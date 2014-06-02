@@ -15,6 +15,7 @@ Développé en secret, le GSCV n'est malheureusement pas encore terminé, son co
 Bref, votre mission consiste à achever le GSCV et à rétablir la paix et l'harmonie. Pour cela :
 
 - Forkez le repository quelque part
+- Lancez l'application avec un serveur web quelconque
 - Ajoutez de nouvelles fonctionnalités à l'application
 - Enfin, faites une pull request de votre travail quand vous le souhaiterez
 
