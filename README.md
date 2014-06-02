@@ -1,4 +1,4 @@
-# Générateur Sketchfab de cartes de visite
+# Générateur Sketchfab de Cartes de Visite
 
 A Sketchfab, on aime bien venir voir les gens pour leur faire un petit coucou. Du coup, de temps à autres, on doit leur donner des cartes de visite. Pourtant, suite à un récent changement de logo, ces dernières vont devoir être refaites.
 
@@ -12,7 +12,7 @@ Ce repository contient la dernière arme mise au point afin de mettre fin à cet
 
 Développé en secret, le GSCV n'est malheureusement pas encore terminé, son concepteur original ayant été porté disparu à la suite d'un incident impliquant une batte de base-ball et une bouteille de whisky.
 
-Bref, votre mission consiste à achever le GSCV et à rétablir la paix et l'harmonie. Pour cela :
+Bref, votre mission consiste à achever le GSCV et rétablir la paix et l'harmonie. Pour cela :
 
 - Forkez le repository quelque part
 - Lancez l'application avec un serveur web quelconque
