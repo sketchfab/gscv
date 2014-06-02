@@ -31,3 +31,7 @@ Bref, votre mission consiste à achever le GSCV et à rétablir la paix et l'har
     - Des images ! Choisir un arrière-plan parmis plusieurs, par exemple
     - ... Et à peu près tout ce que vous souhaitez d'autre.
 - L'ensemble ne devrait pas vous prendre plus d'une poignée d'heures.
+
+## Morgan Freeman
+
+![](http://www.reactiongifs.us/wp-content/uploads/2014/01/good_luck_morgan_freeman.gif)
