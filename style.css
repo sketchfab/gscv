@@ -1,0 +1,19 @@
+.editor-view {
+    display: flex;
+
+    background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
+}
+
+.card {
+    margin: auto;
+
+    flex: none;
+    width: 550px;
+    height: 300px;
+
+    padding: 20px;
+
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+    background: #2C2C2C;
+    color: #FFFFFF;
+}
