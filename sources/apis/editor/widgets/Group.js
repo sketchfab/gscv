@@ -89,9 +89,12 @@ define( [
         toggleVisibilityEvent : function ( e ) {
 
             e.preventDefault( );
-
-            this.$el.toggleClass( 'opened' );
-
+            if(this.$el.hasClass('opened')){
+                this.$el.removeClass('opened');
+            }else{
+                $('.group-widget').removeClass('opened');
+                this.$el.addClass( 'opened' );
+            }
         },
 
         toggleStateEvent : function ( e ) {

@@ -16,4 +16,67 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
     background: #2C2C2C;
     color: #FFFFFF;
+    position: relative;
+    font-weight: 300;
+}
+.editor-panel .input-widget .value {
+    margin-top: 10px;
+    width: 100%;
+    padding: 4px;
+    border: 0;
+    border-radius: 4px;
+    background: #1a1a1a;
+    color: #fff;
+}
+.color-widget .box{
+    width: 150px;
+}
+.editor-panel .color-widget>.widget-wrapper {
+    min-height: 130px;
+}
+.name{
+    position: absolute;
+    top: 34px;
+    left: 122px;
+}
+.job{
+    position: absolute;
+    top: 64px;
+    left: 122px;
+}
+.image{
+    position: absolute;
+    display: block;
+    width: 80px;
+    height: auto;
+    top: 20px;
+    left: 20px;
+}
+.upload{
+    outline: none;
+}
+.upload::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.upload::before {
+  content: 'Upload your photo';
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #000, #222);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  margin-right: 10px;
+  color: #f0f0f0;
+}
+.upload:hover::before {
+  border-color: black;
+}
+.upload:active::before {
+  background: -webkit-linear-gradient(top, #222, #000);
 }

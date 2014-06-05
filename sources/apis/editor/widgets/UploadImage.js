@@ -3,21 +3,21 @@ define( [
     'vendors/Backbone',
     'vendors/JQuery',
 
-    'apis/editor/widgets/Button'
+    'apis/editor/widgets/Widget'
 
-], function ( Backbone, $, ButtonWidget ) {
+], function ( Backbone, $, Widget ) {
 
-    return ButtonWidget.extend( {
+    return Widget.extend( {
 
         el : [ '<div class="widget upload-button-widget">'
-        ,'          <input type="file" class="file">'
-        ,'          <button class="button btn-secondary">'
-        ,'          </button>'
+        ,'           <input type="file" id="uploader" value="Upload" name="image" class="upload">'
+        , '          <input type="hidden" class="imageName" value="">'            
         ,'      </div>'
         ].join( '' ),
 
-        events : _.extend( { }, ButtonWidget.prototype.events, {
-            'change .file' : 'changeEvent',
+        events : _.extend( { }, Widget.prototype.events, {
+            'change .upload:input' : 'uploadEvent',
+            'change .imageName:input' : 'changeEvent',
         } ),
 
         initialize : function ( options ) {
@@ -25,6 +25,7 @@ define( [
             options = _.defaults( options || { }, {
 
                 model        : new Backbone.Model( ),
+                name         : 'value',
                 selectEvent  : 'uploadSelectEvent',
                 cancelEvent  : 'uploadCancelEvent',
                 text         : '',
@@ -32,7 +33,7 @@ define( [
 
             }, options );
 
-            ButtonWidget.prototype.initialize.call( this, options );
+            Widget.prototype.initialize.call( this, options );
 
             this.$el.find( '.button' ).text( this.options.text );
 
@@ -50,12 +51,26 @@ define( [
 
         },
 
-        changeEvent: function ( e ) {
-
+        uploadEvent: function ( e ) {
+            var self = this;
             if ( e.target.files[ 0 ] ) {
 
                 if ( this.options.selectEvent ) {
                     this.options.model.trigger( this.options.selectEvent, e.target.files[0], this );
+                $.ajax({
+                    url: 'upload.php',
+                    type: 'POST',
+                    contentType:false,
+                    processData: false,
+                    data: function(){
+                        var data = new FormData();
+                        data.append('picture',$('#uploader').get(0).files[0]);
+                        return data;
+                    }(),
+                    success: function (data) {
+                        self.change( data );
+                    }
+                });
                 }
 
             } else {
@@ -66,8 +81,14 @@ define( [
                 }
 
             }
-
         },
+        changeEvent: function( e ){
+            var value = $( '.imageName' ).val( );
+        },
+
+        render : function ( ) {
+            $( '.imageName' ).val();
+        }
 
     } );
 

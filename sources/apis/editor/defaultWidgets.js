@@ -10,10 +10,12 @@ define( [
     'apis/editor/widgets/Horizontal',
     'apis/editor/widgets/Hyde',
     'apis/editor/widgets/Image',
+    'apis/editor/widgets/InputText',
     'apis/editor/widgets/Label',
     'apis/editor/widgets/NumberedSlider',
     'apis/editor/widgets/Number',
     'apis/editor/widgets/Orientation',
+    'apis/editor/widgets/UploadImage',
     'apis/editor/widgets/Select',
     'apis/editor/widgets/SlideredImage',
     'apis/editor/widgets/Slider',
@@ -21,7 +23,7 @@ define( [
     'apis/editor/widgets/ToggleSwitch',
     'apis/editor/widgets/Vertical'
 
-], function ( AngleWidget, AxisWidget, ButtonWidget, ColorWidget, FactoredImageWidget, FilePickerWidget, GroupWidget, HorizontalWidget, Hyde, ImageWidget, LabelWidget, NumberedSliderWidget, NumberWidget, OrientationWidget, SelectWidget, SlideredImageWidget, SliderWidget, TabbedWidget, ToggleSwitchWidget, VerticalWidget ) {
+], function ( AngleWidget, AxisWidget, ButtonWidget, ColorWidget, FactoredImageWidget, FilePickerWidget, GroupWidget, HorizontalWidget, Hyde, ImageWidget, InputTextWidget, LabelWidget, NumberedSliderWidget, NumberWidget, OrientationWidget, UploadImageWidget, SelectWidget, SlideredImageWidget, SliderWidget, TabbedWidget, ToggleSwitchWidget, VerticalWidget ) {
 
     return {
 
@@ -33,6 +35,7 @@ define( [
         Hyde           : Hyde,
 
         Image          : ImageWidget,
+        InputText      : InputTextWidget,
         Color          : ColorWidget,
         FactoredImage  : FactoredImageWidget,
         SlideredImage  : SlideredImageWidget,
@@ -47,7 +50,8 @@ define( [
 
         Angle          : AngleWidget,
         Axis           : AxisWidget,
-        Orientation    : OrientationWidget
+        Orientation    : OrientationWidget,
+        UploadImage    : UploadImageWidget
 
     };
 

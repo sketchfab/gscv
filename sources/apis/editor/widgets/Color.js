@@ -21,7 +21,6 @@ define( [
              , '                <div class="slider"><div class="cursor"></div></div>',
              , '            </div>'
              , '        </div>'
-             , '        <input class="value" size="8" />'
              , '    </div>'
              , '</div>'
         ].join( '' ),
@@ -54,7 +53,7 @@ define( [
 
             }, function ( hsv, rgb, hex ) {
 
-                this.change( rgb );
+                this.change( hex );
 
             }.bind( this ) );
 
