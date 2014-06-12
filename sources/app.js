@@ -77,12 +77,14 @@ define( [
 
     colors.createWidget( 'Background color', 'Color', {
         model : card,
-        name  : 'background'
+        name  : 'background',
+        base  : '#82d4f2'
     } );
     
     colors.createWidget( 'Text color', 'Color', {
         model : card,
-        name  : 'color'
+        name  : 'color',
+        base  : '#2a2a2a'
     } );
 
     editor.createWidget( 'Button', {
