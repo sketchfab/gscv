@@ -13,8 +13,9 @@ define( [
 
         defaults : {
             radius : 10,
-            background : "#4d4d4d"
-        }
+        },
+        
+        urlRoot : '/api/cards/'
 
     } );
 
@@ -23,6 +24,7 @@ define( [
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:background', this.onBackgroundChange, this);
+            this.model.on( 'click', this.onSave, this );
         },
 
         render : function ( ) {
@@ -36,6 +38,10 @@ define( [
 
         onBackgroundChange : function ( ) {
             this.$el.css( 'background', this.model.get( 'background' ) );
+        },
+        
+        onSave : function ( ) {
+            this.model.save( );
         }
 
     } );
@@ -61,6 +67,11 @@ define( [
     appearance.createWidget( 'Background color', 'Color', {
         model : card,
         name  : 'background'
+    } );
+    
+    editor.createWidget( 'Button', {
+        model : card,
+        text  : 'Save'
     } );
 
 } );
