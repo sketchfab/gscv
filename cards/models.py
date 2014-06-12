@@ -5,3 +5,6 @@ class Card(models.Model):
     color = models.CharField(max_length=10, null=True)
     background = models.CharField(max_length=10, null=True)
     radius = models.IntegerField()
+    name = models.CharField(max_length=256)
+    job = models.CharField(max_length=256)
+    email = models.CharField(max_length=64)
