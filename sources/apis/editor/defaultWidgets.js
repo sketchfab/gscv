@@ -17,11 +17,12 @@ define( [
     'apis/editor/widgets/Select',
     'apis/editor/widgets/SlideredImage',
     'apis/editor/widgets/Slider',
+    'apis/editor/widgets/String',
     'apis/editor/widgets/Tabbed',
     'apis/editor/widgets/ToggleSwitch',
     'apis/editor/widgets/Vertical'
 
-], function ( AngleWidget, AxisWidget, ButtonWidget, ColorWidget, FactoredImageWidget, FilePickerWidget, GroupWidget, HorizontalWidget, Hyde, ImageWidget, LabelWidget, NumberedSliderWidget, NumberWidget, OrientationWidget, SelectWidget, SlideredImageWidget, SliderWidget, TabbedWidget, ToggleSwitchWidget, VerticalWidget ) {
+], function ( AngleWidget, AxisWidget, ButtonWidget, ColorWidget, FactoredImageWidget, FilePickerWidget, GroupWidget, HorizontalWidget, Hyde, ImageWidget, LabelWidget, NumberedSliderWidget, NumberWidget, OrientationWidget, SelectWidget, SlideredImageWidget, SliderWidget, StringWidget, TabbedWidget, ToggleSwitchWidget, VerticalWidget ) {
 
     return {
 
@@ -39,6 +40,7 @@ define( [
         Number         : NumberWidget,
         Select         : SelectWidget,
         Slider         : SliderWidget,
+        String         : StringWidget,
         NumberedSlider : NumberedSliderWidget,
         Label          : LabelWidget,
         ToggleSwitch   : ToggleSwitchWidget,

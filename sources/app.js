@@ -13,6 +13,9 @@ define( [
 
         defaults : {
             radius : 10,
+            name   : 'Quentin Leffray',
+            job    : 'Backend Developer',
+            email  : 'fiahil@gmail.com'
         },
         
         urlRoot : '/api/cards/'
@@ -25,6 +28,9 @@ define( [
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:color', this.onColorChange, this);
             this.model.on( 'change:background', this.onBackgroundChange, this);
+            this.model.on( 'change:name', this.onNameChange, this);
+            this.model.on( 'change:job', this.onJobChange, this);
+            this.model.on( 'change:email', this.onEmailChange, this);
             this.model.on( 'click', this.onSave, this );
         },
 
@@ -32,6 +38,9 @@ define( [
             this.onRadiusChange( );
             this.onColorChange( );
             this.onBackgroundChange( );
+            this.onNameChange( );
+            this.onJobChange( );
+            this.onEmailChange( );
         },
 
         onRadiusChange : function ( ) {
@@ -44,6 +53,18 @@ define( [
         
         onColorChange : function ( ) {
             this.$el.css( 'color', this.model.get( 'color' ) );
+        },
+
+        onNameChange : function ( ) {
+            this.$('.name').text( this.model.get( 'name' ) );
+        },
+
+        onJobChange : function ( ) {
+            this.$('.job').text( this.model.get( 'job' ) );
+        },
+
+        onEmailChange : function ( ) {
+            this.$('.email').text( this.model.get( 'email' ) );
         },
 
         onSave : function ( ) {
@@ -85,6 +106,25 @@ define( [
         model : card,
         name  : 'color',
         base  : '#2a2a2a'
+    } );
+
+    var data = editor.createWidget( 'Group', {
+        label : 'Informations'
+    } );
+
+    data.createWidget( 'Name', 'String', {
+        model : card,
+        name  : 'name'
+    } );
+
+    data.createWidget( 'Job', 'String', {
+        model : card,
+        name  : 'job'
+    } );
+
+    data.createWidget( 'Email', 'String', {
+        model : card,
+        name  : 'email'
     } );
 
     editor.createWidget( 'Button', {
