@@ -35,7 +35,8 @@ define( [
             options = _.defaults( options || { }, {
 
                 model : new Backbone.Model( ),
-                name  : 'value'
+                name  : 'value',
+                base  : '#000000'
 
             } );
 
@@ -57,6 +58,8 @@ define( [
                 this.change( hex );
 
             }.bind( this ) );
+
+            this.colorPicker.set( this.options.base );
 
         },
 
