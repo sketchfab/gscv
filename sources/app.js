@@ -23,12 +23,14 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
+            this.model.on( 'change:color', this.onColorChange, this);
             this.model.on( 'change:background', this.onBackgroundChange, this);
             this.model.on( 'click', this.onSave, this );
         },
 
         render : function ( ) {
             this.onRadiusChange( );
+            this.onColorChange( );
             this.onBackgroundChange( );
         },
 
@@ -40,6 +42,10 @@ define( [
             this.$el.css( 'background', this.model.get( 'background' ) );
         },
         
+        onColorChange : function ( ) {
+            this.$el.css( 'color', this.model.get( 'color' ) );
+        },
+
         onSave : function ( ) {
             this.model.save( );
         }
@@ -64,11 +70,21 @@ define( [
         name  : 'radius'
     } );
 
-    appearance.createWidget( 'Background color', 'Color', {
+    var colors = editor.createWidget( 'Group', {
+        label : 'Card Colors',
+        opened: false
+    } );
+
+    colors.createWidget( 'Background color', 'Color', {
         model : card,
         name  : 'background'
     } );
     
+    colors.createWidget( 'Text color', 'Color', {
+        model : card,
+        name  : 'color'
+    } );
+
     editor.createWidget( 'Button', {
         model : card,
         text  : 'Save'
