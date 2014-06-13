@@ -68,14 +68,30 @@ define( [
         },
 
         onSave : function ( ) {
-            this.model.save( );
+
+            // Save model and provide visual feedback
+            if ( ! this.model.save( ) ) {
+                $( '.editor-panel' ).css( 'background-color', '#d12424' );
+            }
+            else {
+                $( '.editor-panel' ).css( 'background-color', '#2fc129' );
+            }
+
+            $( '.editor-panel' ).animate( { backgroundColor : '#595959' }, 300 );
         }
 
     } );
 
     // --- --- --- --- --- --- --- --- ---
 
-    var card = new Card( );
+    if ( window.cardID != -1 ) {
+        var card = new Card( { id: window.cardID } );
+        card.fetch( );
+    }
+    else {
+        var card = new Card( );
+    }
+
     var view = new View( { model : card, el : $( '.card' ) } );
 
     view.render( );
@@ -90,6 +106,8 @@ define( [
         model : card,
         name  : 'radius'
     } );
+
+    // --- --- --- --- --- --- --- --- ---
 
     var colors = editor.createWidget( 'Group', {
         label : 'Card Colors',
@@ -107,6 +125,8 @@ define( [
         name  : 'color',
         base  : '#2a2a2a'
     } );
+
+    // --- --- --- --- --- --- --- --- ---
 
     var data = editor.createWidget( 'Group', {
         label : 'Informations'
@@ -126,6 +146,8 @@ define( [
         model : card,
         name  : 'email'
     } );
+
+    // --- --- --- --- --- --- --- --- ---
 
     editor.createWidget( 'Button', {
         model : card,
