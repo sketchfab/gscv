@@ -15,7 +15,8 @@ define( [
             radius : 10,
             name   : 'Quentin Leffray',
             job    : 'Backend Developer',
-            email  : 'fiahil@gmail.com'
+            email  : 'fiahil@gmail.com',
+            url    : ''
         },
         
         urlRoot : '/api/cards/'
@@ -31,7 +32,6 @@ define( [
             this.model.on( 'change:name', this.onNameChange, this);
             this.model.on( 'change:job', this.onJobChange, this);
             this.model.on( 'change:email', this.onEmailChange, this);
-            this.model.on( 'change:url', this.onUrlChange, this);
             this.model.on( 'click', this.onSave, this );
         },
 
@@ -42,7 +42,6 @@ define( [
             this.onNameChange( );
             this.onJobChange( );
             this.onEmailChange( );
-            this.onUrlChange( );
         },
 
         onRadiusChange : function ( ) {
@@ -69,21 +68,20 @@ define( [
             this.$('.email').text( this.model.get( 'email' ) );
         },
 
-        onUrlChange : function ( ) {
-            this.$('.url').text( this.model.get( 'url' ) );
-        },
-
         onSave : function ( ) {
 
             // Save model and provide visual feedback
-            if ( ! this.model.save( ) ) {
-                $( '.editor-panel' ).css( 'background-color', '#d12424' );
-            }
-            else {
-                $( '.editor-panel' ).css( 'background-color', '#2fc129' );
-            }
+            this.model.save( { }, {
+                error   : function ( ) {
+                    $( '.editor-panel' ).css( 'background-color', '#d12424' );
+                    $( '.editor-panel' ).animate( { backgroundColor : '#595959' }, 300 );
+                },
 
-            $( '.editor-panel' ).animate( { backgroundColor : '#595959' }, 300 );
+                success : function ( ) {
+                    $( '.editor-panel' ).css( 'background-color', '#2fc129' );
+                    $( '.editor-panel' ).animate( { backgroundColor : '#595959' }, 300 );
+                }
+            } );
         }
 
     } );
