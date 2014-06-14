@@ -15,7 +15,7 @@ define( [
             radius : 10,
             name   : 'Quentin Leffray',
             job    : 'Backend Developer',
-            email  : 'fiahil@gmail.com',
+            email  : 'quentin.leffray@epitech.eu',
             url    : ''
         },
         
