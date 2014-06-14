@@ -39,6 +39,10 @@ define( [
 
             this.change( $( e.currentTarget ).val( ) );
 
+        },
+
+        render : function ( ) {
+            this.$( '.value' ).val( this.get( ) );
         }
 
     } );
