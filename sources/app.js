@@ -31,6 +31,7 @@ define( [
             this.model.on( 'change:name', this.onNameChange, this);
             this.model.on( 'change:job', this.onJobChange, this);
             this.model.on( 'change:email', this.onEmailChange, this);
+            this.model.on( 'change:url', this.onUrlChange, this);
             this.model.on( 'click', this.onSave, this );
         },
 
@@ -41,6 +42,7 @@ define( [
             this.onNameChange( );
             this.onJobChange( );
             this.onEmailChange( );
+            this.onUrlChange( );
         },
 
         onRadiusChange : function ( ) {
@@ -65,6 +67,10 @@ define( [
 
         onEmailChange : function ( ) {
             this.$('.email').text( this.model.get( 'email' ) );
+        },
+
+        onUrlChange : function ( ) {
+            this.$('.url').text( this.model.get( 'url' ) );
         },
 
         onSave : function ( ) {
@@ -145,6 +151,17 @@ define( [
     data.createWidget( 'Email', 'String', {
         model : card,
         name  : 'email'
+    } );
+
+    // --- --- --- --- --- --- --- --- ---
+
+    var settings = editor.createWidget( 'Group', {
+        label : 'Card Settings'
+    } );
+
+    settings.createWidget( 'URL', 'String', {
+        model : card,
+        name  : 'url'
     } );
 
     // --- --- --- --- --- --- --- --- ---
