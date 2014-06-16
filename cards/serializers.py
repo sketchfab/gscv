@@ -2,8 +2,9 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from cards.models import Card
 
-class CardSerializer(serializers.ModelSerializer):
-    owner = serializers.Field(source='owner.username')
+class CardSerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.HyperlinkedIdentityField(source='owner.name',
+            view_name='user-detail')
 
     class Meta:
         model = Card
@@ -12,7 +13,8 @@ class CardSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    cards = serializers.PrimaryKeyRelatedField(many=True)
+    cards = serializers.HyperlinkedRelatedField(many=True,
+            view_name='card-detail')
 
     class Meta:
         model = User
