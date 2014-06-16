@@ -3,6 +3,7 @@ from django.core.validators import RegexValidator
 import random, string
 
 class Card(models.Model):
+    owner = models.ForeignKey('auth.User', related_name='cards')
     created = models.DateTimeField(auto_now_add=True)
     color = models.CharField(max_length=10, null=True)
     background = models.CharField(max_length=10, null=True)
