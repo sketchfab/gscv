@@ -19,3 +19,9 @@ class Card(models.Model):
         if not self.url:
             self.url = ''.join(random.choice(string.ascii_letters) for _ in range(8))
         super(Card, self).save(*args, **kwargs)
+
+class Comment(models.Model):
+    owner = models.ForeignKey('auth.User', related_name='comments')
+    card = models.ForeignKey('Card', related_name='comments')
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
