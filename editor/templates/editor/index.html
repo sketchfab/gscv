@@ -9,10 +9,13 @@
         <link rel="stylesheet" href="https://d2f25wgezub9nf.cloudfront.net/1.31.0/vendors/Normalize-dc2abc.css" />
         <link rel="stylesheet" href="https://d2f25wgezub9nf.cloudfront.net/1.31.0/styles/editor-106cc9.css" />
         <style>.editor-panel, .editor-view { padding-top: 0 }</style>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="sources/style.css" />
 
         <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
 
+        <script>
+            window.cardID = {{ cardID|default:-1 }};
+        </script>
     </head>
 
     <body>
@@ -23,6 +26,7 @@
                 <div class="card">
                     <div class="name">Maël Nison</div>
                     <div class="job">Frontend Developer</div>
+                    <div class="email"></div>
                 </div>
             </div>
         </div>

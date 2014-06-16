@@ -35,7 +35,8 @@ define( [
             options = _.defaults( options || { }, {
 
                 model : new Backbone.Model( ),
-                name  : 'value'
+                name  : 'value',
+                base  : '#000000'
 
             } );
 
@@ -54,9 +55,11 @@ define( [
 
             }, function ( hsv, rgb, hex ) {
 
-                this.change( rgb );
+                this.change( hex );
 
             }.bind( this ) );
+
+            this.colorPicker.set( this.options.base );
 
         },
 
@@ -68,14 +71,8 @@ define( [
 
         render : function ( ) {
 
-            var rgb = this.get( );
-
-            this.colorPicker.set( rgb );
-
-            var rounded = { r : rgb.r * 255, g : rgb.g * 255, b : rgb.b * 255 };
-            var hex = "#" + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
-
-            this.$( '.value' ).val( hex );
+            this.colorPicker.set( this.get( ) );
+            this.$( '.value' ).val( this.get( ) );
 
         }
 
