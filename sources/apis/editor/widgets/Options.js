@@ -8,37 +8,39 @@ define( [
 
 ], function ( Backbone, $, _, Widget ) {
 
+    'use strict';
+
     return Widget.extend( {
 
-        el : [ '<div class="widget options-widget">',
-        ,'          <div class="widget-wrapper">'
-        ,'              <ul class="options"></ul>'
-        ,'          </div>'
-        ,'      </div>'
+        el: [ '<div class="widget options-widget">',
+            '          <div class="widget-wrapper">',
+            '              <ul class="options"></ul>',
+            '          </div>',
+            '      </div>'
         ].join( '' ),
 
-        events : _.extend( { }, Widget.prototype.events, {
-            'click [data-value]' : 'selectEvent'
+        events: _.extend( {}, Widget.prototype.events, {
+            'click [data-value]': 'selectEvent'
         } ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model         : new Backbone.Model( ),
-                name          : 'value',
-                image         : null,
-                options       : { },
+                model: new Backbone.Model(),
+                name: 'value',
+                image: null,
+                options: {},
 
-                allowMultiple : true,
-                allowEmpty    : true
+                allowMultiple: true,
+                allowEmpty: true
 
             } );
 
             Widget.prototype.initialize.call( this, options );
 
-            if ( options.allowMultiple === true && typeof this.get( ) === 'undefined' )
-                this.set( [ ] );
+            if ( options.allowMultiple === true && typeof this.get() === 'undefined' )
+                this.set( [] );
 
             // Converts a simple array into a key-pair object
             // [ 'a', 'b', 'c' ] => { 'a' : 'a', 'b' : 'b', 'c' : 'c' }
@@ -46,14 +48,17 @@ define( [
                 this.options.options = this.options.options.reduce( function ( options, key ) {
                     options[ key ] = key;
                     return options;
-                }.bind( this ), { } );
+                }.bind( this ), {} );
             }
 
             // Converts a key-pair object into a key-pair array
             // { 'a' : 'a', 'b' : 'b', 'c' : 'c' } => [ { 'label' : 'a', 'value' : 'a' }, { 'label' : 'b', 'value' : 'b' }, { 'label' : 'c', 'value' : 'c' } ]
-            if ( ! ( this.options.options instanceof Backbone.Collection ) ) {
+            if ( !( this.options.options instanceof Backbone.Collection ) ) {
                 this.options.options = new Backbone.Collection( Object.keys( this.options.options ).map( function ( key ) {
-                    return { value : key, label : this.options.options[ key ] };
+                    return {
+                        value: key,
+                        label: this.options.options[ key ]
+                    };
                 }.bind( this ) ) );
             }
 
@@ -67,7 +72,7 @@ define( [
 
         },
 
-        delegateEvents : function ( ) {
+        delegateEvents: function () {
 
             Widget.prototype.delegateEvents.apply( this, arguments );
 
@@ -77,7 +82,7 @@ define( [
 
         },
 
-        undelegateEvents : function ( ) {
+        undelegateEvents: function () {
 
             Widget.prototype.undelegateEvents.apply( this, arguments );
 
@@ -87,22 +92,23 @@ define( [
 
         },
 
-        render : function ( ) {
+        render: function () {
 
-            var values = [ ].concat( this.get( ) || [ ] );
+            var values = [].concat( this.get() || [] );
 
             values = values.map( function ( value ) {
-                return value.toString( );
+                return value.toString();
             } );
 
-            this.$( '[data-value]' ).each( function ( ) {
-                var $el = $( this ), value = $el.attr( 'data-value' );
-                $el.toggleClass( 'active', values.indexOf( value ) !== - 1 );
+            this.$( '[data-value]' ).each( function () {
+                var $el = $( this ),
+                    value = $el.attr( 'data-value' );
+                $el.toggleClass( 'active', values.indexOf( value ) !== -1 );
             } );
 
         },
 
-        addOption : function ( model, render ) {
+        addOption: function ( model, render ) {
 
             if ( typeof render === 'undefined' )
                 render = true;
@@ -112,45 +118,74 @@ define( [
                 .attr( 'data-cid', model.cid )
                 .attr( 'data-value', model.get( 'value' ) )
                 .attr( 'title', model.get( 'label' ) )
-            .appendTo( this.$( '.options' ) );
+                .appendTo( this.$( '.options' ) );
 
             var $link = $( '<a/>' )
                 .text( model.get( 'label' ) )
-            .appendTo( $option );
+                .appendTo( $option );
 
             if ( this.options.image ) {
                 if ( model.get( this.options.image ) ) {
                     $( '<span class="image">' )
                         .css( 'background-image', 'url(' + model.get( 'image' ) + ')' )
-                        .prependTo( $link )
+                        .prependTo( $link );
                 }
             }
 
             if ( render ) {
-                this.render( );
+                this.render();
             }
 
         },
 
-        removeOption : function ( model ) {
+        removeOption: function ( model ) {
 
-            this.$( '.options .option' ).filter( function ( ) {
+            this.$( '.options .option' ).filter( function () {
                 return $( this ).attr( 'data-cid' ) === model.cid;
-            } ).remove( );
+            } ).remove();
 
-            this.render( );
+            this.render();
 
         },
 
-        resetOptions : function ( ) {
+        resetOptions: function () {
 
-            this.$( '.options' ).empty( );
+            this.$( '.options' ).empty();
 
             this.options.options.forEach( function ( model ) {
                 this.addOption( model, false );
             }.bind( this ) );
 
-            this.render( );
+            this.render();
+
+        },
+
+        triggerOption : function ( option ) {
+
+            var currentValue = this.get( );
+            var allowMultiple = Array.isArray( currentValue );
+
+            if ( allowMultiple ) {
+
+                var index = currentValue.indexOf( option );
+
+                if ( index === - 1 ) {
+                    this.change( currentValue.concat( [ option ] ) );
+                } else if ( this.options.allowEmpty || currentValue.length >= 2 ) {
+                    var updatedValue = currentValue.slice( );
+                    updatedValue.splice( index, 1 );
+                    this.change( updatedValue );
+                }
+
+            } else {
+
+                if ( currentValue !== option ) {
+                    this.change( option );
+                } else if ( this.options.allowEmpty ) {
+                    this.change( null );
+                }
+
+            }
 
         },
 
@@ -160,47 +195,23 @@ define( [
 
         },
 
-        removeOptionEvent : function ( model ) {
+        removeOptionEvent: function ( model ) {
 
             this.removeOption( model );
 
         },
 
-        resetOptionEvent : function ( ) {
+        resetOptionEvent: function () {
 
-            this.resetOptions( );
+            this.resetOptions();
 
         },
 
-        selectEvent : function ( e ) {
+        selectEvent: function ( e ) {
 
-            e.preventDefault( );
+            e.preventDefault();
 
-            var currentValue = this.get( );
-            var allowMultiple = Array.isArray( currentValue );
-            var selectedValue = $( e.currentTarget ).attr( 'data-value' );
-
-            if ( allowMultiple ) {
-
-                var index = currentValue.indexOf( selectedValue );
-
-                if ( index === - 1 ) {
-                    this.change( currentValue.concat( [ selectedValue ] ) );
-                } else if ( this.options.allowEmpty || currentValue.length >= 2 ) {
-                    var updatedValue = currentValue.slice( );
-                    updatedValue.splice( index, 1 );
-                    this.change( updatedValue );
-                }
-
-            } else {
-
-                if ( currentValue !== selectedValue ) {
-                    this.change( selectedValue );
-                } else if ( this.options.allowEmpty ) {
-                    this.change( null );
-                }
-
-            }
+            this.triggerOption( $( e.currentTarget ).attr( 'data-value' ) );
 
         }
 

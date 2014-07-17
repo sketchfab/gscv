@@ -8,30 +8,33 @@ define( [
 
 ], function ( Backbone, _, ImageWidget, Widget ) {
 
+    'use strict';
+
     return Widget.extend( {
 
-        el : [ '<div class="widget image-widget factored-image-widget">'
-             , '    <div class="widget-wrapper">'
-             , '        <a class="display toggle">'
-             , '            <img class="false-preview" />'
-             , '        </a>'
-             , '    </div>'
-             , '    <div class="selectbox">'
-             , '    </div>'
-             , '</div>'
+        el: [ '<div class="widget image-widget factored-image-widget">',
+            '    <div class="widget-wrapper">',
+            '        <a class="display toggle">',
+            '            <canvas class="false-preview"></canvas>',
+            '        </a>',
+            '    </div>',
+            '    <div class="selectbox">',
+            '    </div>',
+            '</div>'
+
         ].join( '' ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model     : new Backbone.Model( ),
-                name      : 'value',
+                model: new Backbone.Model(),
+                name: 'value',
 
-                maxWidth  : Infinity,
-                maxHeight : Infinity,
+                maxWidth: Infinity,
+                maxHeight: Infinity,
 
-                convert : function ( n ) {
+                convert: function ( n ) {
                     return n / 100;
                 }
 
@@ -42,41 +45,68 @@ define( [
             if ( typeof this.get( 'factor' ) === 'undefined' )
                 this.set( 'factor', 1 );
 
-            this.set( { r : 0, g : 0, b : 0 } );
+            this.set( {
+                r: 0,
+                g: 0,
+                b: 0
+            } );
 
-            this.canvas = document.createElement( 'canvas' );
+            this.canvas = this.$( '.false-preview' )[ 0 ] || document.createElement( 'canvas' );
             this.context = this.canvas.getContext( '2d' );
 
-            this.image = ImageWidget.reify( this, _.defaults( { }, this.options.imageOptions, {
+            this.internalCanvas = document.createElement( 'canvas' );
+            this.internalContext = this.internalCanvas.getContext( '2d' );
 
-                el : this.$el,
+            this.image = ImageWidget.reify( this, _.defaults( {}, this.options.imageOptions, {
 
-                model : this.model,
-                name : this.field( 'original' )
+                el: this.$el,
+
+                model: this.model,
+                name: this.field( 'original' )
 
             } ) );
 
             this.updateImageEvent( );
-
         },
 
-        render : function ( ) {
+        render: function () {
 
             Widget.prototype.render.apply( this, arguments );
 
-            var value = this.get( );
+            var value = this.get();
 
-            if ( value instanceof HTMLCanvasElement ) {
-                this.$( '.false-preview' ).css( 'background-color', 'rgb(0, 0, 0)' );
-                this.$( '.false-preview' ).attr( 'src', value.toDataURL( ) );
+            if ( value instanceof HTMLImageElement || value instanceof HTMLCanvasElement ) {
+
+                this.canvas.width = value.width;
+                this.canvas.height = value.height;
+
+                this.context.clearRect( 0, 0, this.canvas.width, this.canvas.height );
+                this.context.drawImage( value, 0, 0 );
+
             } else {
-                this.$( '.false-preview' ).attr( 'src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==' );
-                this.$( '.false-preview' ).css( 'background-color', 'rgb(' + Math.round( value.r * 255 ) + ',' + Math.round( value.g * 255 ) + ',' + Math.round( value.b * 255 ) + ')');
+
+                this.canvas.width = this.canvas.height = 1;
+
+                this.context.fillStyle = 'rgb(' + Math.round( value.r * 255 ) + ',' + Math.round( value.g * 255 ) + ',' + Math.round( value.b * 255 ) + ')';
+                this.context.fillRect( 0, 0, 1, 1 );
+
             }
 
         },
 
-        delegateEvents : function ( ) {
+        set: function () {
+
+            return Widget.prototype.set.apply( this, arguments );
+
+        },
+
+        modelChangeEvent: function () {
+
+            return Widget.prototype.modelChangeEvent.apply( this, arguments );
+
+        },
+
+        delegateEvents: function () {
 
             Widget.prototype.delegateEvents.apply( this, arguments );
 
@@ -85,7 +115,7 @@ define( [
 
         },
 
-        undelegateEvents : function ( ) {
+        undelegateEvents: function () {
 
             Widget.prototype.undelegateEvents.apply( this, arguments );
 
@@ -94,22 +124,23 @@ define( [
 
         },
 
-        updateImageEvent : function ( ) {
+        updateImageEvent: function () {
 
             var original = this.get( 'original' );
             var factor = this.options.convert( this.get( 'factor' ) );
 
-            if ( original instanceof Image ) {
+            if ( original instanceof HTMLImageElement || original instanceof HTMLCanvasElement ) {
 
-                var onLoad = function ( ) {
+                var onLoad = function () {
 
                     if ( this.get( 'original' ) !== original )
-                        return ; // This call is not relevant anymore
+                        return; // This call is not relevant anymore
 
-                    var canvas = this.canvas;
-                    var context = this.context;
+                    var canvas = this.internalCanvas;
+                    var context = this.internalContext;
 
-                    var width = original.width, height = original.height;
+                    var width = original.width,
+                        height = original.height;
 
                     var ratio = width / height;
 
@@ -123,19 +154,21 @@ define( [
                         width = Math.floor( height * ratio );
                     }
 
-                    this.canvas.width = width;
-                    this.canvas.height = height;
+                    canvas.width = width;
+                    canvas.height = height;
 
                     context.drawImage( original, 0, 0, original.width, original.height, 0, 0, canvas.width, canvas.height );
                     context.fillStyle = 'rgba(0, 0, 0, ' + ( 1 - factor ) + ')';
                     context.fillRect( 0, 0, canvas.width, canvas.height );
 
-                    if ( this.get( ) !== canvas ) {
+                    if ( this.get() !== canvas ) {
                         this.set( canvas );
                     } else {
                         // We need to force the change signal by reseting the field before
-                        this.model.set( this.field( ), null, { silent : true } );
-                        this.model.set( this.field( ), canvas );
+                        this.model.set( this.field(), null, {
+                            silent: true
+                        } );
+                        this.model.set( this.field(), canvas );
                     }
 
                 }.bind( this );
@@ -150,12 +183,12 @@ define( [
             } else {
 
                 // Using a delayed execution allows to give the same specificity to both code branches : the image will not be completed when returning. Some tests are using this assertion.
-                window.setTimeout( function ( ) {
+                window.setTimeout( function () {
 
                     this.set( {
-                        r : original.r * factor,
-                        g : original.g * factor,
-                        b : original.b * factor
+                        r: original.r * factor,
+                        g: original.g * factor,
+                        b: original.b * factor
                     } );
 
                 }.bind( this ), 0 );

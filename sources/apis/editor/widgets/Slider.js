@@ -8,46 +8,48 @@ define( [
 
 ], function ( Backbone, $, _, Widget ) {
 
+    'use strict';
+
     return Widget.extend( {
 
-        el : [ '<div class="widget slider-widget">'
-        ,'          <div class="widget-wrapper">'
-        ,'              <div class="bar">'
-        ,'                  <div class="slide">'
-        ,'                      <div class="cursor"></div>'
-        ,'                  </div>'
-        ,'              </div>'
-        ,'          </div>',
-        ,'      </div>'
+        el: [ '<div class="widget slider-widget">',
+            '          <div class="widget-wrapper">',
+            '              <div class="bar">',
+            '                  <div class="slide">',
+            '                      <div class="cursor"></div>',
+            '                  </div>',
+            '              </div>',
+            '          </div>',
+            '      </div>'
         ].join( '' ),
 
-        events : _.extend( { }, Widget.prototype.events, {
-            'click .bar' : 'selectEvent',
-            'mousedown .cursor' : 'startEvent'
+        events: _.extend( {}, Widget.prototype.events, {
+            'click .bar': 'selectEvent',
+            'mousedown .cursor': 'startEvent'
         } ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model : new Backbone.Model( ),
-                name  : 'value',
+                model: new Backbone.Model(),
+                name: 'value',
 
-                minimum : 0,
-                maximum : 100,
-                step    : 1
+                minimum: 0,
+                maximum: 100,
+                step: 1
 
             } );
 
             Widget.prototype.initialize.call( this, options );
 
-            if ( typeof this.get( ) === 'undefined' ) {
+            if ( typeof this.get() === 'undefined' ) {
                 this.set( 0 );
             }
 
         },
 
-        delegateEvents : function ( ) {
+        delegateEvents: function () {
 
             Widget.prototype.delegateEvents.apply( this, arguments );
 
@@ -56,7 +58,7 @@ define( [
 
         },
 
-        undelegateEvents : function ( ) {
+        undelegateEvents: function () {
 
             Widget.prototype.undelegateEvents.apply( this, arguments );
 
@@ -64,55 +66,55 @@ define( [
 
         },
 
-        render : function ( ) {
+        render: function () {
 
             var range = this.options.maximum - this.options.minimum;
-            var percent = ( this.get( ) - this.options.minimum ) / range * 100;
+            var percent = ( this.get() - this.options.minimum ) / range * 100;
 
             this.$( '.slide' ).css( {
-                width : percent + '%'
+                width: percent + '%'
             } );
 
         },
 
-        startEvent : function ( e ) {
+        startEvent: function ( e ) {
 
-            e.preventDefault( );
+            e.preventDefault();
 
             this.$el.addClass( 'fast' );
             this.started = true;
 
         },
 
-        stopEvent : function ( e ) {
+        stopEvent: function ( e ) {
 
-            if ( ! this.started )
-                return ;
+            if ( !this.started )
+                return;
 
-            e.preventDefault( );
+            e.preventDefault();
 
             this.$el.removeClass( 'fast' );
             this.started = false;
 
         },
 
-        moveEvent : function ( e ) {
+        moveEvent: function ( e ) {
 
-            if ( ! this.started )
-                return ;
+            if ( !this.started )
+                return;
 
-            e.preventDefault( );
+            e.preventDefault();
 
             this.selectEvent( e );
 
         },
 
-        selectEvent : function ( e ) {
+        selectEvent: function ( e ) {
 
-            e.preventDefault( );
+            e.preventDefault();
 
-            var left = this.$el.position( ).left;
-            var width = this.$el.width( );
+            var left = this.$el.position().left;
+            var width = this.$el.width();
 
             var mouse = e.pageX;
 

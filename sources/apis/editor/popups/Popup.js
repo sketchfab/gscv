@@ -6,6 +6,8 @@ define( [
 
 ], function ( Backbone, $, _ ) {
 
+    'use strict';
+
     var template = _.template( [
         '<div class="popup-wrapper">',
         '    <div class="popup texture-popup">',
@@ -24,50 +26,50 @@ define( [
 
     return Backbone.View.extend( {
 
-        events : _.extend( { }, Backbone.View.prototype.events, {
-            'click .popup-action-close' : 'close',
-            'click'                     : 'closeIfOverlay'
+        events: _.extend( {}, Backbone.View.prototype.events, {
+            'click .popup-action-close': 'close',
+            'click': 'closeIfOverlay'
         } ),
 
-        el : function ( ) {
+        el: function () {
             return template( {
-                header : _.result( this, 'header' ),
-                content : _.result( this, 'content' ),
-                footer : _.result( this, 'footer' )
+                header: _.result( this, 'header' ),
+                content: _.result( this, 'content' ),
+                footer: _.result( this, 'footer' )
             } );
         },
 
-        constructor : function ( parent, options ) {
+        constructor: function ( parent, options ) {
 
             this.parent = parent;
-            this.options = _.extend( { }, options );
-            this.environment = _.extend( { }, parent ? parent.environment : { }, this.options.environment );
+            this.options = _.extend( {}, options );
+            this.environment = _.extend( {}, parent ? parent.environment : {}, this.options.environment );
 
-            $( document ).on( 'keydown', function( e ) {
+            $( document ).on( 'keydown', function ( e ) {
 
                 if ( e.keyCode !== 27 )
-                    return ;
+                    return;
 
                 if ( this.environment.popupStack.length === 0 )
-                    return ;
+                    return;
 
-                this.environment.popupStack[ 0 ].close( );
+                this.environment.popupStack[ 0 ].close();
 
             }.bind( this ) );
 
             Backbone.View.call( this, options );
 
-            this.render( );
+            this.render();
 
         },
 
-        render : function ( ) {
+        render: function () {
 
             this.setElement( _.result( this, 'el' ) );
 
             while ( this.environment.popupStack.length > 0 && this.environment.popupStack[ 0 ] !== this.parent ) {
-                var stackedPopup = this.environment.popupStack.shift( );
-                stackedPopup.close( );
+                var stackedPopup = this.environment.popupStack.shift();
+                stackedPopup.close();
             }
 
             this.environment.popupStack.unshift( this );
@@ -76,18 +78,18 @@ define( [
 
         },
 
-        close : function ( ) {
+        close: function () {
 
-            this.$el.remove( );
+            this.$el.remove();
 
         },
 
-        closeIfOverlay : function ( e ) {
+        closeIfOverlay: function ( e ) {
 
             if ( this.$( '.popup' ).has( e.target ).length )
-                return ;
+                return;
 
-            this.close( );
+            this.close();
 
         }
 

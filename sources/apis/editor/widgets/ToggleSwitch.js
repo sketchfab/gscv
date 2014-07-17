@@ -8,27 +8,29 @@ define( [
 
 ], function ( Backbone, $, _, Widget ) {
 
+    'use strict';
+
     return Widget.extend( {
 
-        el : [ '<div class="widget toggleswitch-widget">'
-        ,'          <a class="state"></a>'
-        ,'          <a class="label"></a>'
-        ,'      </div>'
+        el: [ '<div class="widget toggleswitch-widget">',
+            '          <a class="state"></a>',
+            '          <a class="label"></a>',
+            '      </div>'
         ].join( '' ),
 
-        events : _.extend( { }, Widget.prototype.events, {
-            'click .state' : 'toggleStateEvent',
-            'click .label' : 'toggleStateEvent'
+        events: _.extend( {}, Widget.prototype.events, {
+            'click .state': 'toggleStateEvent',
+            'click .label': 'toggleStateEvent'
         } ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model : new Backbone.Model( ),
-                name  : 'value',
+                model: new Backbone.Model(),
+                name: 'value',
 
-                label : ''
+                label: ''
 
             } );
 
@@ -38,18 +40,18 @@ define( [
 
         },
 
-        render : function ( ) {
+        render: function () {
 
-            this.$el.toggleClass( 'active', this.get( ) );
+            this.$el.toggleClass( 'active', this.get() );
 
         },
 
-        toggleStateEvent : function ( e ) {
+        toggleStateEvent: function ( e ) {
 
-            e.preventDefault( );
-            e.stopPropagation( );
+            e.preventDefault();
+            e.stopPropagation();
 
-            this.change( ! this.model.get( this.options.name ) );
+            this.change( !this.model.get( this.options.name ) );
 
         }
 

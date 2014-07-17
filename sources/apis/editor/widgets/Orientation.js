@@ -1,25 +1,29 @@
 define( [
 
+    'vendors/Underscore',
+
     'apis/editor/widgets/Angle'
 
-], function ( AngleWidget ) {
+], function ( _, AngleWidget ) {
+
+    'use strict';
 
     return AngleWidget.extend( {
 
-        el : [ '<div class="widget orientation-widget">'
-        ,'          <div class="widget-wrapper">'
-        ,'              <div class="decrease"><a></a></div>'
-        ,'              <div class="value"></div>'
-        ,'              <div class="increase"><a></a></div>'
-        ,'          </div>'
-        ,'      </div>'
+        el: [ '<div class="widget orientation-widget">',
+            '          <div class="widget-wrapper">',
+            '              <div class="decrease"><a></a></div>',
+            '              <div class="value"></div>',
+            '              <div class="increase"><a></a></div>',
+            '          </div>',
+            '      </div>'
         ].join( '' ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                label   : ''
+                label: ''
 
             } );
 
@@ -27,9 +31,9 @@ define( [
 
         },
 
-        render : function ( ) {
+        render: function () {
             var $valueElement = this.$( '.value' );
-            $valueElement.text(this.options.label);
+            $valueElement.text( this.options.label );
         }
 
     } );

@@ -11,36 +11,38 @@ define( [
 
 ], function ( Backbone, $, _, TexturesPopup, TabbedWidget, VerticalWidget, Widget ) {
 
+    'use strict';
+
     return Widget.extend( {
 
-        el : [ '<div class="widget image-widget">'
-             , '    <div class="widget-wrapper">'
-             , '        <a class="display toggle">'
-             , '            <img class="preview" />'
-             , '        </a>'
-             , '    </div>'
-             , '    <div class="selectbox">'
-             , '    </div>'
-             , '</div>'
+        el: [ '<div class="widget image-widget">',
+            '    <div class="widget-wrapper">',
+            '        <a class="display toggle">',
+            '            <canvas class="preview"></canvas>',
+            '        </a>',
+            '    </div>',
+            '    <div class="selectbox">',
+            '    </div>',
+            '</div>'
         ].join( '' ),
 
-        events : _.extend( { }, Widget.prototype.events, {
-            'click .toggle' : 'toggleEvent',
-            'click .open' : 'openEvent'
+        events: _.extend( {}, Widget.prototype.events, {
+            'click .toggle': 'toggleEvent',
+            'click .open': 'openEvent'
         } ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model        : new Backbone.Model( ),
-                name         : 'value',
+                model: new Backbone.Model(),
+                name: 'value',
 
-                allowColor   : true,
-                allowTexture : true,
+                allowColor: true,
+                allowTexture: true,
 
                 // Expects models to have { label:, value:, image: } properties
-                collection   : new Backbone.Collection( )
+                collection: new Backbone.Collection()
 
             } );
 
@@ -48,8 +50,16 @@ define( [
 
             this.globalCloseEvent_ = this.globalCloseEvent.bind( this );
 
-            if ( typeof this.get( ) === 'undefined' )
-                this.set( { r : 1, g : 1, b : 1 } );
+            this.canvas = this.$( '.preview' )[ 0 ] || document.createElement( 'canvas' );
+            this.context = this.canvas.getContext( '2d' );
+
+            if ( this.get() === undefined )
+                this.set( {
+                    r: 1,
+                    g: 1,
+                    b: 1
+                } );
+
 
             var colorPanel, texturePanel;
 
@@ -84,17 +94,17 @@ define( [
             if ( this.options.allowTexture ) {
 
                 var importWidget = texturePanel.createWidget( 'Button', {
-                    text : 'Manage textures',
+                    text: 'Manage textures'
                 } );
 
-                importWidget.model.on( 'click', function ( ) {
+                importWidget.model.on( 'click', function () {
 
                     var popup = new TexturesPopup( this, {
 
-                        model : this.textureWidget.options.model,
-                        name : this.textureWidget.options.name,
+                        model: this.textureWidget.options.model,
+                        name: this.textureWidget.options.name,
 
-                        collection : this.options.collection
+                        collection: this.options.collection
 
                     } );
 
@@ -105,56 +115,84 @@ define( [
                 }.bind( this ) );
 
                 this.textureWidget = texturePanel.createWidget( 'Select', {
-                    placeholder : 'Choose texture',
-                    options : this.options.collection,
-                    image : 'image'
+                    placeholder: 'Choose texture',
+                    options: this.options.collection,
+                    image: 'image'
                 } );
 
                 this.textureWidget.model.on( 'change', this.applyTextureEvent, this );
                 this.model.on( 'change', this.updateTextureEvent, this );
                 this.options.collection.on( 'add', this.updateTextureEvent, this );
 
-                this.updateTextureEvent( );
+                this.updateTextureEvent();
 
                 var filtering = texturePanel.createWidget( 'Horizontal' );
-                filtering.createWidget( 'Label', { content: 'Filtering:', classname: 'setting' } );
+                filtering.createWidget( 'Label', {
+                    content: 'Filtering:',
+                    classname: 'setting'
+                } );
                 filtering.createWidget( 'Select', {
                     model: this.model,
                     name: this.field( 'minFilter' ),
                     allowEmpty: false,
-                    options: { 'NEAREST': 'Nearest', 'LINEAR': 'Bilinear', 'LINEAR_MIPMAP_LINEAR': 'Trilinear' }
+                    options: {
+                        'NEAREST': 'Nearest',
+                        'LINEAR': 'Bilinear',
+                        'LINEAR_MIPMAP_LINEAR': 'Trilinear'
+                    }
                 } );
 
                 var format = texturePanel.createWidget( 'Horizontal' );
-                format.createWidget( 'Label', { content: 'Format:', classname: 'setting' } );
+                format.createWidget( 'Label', {
+                    content: 'Format:',
+                    classname: 'setting'
+                } );
                 format.createWidget( 'Select', {
                     model: this.model,
                     name: this.field( 'internalFormat' ),
                     allowEmpty: false,
-                    options: { 'RGB': 'RGB', 'RGBA': 'RGBA', 'LUMINANCE': 'Luminance' }
+                    options: {
+                        'RGB': 'RGB',
+                        'RGBA': 'RGBA',
+                        'LUMINANCE': 'Luminance'
+                    }
                 } );
 
                 var wraps = texturePanel.createWidget( 'Horizontal' );
-                wraps.createWidget( 'Label', { content: 'Wrap S:', classname: 'setting' } );
+                wraps.createWidget( 'Label', {
+                    content: 'Wrap S:',
+                    classname: 'setting'
+                } );
                 wraps.createWidget( 'Select', {
                     model: this.model,
                     name: this.field( 'wrapS' ),
                     allowEmpty: false,
-                    options: { 'REPEAT': 'Repeat', 'MIRRORED_REPEAT': 'Mirror', 'CLAMP_TO_EDGE': 'Clamp' }
+                    options: {
+                        'REPEAT': 'Repeat',
+                        'MIRRORED_REPEAT': 'Mirror',
+                        'CLAMP_TO_EDGE': 'Clamp'
+                    }
                 } );
 
                 var wrapt = texturePanel.createWidget( 'Horizontal' );
-                wrapt.createWidget( 'Label', { content: 'Wrap T:', classname: 'setting' } );
+                wrapt.createWidget( 'Label', {
+                    content: 'Wrap T:',
+                    classname: 'setting'
+                } );
                 wrapt.createWidget( 'Select', {
                     model: this.model,
                     name: this.field( 'wrapT' ),
                     allowEmpty: false,
-                    options: { 'REPEAT': 'Repeat', 'MIRRORED_REPEAT': 'Mirror', 'CLAMP_TO_EDGE': 'Clamp' }
+                    options: {
+                        'REPEAT': 'Repeat',
+                        'MIRRORED_REPEAT': 'Mirror',
+                        'CLAMP_TO_EDGE': 'Clamp'
+                    }
                 } );
             }
         },
 
-        delegateEvents : function ( ) {
+        delegateEvents: function () {
 
             Widget.prototype.delegateEvents.apply( this, arguments );
 
@@ -162,7 +200,7 @@ define( [
 
         },
 
-        undelegateEvents : function ( ) {
+        undelegateEvents: function () {
 
             Widget.prototype.undelegateEvents.apply( this, arguments );
 
@@ -170,27 +208,37 @@ define( [
 
         },
 
-        render : function ( ) {
+        render: function () {
 
             Widget.prototype.render.apply( this, arguments );
 
-            var value = this.get( );
+            var value = this.get();
 
-            if ( value instanceof Image ) {
-                this.$( '.preview' ).attr( 'src', value.src );
+            if ( value instanceof HTMLImageElement || value instanceof HTMLCanvasElement ) {
+
+                this.canvas.width = value.width;
+                this.canvas.height = value.height;
+
+                this.context.clearRect( 0, 0, this.canvas.width, this.canvas.height );
+                this.context.drawImage( value, 0, 0 );
+
             } else {
-                this.$( '.preview' ).attr( 'src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==' );
-                this.$( '.preview' ).css( 'background-color', 'rgb(' + Math.round( value.r * 255 ) + ',' + Math.round( value.g * 255 ) + ',' + Math.round( value.b * 255 ) + ')');
+
+                this.canvas.width = this.canvas.height = 1;
+
+                this.context.fillStyle = 'rgb(' + Math.round( value.r * 255 ) + ',' + Math.round( value.g * 255 ) + ',' + Math.round( value.b * 255 ) + ')';
+                this.context.fillRect( 0, 0, 1, 1 );
 
                 // We might have a color without colorWidget (if options.allowColor is false)
                 if ( this.colorWidget ) {
-                    this.colorWidget.set( value )
+                    this.colorWidget.set( value );
                 }
+
             }
 
         },
 
-        toggleEvent : function ( e ) {
+        toggleEvent: function ( e ) {
 
             if ( this.$el.hasClass( 'opened' ) ) {
                 this.closeEvent( e );
@@ -200,84 +248,86 @@ define( [
 
         },
 
-        openEvent : function ( e ) {
+        openEvent: function ( e ) {
 
-            e.preventDefault( );
-            e.stopPropagation( );
+            e.preventDefault();
+            e.stopPropagation();
 
             this.$el.addClass( 'opened' );
 
         },
 
-        closeEvent : function ( e ) {
+        closeEvent: function ( /*e*/) {
 
             this.$el.removeClass( 'opened' );
 
         },
 
-        globalCloseEvent : function ( e ) {
+        globalCloseEvent: function ( e ) {
 
             if ( $.contains( this.el, e.target ) )
-                return ;
+                return;
 
             this.closeEvent( e );
 
         },
 
-        applyColorEvent : function ( ) {
+        applyColorEvent: function () {
 
-            this.change( this.colorWidget.get( ) );
+            this.change( this.colorWidget.get() );
 
         },
 
-        applyTextureEvent : function ( ) {
+        // When the Select value change, we update the widget
 
-            // CP:
-            // ok we need to discuss about this
-            // first I needed to add information in image because
-            // I need to keep track of the uid of the image
-            // url is not an identifier.
-            // also Image should be managed and not loaded directly
-            // with the src.
-            // Ideally I would like transport data with an image object
-            // I would provide and also with an uid
-            var textureUID = this.textureWidget.get( );
+        applyTextureEvent: function () {
+
+            var textureUID = this.textureWidget.get();
             var texture = this.options.collection.findWhere( {
                 'value': textureUID
             } );
 
-            if ( ! texture )
-                return ;
-
-            var imageModel = texture.get( 'imageModel' );
-            var imageURL = texture.get( 'image' );
-            var image = new Image( );
-
-            if ( imageModel === null ) {
-                this.change( { r : 1, g : 1, b : 1 } );
+            if ( !texture )
                 return;
-            }
 
-            // need cross origin to avoid to taint canvas later
-            var isInlineImage = ( imageURL.substr(0, 'data:image'.length ) === 'data:image' );
-            if (!isInlineImage){
-                image.crossOrigin = 'anonymous';
-            }
-            image.src = imageURL;
+            var image = texture.get( 'imageData' );
 
-            image.imageModel = imageModel;
-            image.addEventListener( 'load', function () {
-                this.change( image );
-            }.bind( this ), false );
+            // The flag allow us to know if we're still relevant.
+            // It's useful is multiple applyTextureEvent are triggered before an image has been loaded.
+
+            var flag = this.flag = {};
+
+            var onReady = function () {
+
+                if ( flag !== this.flag )
+                    return;
+
+                if ( image.imageModel ) {
+                    this.change( image );
+                } else {
+                    this.change( { r : 1, g : 1, b : 1 } );
+                }
+
+            }.bind( this );
+
+            if ( image.complete ) {
+                onReady();
+            } else image.addEventListener( 'load', function () {
+                onReady();
+            } );
 
         },
 
-        updateTextureEvent : function ( ) {
+        // When the widget value change, we update the Select value
 
-            var value = this.get( );
+        updateTextureEvent: function () {
+
+            var value = this.get();
 
             if ( value instanceof Image ) {
-                var selectedTexture = this.options.collection.findWhere( { image : value.src } );
+                var selectedTexture = this.options.collection.findWhere( {
+                    image: value.src
+                } );
                 this.textureWidget.set( selectedTexture ? selectedTexture.get( 'value' ) : null );
             } else {
                 this.textureWidget.set( null );

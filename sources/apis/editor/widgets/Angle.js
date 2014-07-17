@@ -1,29 +1,33 @@
 define( [
 
+    'vendors/Underscore',
+
     'apis/editor/widgets/Number'
 
-], function ( NumberWidget ) {
+], function ( _, NumberWidget ) {
+
+    'use strict';
 
     return NumberWidget.extend( {
 
-        el : [ '<div class="widget angle-widget">'
-        ,'          <div class="widget-wrapper">'
-        ,'              <div class="decrease"><a></a></div>'
-        ,'              <div class="value"></div>'
-        ,'              <div class="increase"><a></a></div>'
-        ,'          </div>'
-        ,'      </div>'
+        el: [ '<div class="widget angle-widget">',
+            '      <div class="widget-wrapper">',
+            '          <div class="decrease"><a></a></div>',
+            '          <div class="value"></div>',
+            '          <div class="increase"><a></a></div>',
+            '      </div>',
+            '  </div>'
         ].join( '' ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                minimum : 0,
-                maximum : 360,
-                step    : 90,
+                minimum: 0,
+                maximum: 360,
+                step: 90,
 
-                cycle   : true
+                cycle: true
 
             } );
 

@@ -2,36 +2,39 @@ define( [
 
     'vendors/Backbone',
     'vendors/JQuery',
+    'vendors/Underscore',
 
     'apis/editor/widgets/Widget'
 
-], function ( Backbone, $, Widget ) {
+], function ( Backbone, $, _, Widget ) {
+
+    'use strict';
 
     return Widget.extend( {
 
-        el : [ '<div class="widget label-widget">'
-        ,'          <span class="text">'
-        ,'          </span class="text">'
-        ,'      </div>'
+        el: [ '<div class="widget label-widget">',
+            '          <span class="text">',
+            '          </span class="text">',
+            '      </div>'
         ].join( '' ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model     : new Backbone.Model( ),
-                name      : 'value',
+                model: new Backbone.Model(),
+                name: 'value',
 
-                content   : undefined,
-                className : '',
+                content: undefined,
+                className: '',
 
-                escape    : true
+                escape: true
 
             }, options );
 
             Widget.prototype.initialize.call( this, options );
 
-            if ( typeof this.get( ) === 'undefined' )
+            if ( typeof this.get() === 'undefined' )
                 this.set( this.options.content );
 
             if ( this.options.className ) {
@@ -40,11 +43,9 @@ define( [
 
         },
 
-        render : function ( ) {
+        render: function () {
 
-            this.$( '.text' )[ this.options.escape
-                ? 'text' : 'html'
-            ]( this.get( ) );
+            this.$( '.text' )[ this.options.escape ? 'text' : 'html' ]( this.get() );
 
         }
 

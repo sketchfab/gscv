@@ -10,21 +10,23 @@ define( [
 
 ], function ( Backbone, _, Vertical ) {
 
+    'use strict';
+
     return Vertical.extend( {
 
-        el : [ '<div class="widget layout-widget vertical-widget hyde-widget">'
-        ,'          <div class="widget-wrapper">',
-        ,'              <div class="children"></div>'
-        ,'          </div>'
-        ,'      </div>'
+        el: [ '<div class="widget layout-widget vertical-widget hyde-widget">',
+            '          <div class="widget-wrapper">',
+            '              <div class="children"></div>',
+            '          </div>',
+            '      </div>'
         ].join( '' ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model : new Backbone.Model( ),
-                name  : 'value'
+                model: new Backbone.Model(),
+                name: 'value'
 
             } );
 
@@ -32,9 +34,9 @@ define( [
 
         },
 
-        render : function ( ) {
+        render: function () {
 
-            this.$el.toggle( Boolean( this.get( ) ) );
+            this.$el.toggle( Boolean( this.get() ) );
 
         }
 

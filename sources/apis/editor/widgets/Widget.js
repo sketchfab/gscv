@@ -6,6 +6,8 @@ define( [
 
 ], function ( Backbone, $, _ ) {
 
+    'use strict';
+
     /**
      * WIDGET PIPELINE
      * |
@@ -33,15 +35,15 @@ define( [
 
     return Backbone.View.extend( {
 
-        el : '<div class="widget"/>',
+        el: '<div class="widget"/>',
 
-        constructor : function ( parent, options ) {
+        constructor: function ( parent, options ) {
 
-            this.environment = _.extend( { }, parent ? parent.environment : { }, ( options || { } ).environment );
+            this.environment = _.extend( {}, parent ? parent.environment : {}, ( options || {} ).environment );
 
             Backbone.View.call( this, options );
 
-            this.render( );
+            this.render();
 
         },
 
@@ -51,11 +53,11 @@ define( [
          * - Extends the standard Backbone function.
          */
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
             Backbone.View.prototype.initialize.call( this, options );
 
-            this.options = options || { };
+            this.options = options || {};
 
             if ( this.options.id !== undefined ) {
                 this.id = this.options.id;
@@ -67,6 +69,7 @@ define( [
                 this.$el.addClass( this.className );
             }
 
+            this.collection = this.options.collection;
             this.model = this.options.model;
 
         },
@@ -91,12 +94,12 @@ define( [
          * - Replaces the standard Backbone implementation.
          */
 
-        $ : function ( selector ) {
+        $: function ( selector ) {
 
             var currentWidget = this.$el;
 
-            return this.$el.find( selector ).filter( function ( ) {
-                return $( this ).closest( '.widget' ).is( currentWidget );
+            return this.$el.find( selector ).filter( function () {
+                return $( this ).parent().closest( '.widget' ).is( currentWidget );
             } );
 
         },
@@ -109,10 +112,10 @@ define( [
          * - Intercepts & extends the standard Backbone implementation.
          */
 
-        delegateEvents : function ( events ) {
+        delegateEvents: function ( events ) {
 
-            if ( ! events )
-                events = _.result( this, 'events' ) || { };
+            if ( !events )
+                events = _.result( this, 'events' ) || {};
 
             var currentWidget = this.$el;
 
@@ -120,16 +123,16 @@ define( [
 
                 var method = events[ key ];
 
-                if ( ! _.isFunction( method ) )
+                if ( !_.isFunction( method ) )
                     method = this[ events[ key ] ];
 
-                if ( ! method )
+                if ( !method )
                     return newEvents;
 
                 newEvents[ key ] = function ( e ) {
 
-                    if ( e && e.currentTarget && ! $( e.currentTarget ).closest( '.widget' ).is( currentWidget ) )
-                        return ;
+                    if ( e && e.currentTarget && !$( e.currentTarget ).closest( '.widget' ).is( currentWidget ) )
+                        return;
 
                     method.apply( this, arguments );
 
@@ -137,7 +140,7 @@ define( [
 
                 return newEvents;
 
-            }.bind( this ), { } ) );
+            }.bind( this ), {} ) );
 
             if ( this.model )
                 this.model.on( 'change', this.modelChangeEvent, this );
@@ -152,7 +155,7 @@ define( [
          * - Extends the standard Backbone implementation.
          */
 
-        undelegateEvents : function ( ) {
+        undelegateEvents: function () {
 
             Backbone.View.prototype.undelegateEvents.apply( this, arguments );
 
@@ -169,14 +172,23 @@ define( [
          * - Should not be manually called.
          */
 
-        modelChangeEvent : function ( ) {
+        modelChangeEvent: function () {
 
             var name = this.options.name;
             var namespace = name + '.';
 
-            if ( Object.keys( this.model.changedAttributes( ) || { } ).some( function ( attribute ) {
+            // If there is no name, then we catch every event
+            var thereIsNoName = ! name;
+
+            // Is there some attribute that match the widget name ? (ie. a widget named "foo" will catch changes on properties "foo" and "foo.bar")
+            var changedAttributes = Object.keys( this.model.changedAttributes() || {} );
+            var hasInterestingChanges = changedAttributes.some( function ( attribute ) {
                 return attribute === name || attribute.indexOf( namespace ) === 0;
-            } ) ) this.render( );
+            } );
+
+            if ( thereIsNoName || hasInterestingChanges ) {
+                this.render();
+            }
 
         },
 
@@ -191,7 +203,7 @@ define( [
          *   - `preventDefault` is a function which, when called, will prevent the widget default action from executing
          */
 
-        change : function ( which, value ) {
+        change: function ( which, value ) {
 
             if ( arguments.length === 1 ) {
                 value = which;
@@ -199,13 +211,15 @@ define( [
             }
 
             var triggerDefault = true;
-            var defaultInhiber = function ( ) { triggerDefault = false; };
+            var defaultInhiber = function () {
+                triggerDefault = false;
+            };
 
             var eventObject = {
-                target : this,
-                which : which,
-                value : value,
-                preventDefault : defaultInhiber
+                target: this,
+                which: which,
+                value: value,
+                preventDefault: defaultInhiber
             };
 
             this.trigger( 'change.before', eventObject );
@@ -227,7 +241,7 @@ define( [
          * - Should not be manually called.
          */
 
-        defaultAction : function ( which, value ) {
+        defaultAction: function ( which, value ) {
 
             this.set( value );
 
@@ -237,7 +251,7 @@ define( [
          * This function returns the name of the specified field.
          */
 
-        field : function ( which ) {
+        field: function ( which ) {
 
             return this.options.name + ( which ? '.' + which : '' );
 
@@ -249,7 +263,7 @@ define( [
          * If specified, `which` is the name of the specific field requested. Only useful for some specific widgets.
          */
 
-        get : function ( which ) {
+        get: function ( which ) {
 
             return this.model.get( this.field( which ) );
 
@@ -261,7 +275,7 @@ define( [
          * If specified, `which` is the name of the specific field affected. Only useful for some specific widgets.
          */
 
-        set : function ( which, value ) {
+        set: function ( which, value ) {
 
             if ( arguments.length === 1 ) {
                 value = which;
@@ -274,15 +288,17 @@ define( [
 
     }, {
 
-        reify : function ( ) {
+        reify: function () {
 
             var args = arguments;
             var constructor = this;
 
-            var F = function ( ) { constructor.apply( this, args ); };
+            var F = function () {
+                constructor.apply( this, args );
+            };
             F.prototype = this.prototype;
 
-            return new F( );
+            return new F();
 
         }
 

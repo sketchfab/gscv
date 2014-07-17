@@ -7,22 +7,24 @@ define( [
 
 ], function ( $, _, Popup ) {
 
+    'use strict';
+
     return Popup.extend( {
 
-        events : _.extend( { }, Popup.prototype.events, {
-            'click .texture' : 'selectTextureEvent',
-            'click .texture .reupload' : 'reuploadTextureEvent',
-            'click .texture .delete' : 'deleteTextureEvent',
-            'change .upload-input' : 'uploadTextureEvent',
+        events: _.extend( {}, Popup.prototype.events, {
+            'click .texture': 'selectTextureEvent',
+            'click .texture .reupload': 'reuploadTextureEvent',
+            'click .texture .delete': 'deleteTextureEvent',
+            'change .upload-input': 'uploadTextureEvent',
 
-            'keyup [name="filter"]'  : 'filterTexture',
-            'change [name="filter"]' : 'filterTexture',
-            'submit .filter'         : 'filterTexture'
+            'keyup [name="filter"]': 'filterTexture',
+            'change [name="filter"]': 'filterTexture',
+            'submit .filter': 'filterTexture'
         } ),
 
-        className : 'texture-popup',
+        className: 'texture-popup',
 
-        header : function ( ) {
+        header: function () {
 
             return _.template( [
 
@@ -39,7 +41,7 @@ define( [
 
         },
 
-        content : function ( ) {
+        content: function () {
 
             return _.template( [
 
@@ -56,35 +58,32 @@ define( [
 
             ].join( '\n' ), {
 
-                textures : _.result( this, 'textures' )
+                textures: _.result( this, 'textures' )
 
             } );
 
         },
 
-        filterTexture : function( e ) {
+        filterTexture: function ( /*e*/) {
 
-            var self = this;
+            var query = this.$( '.filter [name="filter"]' ).val();
 
-            var query = this.$('.filter [name="filter"]').val();
+            if ( query !== '' ) {
 
-            if ( query != '' ) {
-
-                var filtered = this.options.collection.filter( function( item ) {
-                    var regexp = new RegExp( query, "i");
-                    return item.get('label').match( query );
+                var filtered = this.options.collection.filter( function ( item ) {
+                    return item.get( 'label' ).match( query );
                 } );
 
-                this.$('.textures').html( this.textures( filtered ) );
+                this.$( '.textures' ).html( this.textures( filtered ) );
 
             } else {
 
-                this.$('.textures').html( this.textures( ) );
+                this.$( '.textures' ).html( this.textures() );
 
             }
         },
 
-        textures : function ( collection ) {
+        textures: function ( collection ) {
 
             return _.template( [
 
@@ -96,29 +95,29 @@ define( [
                 '        <div class="name"><%- texture.get( \'label\' ) %></div>',
                 '        <div class="actions">',
                 '            <input id="texture-<%- texture.get( \'value\' ) %>" class="cloaked" type="file" />',
-//              '            <label class="popup-button reupload" for="texture-<%- texture.get( \'value\' ) %>">Re-upload</label>',
-//              '            <a class="popup-button delete">Delete</a>',
+                //              '            <label class="popup-button reupload" for="texture-<%- texture.get( \'value\' ) %>">Re-upload</label>',
+                //              '            <a class="popup-button delete">Delete</a>',
                 '        </div>',
                 '    </div>',
                 '<% } ); %>'
 
             ].join( '\n' ), {
 
-                textures : collection || this.options.collection
+                textures: collection || this.options.collection
 
             } );
 
         },
 
-        initialize : function ( ) {
+        initialize: function () {
 
-            this.options.collection.on( 'add remove reset change', function ( ) {
+            this.options.collection.on( 'add remove reset change', function () {
                 this.$( '.textures' ).html( _.result( this, 'textures' ) );
             }.bind( this ) );
 
         },
 
-        uploadTextureEvent : function ( e ) {
+        uploadTextureEvent: function ( e ) {
 
             this.trigger( 'uploadRequest', e.target.files[ 0 ] );
 
@@ -126,22 +125,22 @@ define( [
 
         },
 
-        selectTextureEvent : function ( e ) {
+        selectTextureEvent: function ( e ) {
 
-            if ( $( e.target ).parentsUntil( e.currentTarget ).andSelf( ).filter( 'a, label' ).length > 0 )
-                return ;
+            if ( $( e.target ).parentsUntil( e.currentTarget ).andSelf().filter( 'a, label' ).length > 0 )
+                return;
 
             this.options.model.set( this.options.name, $( e.currentTarget ).attr( 'data-value' ) );
 
-            this.close( );
+            this.close();
 
         },
 
-        reuploadTextureEvent : function ( ) {
+        reuploadTextureEvent: function () {
 
         },
 
-        deleteTextureEvent : function ( ) {
+        deleteTextureEvent: function () {
 
         }
 

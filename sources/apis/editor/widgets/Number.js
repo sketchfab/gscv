@@ -8,40 +8,42 @@ define( [
 
 ], function ( Backbone, $, _, Widget ) {
 
+    'use strict';
+
     return Widget.extend( {
 
-        el : [ '<div class="widget number-widget">'
-        ,'          <div class="widget-wrapper">'
-        ,'              <div class="decrease"><a></a></div>'
-        ,'              <input class="value" />'
-        ,'              <div class="increase"><a></a></div>'
-        ,'          </div>'
-        ,'      </div>'
+        el: [ '<div class="widget number-widget">',
+            '          <div class="widget-wrapper">',
+            '              <div class="decrease"><a></a></div>',
+            '              <input class="value" />',
+            '              <div class="increase"><a></a></div>',
+            '          </div>',
+            '      </div>'
         ].join( '' ),
 
-        events : _.extend( { }, Widget.prototype.events, {
-            'click .decrease'      : 'decreaseEvent',
-            'click .increase'      : 'increaseEvent',
-            'change .value:input'  : 'changeEvent',
-            'keydown .value:input' : 'keydownEvent',
-            'mousewheel .value'    : 'mousewheelEvent'
+        events: _.extend( {}, Widget.prototype.events, {
+            'click .decrease': 'decreaseEvent',
+            'click .increase': 'increaseEvent',
+            'change .value:input': 'changeEvent',
+            'keydown .value:input': 'keydownEvent',
+            'mousewheel .value': 'mousewheelEvent'
         } ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model    : new Backbone.Model( ),
-                name     : 'value',
+                model: new Backbone.Model(),
+                name: 'value',
 
-                minimum  : 0,
-                maximum  : 100,
-                step     : 1,
+                minimum: 0,
+                maximum: 100,
+                step: 1,
 
-                cycle    : false,
+                cycle: false,
 
-                unit     : '',
-                decimals : null,
+                unit: '',
+                decimals: null,
 
                 // used to override the value displayed
                 // used for custom scale
@@ -52,16 +54,16 @@ define( [
 
             Widget.prototype.initialize.call( this, options );
 
-            if ( typeof this.get( ) === 'undefined' )
+            if ( typeof this.get() === 'undefined' )
                 this.set( 0 );
 
             if ( this.options.decimals === null ) {
-                this.options.decimals = options.step.toString( ).replace( /^[0-9]*(?:\.([0-9]*))$/, '$1' ).length;
+                this.options.decimals = options.step.toString().replace( /^[0-9]*(?:\.([0-9]*))$/, '$1' ).length;
             }
 
         },
 
-        render : function ( ) {
+        render: function () {
 
             var $valueElement = this.$( '.value' );
 
@@ -84,7 +86,7 @@ define( [
 
         },
 
-        fixValue : function ( value ) {
+        fixValue: function ( value ) {
 
             if ( value < this.options.minimum ) {
 
@@ -112,9 +114,9 @@ define( [
 
         },
 
-        add : function ( amount ) {
+        add: function ( amount ) {
 
-            var factor = this.get( ) / this.options.step;
+            var factor = this.get() / this.options.step;
             var intFactor = Math.round( factor );
 
             var value = this.fixValue( this.options.step * ( intFactor + amount ) );
@@ -125,34 +127,34 @@ define( [
 
         },
 
-        increaseEvent : function ( e ) {
+        increaseEvent: function ( e ) {
 
-            e.preventDefault( );
+            e.preventDefault();
 
-            this.add( + 1 );
-
-        },
-
-        decreaseEvent : function ( e ) {
-
-            e.preventDefault( );
-
-            this.add( - 1 );
+            this.add( +1 );
 
         },
 
-        changeEvent : function ( e ) {
+        decreaseEvent: function ( e ) {
 
-            var value = $( e.currentTarget ).val( );
+            e.preventDefault();
+
+            this.add( -1 );
+
+        },
+
+        changeEvent: function ( e ) {
+
+            var value = $( e.currentTarget ).val();
 
             var valueUnit = value.match( /[^0-9.]*$/ )[ 0 ];
             var valueNumber = value.substr( 0, value.length - valueUnit.length );
 
-            valueUnit = valueUnit.trim( );
-            valueNumber = valueNumber.trim( );
+            valueUnit = valueUnit.trim();
+            valueNumber = valueNumber.trim();
 
             if ( valueUnit.length && valueUnit !== this.options.unit )
-                return ; // bad unit
+                return; // bad unit
 
             value = Number( valueNumber );
 
@@ -170,55 +172,59 @@ define( [
             } else if ( value < this.options.minimum ) {
                 value = this.options.minimum;
             } else if ( isNaN( value ) ) {
-                return ;
+                return;
             }
 
             // This force the update
-            this.set( ! value );
+            this.set( !value );
             this.change( value );
 
         },
 
-        keydownEvent : function ( e ) {
+        keydownEvent: function ( e ) {
 
             switch ( e.keyCode ) {
 
-                case 38 : /* up */
-                    e.preventDefault( );
-                    this.add( + 1 );
-                break ;
+            case 38:
+                /* up */
+                    e.preventDefault();
+                this.add( +1 );
+                break;
 
-                case 40 : /* down */
-                    e.preventDefault( );
-                    this.add( - 1 );
-                break ;
+            case 40:
+                /* down */
+                    e.preventDefault();
+                this.add( -1 );
+                break;
 
-                case 33 : /* page up */
-                    e.preventDefault( );
-                    this.add( + 10 );
-                break ;
+            case 33:
+                /* page up */
+                    e.preventDefault();
+                this.add( +10 );
+                break;
 
-                case 34 : /* page down */
-                    e.preventDefault( );
-                    this.add( - 10 );
-                break ;
+            case 34:
+                /* page down */
+                    e.preventDefault();
+                this.add( -10 );
+                break;
 
             }
 
         },
 
-        mousewheelEvent : function ( e, delta ) {
+        mousewheelEvent: function ( e, delta ) {
 
-            if ( !this.$('.value').is( ':focus' ) ) {
+            if ( !this.$( '.value' ).is( ':focus' ) ) {
                 return;
             }
 
-            e.preventDefault( );
+            e.preventDefault();
 
             if ( delta > 0 ) { // up
-                this.add( + 1 );
+                this.add( +1 );
             } else if ( delta < 0 ) {
-                this.add( - 1 );
+                this.add( -1 );
             }
 
         }

@@ -2,30 +2,33 @@ define( [
 
     'vendors/Backbone',
     'vendors/JQuery',
+    'vendors/Underscore',
 
     'apis/editor/widgets/Widget'
 
-], function ( Backbone, $, Widget ) {
+], function ( Backbone, $, _, Widget ) {
+
+    'use strict';
 
     return Widget.extend( {
 
-        el : [ '<div class="widget button-widget">'
-        ,'          <button class="button btn-secondary">'
-        ,'          </button>'
-        ,'      </div>'
-        ].join( '' ),
+        el: [ '<div class="widget button-widget">',
+              '          <button class="button btn-secondary">',
+              '          </button>',
+              '      </div>'
+            ].join( '' ),
 
-        events: _.extend( { }, Widget.prototype.events, {
-            'click .button'  : 'clickEvent',
+        events: _.extend( {}, Widget.prototype.events, {
+            'click .button': 'clickEvent'
         } ),
 
-        initialize : function ( options ) {
+        initialize: function ( options ) {
 
-            options = _.defaults( options || { }, {
+            options = _.defaults( options || {}, {
 
-                model    : new Backbone.Model( ),
-                event    : 'click',
-                text     : ''
+                model: new Backbone.Model(),
+                event: 'click',
+                text: ''
 
             }, options );
 
@@ -35,7 +38,7 @@ define( [
 
         },
 
-        clickEvent : function ( e ) {
+        clickEvent: function ( e ) {
 
             e.preventDefault();
 
