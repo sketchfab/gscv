@@ -103,6 +103,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+
 /* makes the font 33% larger relative to the icon container */
 /* line 5, ../../../static/vendors/font-awesome/scss/_larger.scss */
 .fa-lg {
@@ -4103,24 +4104,18 @@ textarea.form-input, textarea.form-listbox, textarea.form-prefixed-input {
 
 /* line 14, ../../../static/sass/editor/_layout.scss */
 .editor-panel {
-  position: absolute;
-  left: 0;
-  top: 0;
   /* The +1 is because we have a right border */
   width: 291px;
   height: 100%;
-  padding-top: 55px; }
+  padding-top: 55px;
+  float: left;
+  overflow: scroll }
 
 /* line 25, ../../../static/sass/editor/_layout.scss */
 .editor-view {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  padding-top: 55px;
-  padding-left: 290px; }
+  width: calc( 100% - 291px );
+  height: 100%; 
+  float: left;}
   /* line 36, ../../../static/sass/editor/_layout.scss */
   .editor-view .editor-view-inner {
     position: relative;
@@ -4559,7 +4554,7 @@ textarea.form-input, textarea.form-listbox, textarea.form-prefixed-input {
       flex: 2; }
   /* line 384, ../../../static/sass/editor/_widgets.scss */
   .editor-panel .color-widget > .widget-wrapper {
-    min-height: 231px; }
+    /* min-height: 231px; */ }
     /* line 388, ../../../static/sass/editor/_widgets.scss */
     .editor-panel .color-widget > .widget-wrapper > .box {
       display: -webkit-box;
@@ -5307,11 +5302,11 @@ textarea.form-input, textarea.form-listbox, textarea.form-prefixed-input {
 /* line 2, ../../../static/sass/viewer/_layout.scss */
 html,
 body {
-  overflow: hidden; }
+  /*overflow: hidden;*/ }
   /* line 5, ../../../static/sass/viewer/_layout.scss */
   html.ready,
   body.ready {
-    overflow: auto; }
+    /*overflow: auto;*/ }
 
 /* line 10, ../../../static/sass/viewer/_layout.scss */
 .viewer {
