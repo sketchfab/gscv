@@ -67,6 +67,8 @@ define( [
                 this.$el.addClass( 'opened' );
             }
 
+            this.canOpen = true;
+
         },
 
         delegateEvents: function () {
@@ -95,9 +97,13 @@ define( [
 
         toggleVisibilityEvent: function ( e ) {
 
-            e.preventDefault();
+            if ( e ) e.preventDefault();
+
+            // if ( !this.canOpen ) return;
 
             this.$el.toggleClass( 'opened' );
+
+            this.$el.hide().show(0);
 
         },
 
@@ -107,6 +113,40 @@ define( [
             e.stopPropagation();
 
             this.change( !this.model.get( this.options.name ) );
+
+        },
+
+        open: function () {
+        
+            this.$el.addClass( 'opened' );
+
+            return this;
+
+        },
+
+        close: function() {
+
+            this.$el.toggleClass( 'opened' );
+
+            this.$el.hide().show(0);
+
+            return this;
+
+        },
+
+        activate: function() {
+
+            this.$el.addClass( 'active' );
+
+            return this;
+
+        },
+
+        desactivate: function() {
+
+            this.$el.removeClass( 'active' );
+
+            return this;
 
         },
 

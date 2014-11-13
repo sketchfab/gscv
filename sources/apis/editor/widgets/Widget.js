@@ -159,8 +159,9 @@ define( [
 
             Backbone.View.prototype.undelegateEvents.apply( this, arguments );
 
-            if ( this.model )
+            if ( this.model ) {
                 this.model.off( 'change', this.modelChangeEvent, this );
+            }
 
             return this;
 

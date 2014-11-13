@@ -10,20 +10,56 @@
         <link rel="stylesheet" href="sources/vendors/editor.css" />
         <style>.editor-panel, .editor-view { padding-top: 0 }</style>
         <link rel="stylesheet" href="style.css" />
-
+        
+        
+        <script src="sources/vendors/html2canvas.min.js"></script>
         <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
 
     </head>
+    
 
     <body>
         <div class="editor">
             <div class="editor-panel">
             </div>
             <div class="editor-view">
-                <div class="card">
-                    <div class="name">Maël Nison</div>
-                    <div class="job">Frontend Developer</div>
+
+                <div class="toolbar">
+                    <div class="download"> </div>
+                    <div class="flip"> </div>
                 </div>
+
+                <div class="card-container">
+
+                    <div class="sides-container">
+                        
+                        <div class="card-side front">
+                            
+                            <img class="main-logo" src="images/sketchfab_logo.png" alt="">
+                            
+                        </div>
+
+                        <div class="card-side back">
+                            
+                            <div class="small-logo draggable"> 
+                                <span class="handler"></span>
+                            </div>
+
+                            <div class="title">
+                                <span class="handler"></span>
+                                <div class="name" contenteditable="true">William Mapan</div>
+                                <div class="role" contenteditable="true">Lead Frontend Developer</div>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+                    <span class="side-label"> Plop </span>
+
+                    
+                </div>
+                
             </div>
         </div>
     </body>

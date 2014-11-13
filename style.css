@@ -1,19 +1,199 @@
 .editor-view {
-    display: flex;
-
+    position: relative;
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
 }
 
-.card {
-    margin: auto;
+/*
+CARD
+ */
 
-    flex: none;
+.card-container {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     width: 550px;
     height: 300px;
+    -webkit-perspective: 1000;
+    perspective: 1000;
 
-    padding: 20px;
-
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
-    background: #2C2C2C;
-    color: #FFFFFF;
 }
+
+.sides-container {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: all .3s linear;
+    transition: all .3s linear;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+}
+
+.fornt *,
+.back * {
+    -webkit-transform: translateZ(0);
+}
+
+.sides-container.upsidedown {
+    transform: rotateY(-180deg);   
+}
+
+.card-side {
+    width: 100%;
+    height: 100%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+    background: rgb(27, 169, 217);
+    color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+}
+
+.front {
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+
+.back {
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+}
+
+.back.printMode {
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+}
+
+/*
+CARD ELEMENTS
+ */
+
+/* Front */
+.main-logo {
+    position: absolute;
+    display: block;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+
+/* Back */
+.small-logo {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 10px;
+    top: 230px;
+    background: url('images/sketchfab_logo_3.png');
+}
+
+.title {
+    padding: 10px;
+    -webkit-transition: border .1s linear .2s;
+    transition: border .1s linear .2s;
+    border: 1px dashed rgba(255, 255, 255, 0);
+}
+
+.title:hover {
+    -webkit-transition: border .1s linear;
+    transition: border .1s linear;
+    border: 1px dashed rgba(255, 255, 255, .6);
+}
+
+.handler {
+    -webkit-transition: opacity .1s linear;
+    transition: opacity .1s linear;
+    width: 30px;
+    height: 30px;
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    opacity: 0;
+    background: #fff url(images/move_icon.png);
+    background-size: cover;
+    border-radius: 16px;
+    display: none;
+}
+
+.draggable .handler {
+    display: block;
+}
+
+.draggable:hover .handler {
+    opacity: 1;
+}
+
+.side-label {
+    -webkit-transition: opacity .3s linear;
+    transition: opacity .3s linear;
+    position: absolute;
+    margin: auto;
+    bottom: -60px;
+    left: 0;
+    right: 0;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+    border-radius: 20px;
+    opacity: 0;
+    display: block;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: .8em;
+}
+
+.side-label.show {
+    opacity: 1;
+}
+
+/*
+TOOLBAR
+ */
+
+.toolbar {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.toolbar div {
+    -webkit-transition: all .3s linear;
+    transition: .3s linear;
+    float: left;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    margin-left: 15px;
+    cursor: pointer;
+    opacity: .4;
+}
+
+.toolbar div:hover {
+    opacity: 1;
+}
+
+.download {
+    background: url('images/download_icon.svg');
+}
+
+.flip {
+    background: url('images/flip_icon.svg');
+}
+
+.flip.upsidedown {
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+}
+
