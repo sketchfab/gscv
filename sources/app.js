@@ -198,5 +198,6 @@ define([
     name: 'textShadow'
   });
 
-});
 
+  $('html').addClass('ready');
+});
