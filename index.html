@@ -1,31 +1,25 @@
-<!DOCTYPE HTML>
-<html>
+<!doctype html>
+<meta charset="utf-8">
+<title>Sketchfab Card Editor</title>
+<link rel="icon" href="https://d2f25wgezub9nf.cloudfront.net/1.46.0/assets/images/favicon.png">
 
-    <head>
+<link rel="stylesheet" href="/sources/vendors/Normalize.css" />
+<link rel="stylesheet" href="/sources/vendors/editor.css">
+<link rel="stylesheet" href="/style.css" />
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Titillium+Web:400,300,600,700">
 
-        <meta charset="UTF-8">
-        <title>Sketchfab Widgets</title>
+<div class="editor">
+  <div class="editor-panel">
+  </div>
+  <div class="editor-view">
+    <div class="card"></div>
+  </div>
+</div>
 
-        <link rel="stylesheet" href="sources/vendors/Normalize.css" />
-        <link rel="stylesheet" href="sources/vendors/editor.css" />
-        <style>.editor-panel, .editor-view { padding-top: 0 }</style>
-        <link rel="stylesheet" href="style.css" />
+<script type="text/template" id="card-template">
+<div><span class="name" contenteditable><%= name %></span></div>
+<div><span class="position" contenteditable><%= position %></span>, <span class="company" contenteditable><%= company %></span></div>
+<div><span class="location" contenteditable><%= location %></span></div>
+</script>
 
-        <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
-
-    </head>
-
-    <body>
-        <div class="editor">
-            <div class="editor-panel">
-            </div>
-            <div class="editor-view">
-                <div class="card">
-                    <div class="name">Maël Nison</div>
-                    <div class="job">Frontend Developer</div>
-                </div>
-            </div>
-        </div>
-    </body>
-
-</html>
+<script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
