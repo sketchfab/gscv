@@ -2,12 +2,16 @@
 define([
   'vendors/Backbone',
   'vendors/JQuery',
+  'vendors/BackboneLocalStorage',
   'editor'
-], function(Backbone, $, editor) {
+], function(Backbone, $, localstorage, editor) {
 
   'use strict';
 
   var Card = Backbone.Model.extend({
+
+    localStorage: new Backbone.LocalStorage('sketchfab-card'),
+
     defaults: {
       radius: 20,
       bgColor: '#1caad9',
@@ -25,6 +29,10 @@ define([
       position: 'CTO',
       company: 'Internet',
       location: 'San Francisco, CA'
+    },
+
+    initialize:function () {
+      console.log("UserModel initialized")
     }
   });
 
@@ -45,12 +53,16 @@ define([
       this.model.on('change:dimensions', this.onDimensionsChange, this);
       this.model.on('change:textShadow', this.onTextShadowChange, this);
       this.model.on('change:fontFamily', this.onFontFamilyChange, this);
+
+      this.model.on('change', function () { this.model.save() }, this);
     },
     render: function() {
       this.$el.html(this.template(this.model.toJSON()));
       this.onBgColorChange();
       this.onBgImageChange();
       this.onRadiusChange();
+      this.onFontSizeChange();
+      this.onFontFamilyChange();
 
       return this;
     },
@@ -137,7 +149,9 @@ define([
 
   // --- --- --- --- --- --- --- --- ---
 
-  var card = new Card();
+  var card = new Card({id: 42});
+  card.fetch();
+
   var view = new View({
     model: card,
     el: $('.card')
