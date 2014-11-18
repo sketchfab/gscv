@@ -14,6 +14,7 @@ define([
       bgImage: '',
       isBgMosaic: false,
       fontColor: '#FFFFFF',
+      fontSize: 16,
       fontFamily: 'Titillium Web',
       textShadow: '#0A1BA5',
       dimensions: {
@@ -40,6 +41,7 @@ define([
       this.model.on('change:bgImage change:isBgMosaic', this.onBgImageChange, this);
       this.model.on('change:bgColor', this.onBgColorChange, this);
       this.model.on('change:fontColor', this.onFontColorChange, this);
+      this.model.on('change:fontSize', this.onFontSizeChange, this);
       this.model.on('change:dimensions', this.onDimensionsChange, this);
       this.model.on('change:textShadow', this.onTextShadowChange, this);
       this.model.on('change:fontFamily', this.onFontFamilyChange, this);
@@ -116,6 +118,9 @@ define([
     onFontColorChange: function () {
       this.$el.css('color', this.model.get('fontColor'));
     },
+    onFontSizeChange: function () {
+      this.$el.css('font-size', this.model.get('fontSize')+'px');
+    },
     onFontFamilyChange: function () {
       this.$el.css('font-family', this.model.get('fontFamily'));
     },
@@ -184,6 +189,12 @@ define([
       'Titillium Web': 'Titillium Web',
       'Comic Sans MS': 'Comic Sans MS'
     }
+  });
+  text.createWidget('Font Size', 'NumberedSlider', {
+    model: card,
+    name: 'fontSize',
+    minimum: 10,
+    maximum: 32
   });
   text.createWidget('Text Color', 'ColorPicker', {
     model: card,
