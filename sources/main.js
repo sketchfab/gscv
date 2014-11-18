@@ -3,13 +3,14 @@ require.config( {
     'baseUrl' : 'sources',
 
     'shim' : {
-        'vendors/JQuery'            : { 'exports' : 'jQuery' },
-        'vendors/Underscore'        : { 'exports' : '_' },
-        'vendors/Backbone'          : { 'exports' : 'Backbone',      'deps' : [ 'vendors/JQuery', 'vendors/Underscore' ] },
-        'vendors/SvgColorPicker'    : { 'exports' : 'SvgColorPicker' },
-        'vendors/jquery/UI'         : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
-        'vendors/jquery/mousewheel' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
-        'vendors/jquery/toggleAttr' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] }
+        'vendors/JQuery'                : { 'exports' : 'jQuery' },
+        'vendors/Underscore'            : { 'exports' : '_' },
+        'vendors/Backbone'              : { 'exports' : 'Backbone',      'deps' : [ 'vendors/JQuery', 'vendors/Underscore' ] },
+        'vendors/BackboneLocalStorage'  : { 'exports' : 'BackboneLocalStorage',      'deps' : [ 'vendors/Backbone' ] },
+        'vendors/SvgColorPicker'        : { 'exports' : 'SvgColorPicker' },
+        'vendors/jquery/UI'             : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
+        'vendors/jquery/mousewheel'     : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
+        'vendors/jquery/toggleAttr'     : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] }
     }
 
 } );

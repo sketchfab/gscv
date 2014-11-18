@@ -1,19 +1,64 @@
+.editor-panel,
 .editor-view {
-    display: flex;
+  padding-top: 0;
+  overflow: auto;
+}
 
-    background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
+.editor-view {
+  display: flex;
+  background: url(http://subtlepatterns.com/images/transp_bg.png);
+}
+/*
+.editor-panel .color-widget > .widget-wrapper {
+  min-height: inherit;
+}
+.editor-panel .color-widget > .widget-wrapper > .box > .picker-wrapper {
+  height: 3em
+}
+*/
+
+.editor-panel .group-widget:not(.opened) {
+  overflow: hidden;
+}
+
+.upload-button-widget .hint:not(:empty) {
+  font-size: .7em;
+  color: inherit;
+  text-decoration: none;
 }
 
 .card {
-    margin: auto;
+  margin: auto;
+  padding: 20px;
 
-    flex: none;
-    width: 550px;
-    height: 300px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
 
-    padding: 20px;
+  min-width: 400px;
+  min-height: 230px;
+  max-width: 700px;
+  max-height: 450px;
 
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
-    background: #2C2C2C;
-    color: #FFFFFF;
+  background-position: center center;
+  background-size: cover;
+
+  resize: both;
+  overflow: auto;
+  flex: none;
+
+  -webkit-user-select: none;
+  user-select: none;
+
+  font-family: Titillium Web;
+  line-height: 1;
+}
+.card [contenteditable] {
+  display: inline-block;
+  padding: .2em;
+  margin: .1em 0;
+}
+.card [contenteditable]:hover,
+.card [contenteditable]:focus {
+  outline: 1px dashed;
 }
