@@ -7,6 +7,8 @@
 .card {
     margin: auto;
 
+    position: relative;
+
     flex: none;
     width: 550px;
     height: 300px;
@@ -16,4 +18,15 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
     background: #2C2C2C;
     color: #FFFFFF;
+
+    background-size: 100% 100%;
+    background-image: url("./example.png");
+}
+
+.name, .job, .address, .mail{
+    position: absolute;
+}
+
+.editor-panel{
+    overflow: scroll;
 }
