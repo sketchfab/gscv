@@ -1,0 +1,73 @@
+.editor-view {
+    display: flex;
+
+    background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
+}
+
+.card {
+    margin: auto;
+
+    flex: none;
+
+    width: 550px;
+    height: 300px;
+
+    padding: 20px;
+
+    -webkit-transition: all .3s;
+    transition: all .3s;
+
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+    background: #2C2C2C;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    color: #FFFFFF;
+
+}
+
+.avatar {
+    height: 50px;
+    width: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.absolute { position: absolute; }
+
+.left { float: left; }
+.right { float: right; }
+.number { width: 30px; }
+
+.label { margin: 5px 1px 0px 5px; }
+
+
+.p1 { padding: 1px; }
+.p2 { padding: 2px; }
+.p3 { padding: 3px; }
+.p4 { padding: 4px; }
+.p5 { padding: 5px; }
+
+/* FLEX IS THE FUCKING FUTURE!! */
+
+.flex { display: flex; }
+
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+
+.flex-wrap { flex-wrap: wrap; }
+
+.flex-1 { flex: 1; }
+
+
+.flex-just-start  { justify-content: flex-start; }
+.flex-just-center { justify-content: center; }
+.flex-just-around { justify-content: space-around; }
+.flex-just-end    { justify-content: flex-end; }
+
+.flex-align-start  { align-items: flex-start; }
+.flex-align-center  { align-items: center; }
+.flex-align-end  { align-items: flex-end; }
+.flex-align-stretch  { align-items: stretch; }
+
+.flex-self-end { align-self: flex-end; }

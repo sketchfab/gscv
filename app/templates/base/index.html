@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <title>Sketchfab Widgets</title>
+
+
+        <link rel="stylesheet" href="{% static "sources/vendors/Normalize.css" %}" />
+        <link rel="stylesheet" href="{% static "sources/vendors/editor.css" %}" />
+
+        <style>.editor-panel, .editor-view { padding-top: 0 }</style>
+        <link rel="stylesheet" href="{% static "style.css" %}" />
+
+
+        <script data-main="{% static "sources/main" %}" src="{% static "sources/vendors/require.2.1.13.js" %}"></script>
+
+
+    </head>
+
+    <body>
+        <div class="editor">
+            <div class="editor-panel">
+            </div>
+            <div class="editor-view">
+                <div class="card">
+                    <div class"text-info">
+                        <div class="name absolute"></div>
+                        <div class="job absolute"></div>
+                        <div class="description absolute"></div>
+                        <div class="phone absolute"></div>
+                        <div class="avatar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
