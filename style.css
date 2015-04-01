@@ -1,3 +1,5 @@
+.editor-panel, .editor-view { padding-top: 0 }
+
 .editor-view {
     display: flex;
 
