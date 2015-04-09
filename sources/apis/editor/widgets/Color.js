@@ -45,10 +45,18 @@ define( [
 
             if ( typeof this.get() === 'undefined' )
                 this.set( {
-                    r: 1,
-                    g: 1,
-                    b: 1
+                    r: 0,
+                    g: 0,
+                    b: 0
                 } );
+
+            var rgb = this.get();
+            var rounded = {
+                r: rgb.r * 255,
+                g: rgb.g * 255,
+                b: rgb.b * 255
+            };
+            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
 
             this.colorPicker = SvgColorPicker( {
 
@@ -64,12 +72,11 @@ define( [
 
             }.bind( this ) );
 
+            this.colorPicker.set( hex );
         },
 
         changeEvent: function () {
-
             this.colorPicker.set( this.$( '.value' ).val() );
-
         },
 
         render: function () {

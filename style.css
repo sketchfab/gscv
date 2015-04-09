@@ -1,3 +1,9 @@
+.editor-panel, .editor-view { padding-top: 0 }
+
+.editor-panel {
+    overflow-y: scroll;
+}
+
 .editor-view {
     display: flex;
 
@@ -14,6 +20,7 @@
     padding: 20px;
 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+    border: solid 0 #000;
     background: #2C2C2C;
     color: #FFFFFF;
 }
