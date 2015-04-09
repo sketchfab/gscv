@@ -45,9 +45,9 @@ define( [
 
             if ( typeof this.get() === 'undefined' )
                 this.set( {
-                    r: 1,
+                    r: 0,
                     g: 0,
-                    b: 1
+                    b: 0
                 } );
 
             var rgb = this.get();

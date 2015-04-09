@@ -1,23 +1,23 @@
 define( [
-
+    'vendors/Backbone',
     'vendors/Underscore',
 
-    'apis/editor/widgets/Widget'
+    'apis/editor/widgets/Vertical'
 
-], function ( _, Widget ) {
+], function ( Backbone, _, VerticalWidget ) {
 
     'use strict';
-
-    return Widget.extend( {
+    return VerticalWidget.extend( {
 
         el: [ '<div class="widget input-widget">',
             '          <div class="widget-wrapper">',
-            '              <input type="text" class="value">',
+            '              <div><input type="text" class="value"></div><br>',
+            '              <div class="children"></div>',
             '          </div>',
             '      </div>',
         ].join( '' ),
 
-        events: _.extend( {}, Widget.prototype.events, {
+        events: _.extend( {}, VerticalWidget.prototype.events, {
             'input .value:input': 'input',
         } ),
 
@@ -31,7 +31,7 @@ define( [
             }, options );
 
 
-            Widget.prototype.initialize.call( this, options );
+            VerticalWidget.prototype.initialize.call( this, options );
 
             var text = this.get() || options.value;
             this.$( 'input' ).val( text );
@@ -47,10 +47,34 @@ define( [
                         })
 
             options.$parentEl.append(this.$text);
+
+            var common = {
+                model: this.model,
+                name: this.options.name
+            };
+
+            this.colorWidget = this.createWidget( 'Color', _.extend( {}, common, this.options.colorOptions ) );
+            this.applyColor( ( this.options.color || {r:0, g: 0, b: 0} ) );
+            this.colorWidget.on( 'change', this.applyColor, this );
         },
 
         input: function ( e ) {
             this.$text.html( $( e.currentTarget ).val() );
+        },
+
+        applyColor: function ( color ) {
+            var rgb = color || this.colorWidget.get( );
+            var rounded = {
+                r: rgb.r * 255,
+                g: rgb.g * 255,
+                b: rgb.b * 255
+            };
+            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+
+            if ( color )
+                this.colorWidget.set ( hex )
+
+            this.$text.css( 'color',  hex );
         }
 
     } );
