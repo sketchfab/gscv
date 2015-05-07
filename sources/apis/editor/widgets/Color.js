@@ -44,11 +44,7 @@ define( [
             Widget.prototype.initialize.call( this, options );
 
             if ( typeof this.get() === 'undefined' )
-                this.set( {
-                    r: 1,
-                    g: 1,
-                    b: 1
-                } );
+                this.set( '#000000' );
 
             this.colorPicker = SvgColorPicker( {
 
@@ -58,9 +54,9 @@ define( [
                 sliderCursor: this.$( '.slider > .cursor' )[ 0 ],
                 pickerCursor: this.$( '.picker > .cursor' )[ 0 ]
 
-            }, function ( hsv, rgb /*, hex*/ ) {
+            }, function ( hsv, rgb , hex ) {
 
-                this.change( rgb );
+                this.change( hex );
 
             }.bind( this ) );
 
@@ -74,16 +70,7 @@ define( [
 
         render: function () {
 
-            var rgb = this.get();
-
-            this.colorPicker.set( rgb );
-
-            var rounded = {
-                r: rgb.r * 255,
-                g: rgb.g * 255,
-                b: rgb.b * 255
-            };
-            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+            var hex = this.get();
 
             this.$( '.value' ).val( hex );
 

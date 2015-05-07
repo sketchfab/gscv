@@ -5,7 +5,7 @@ define( [
     'apis/editor/widgets/Vertical',
     'apis/editor/defaultWidgets'
 
-], function ( _, VerticalWidget ) {
+], function ( _, VerticalWidget, defaultWidgets ) {
 
     'use strict';
 
