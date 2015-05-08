@@ -97,6 +97,7 @@ define( [
 
             e.preventDefault();
 
+            this.$el.parent().find('.group-widget').removeClass('opened');
             this.$el.toggleClass( 'opened' );
 
         },

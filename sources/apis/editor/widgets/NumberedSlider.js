@@ -35,8 +35,8 @@ define( [
 
             HorizontalWidget.prototype.initialize.call( this, options );
 
-            if ( typeof this.get() === 'undefined' )
-                this.set( 0 );
+            // if ( typeof this.get() === 'undefined' )
+            //     this.set( 0 );
 
             var common = {
                 model: this.model,
