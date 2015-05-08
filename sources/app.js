@@ -5,7 +5,7 @@ define([
     'vendors/Backbone',
     'vendors/JQuery',
 
-    'editor',
+    'editor'
 
 ], function(Backbone, $, editor) {
 
