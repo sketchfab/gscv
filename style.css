@@ -1,17 +1,42 @@
+@font-face {
+	font-family: 'UniSans';
+	src: url('sources/fonts/Uni Sans Heavy.otf');
+}
+
+@font-face {
+	font-family: 'Chopin';
+	src: url('sources/fonts/ChopinScript.otf');
+}
+
+@font-face {
+	font-family: 'Helvetica';
+	src: url('sources/fonts/helvetica-neue-medium-1361522099.ttf')format('truetype');
+}
+
+@font-face {
+	font-family: 'HoneyScript';
+	src: url('sources/fonts/HoneyScript-Light.ttf')format('truetype');
+}
+
 .editor-view {
     display: flex;
 
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
 }
 
+.editor-panel {
+    overflow-y: auto;
+}
+
 .card {
+    position: relative;
     margin: auto;
 
     flex: none;
     width: 550px;
     height: 300px;
 
-    padding: 20px;
+    border-style: solid;
     overflow: hidden;
 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
@@ -19,6 +44,57 @@
     color: #FFFFFF;
 }
 
+.card .name, .card .job{
+    position: absolute;
+}
+
+.card img.background{
+    display: block;
+    width: 100%;
+
+    margin: 0;
+}
+
+.card img.background.hidden{
+    display: none;
+}
+
+
+
+
 div.children{
     overflow: auto;
+}
+
+.text-input-widget input.text{
+    width: 100%;
+    padding: 10px;
+    background: #333;
+    border: none;
+    outline: none;
+    color: #aaa;
+}
+
+.upload-widget input{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #333;
+    border: none;
+    outline: none;
+    color: #aaa;
+}
+
+.upload-widget button{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #333;
+    border: #000;
+    outline: none;
+    color: #aaa;
+}
+.upload-widget button.hidden{
+    display: none;
 }

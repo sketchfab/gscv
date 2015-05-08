@@ -1,5 +1,7 @@
 define( [
 
+    'apis/editor/widgets/TextInput',
+    'apis/editor/widgets/Upload',
     'apis/editor/widgets/Angle',
     'apis/editor/widgets/Annotation',
     'apis/editor/widgets/Axis',
@@ -10,7 +12,6 @@ define( [
     'apis/editor/widgets/Group',
     'apis/editor/widgets/Horizontal',
     'apis/editor/widgets/Hyde',
-    'apis/editor/widgets/TextInput',
     'apis/editor/widgets/Image',
     'apis/editor/widgets/Label',
     'apis/editor/widgets/NumberedSlider',
@@ -25,7 +26,7 @@ define( [
     'apis/editor/widgets/Vertical',
     'apis/editor/widgets/Widget'
 
-], function ( AngleWidget, AnnotationWidget, AxisWidget, ButtonWidget, ColorWidget, FactoredImageWidget, FilePickerWidget, GroupWidget, HorizontalWidget, Hyde, TextInputWidget, ImageWidget, LabelWidget, NumberedSliderWidget, NumberWidget, OrientationWidget, RepeatWidget, SelectWidget, SlideredImageWidget, SliderWidget, TabbedWidget, ToggleSwitchWidget, VerticalWidget ) {
+], function ( TextInputWidget, UploadWidget, AngleWidget, AnnotationWidget, AxisWidget, ButtonWidget, ColorWidget, FactoredImageWidget, FilePickerWidget, GroupWidget, HorizontalWidget, Hyde, ImageWidget, LabelWidget, NumberedSliderWidget, NumberWidget, OrientationWidget, RepeatWidget, SelectWidget, SlideredImageWidget, SliderWidget, TabbedWidget, ToggleSwitchWidget, VerticalWidget ) {
 
     'use strict';
 
@@ -41,6 +42,7 @@ define( [
         Repeat: RepeatWidget,
 
         TextInput: TextInputWidget,
+        Upload: UploadWidget,
         Image: ImageWidget,
         Color: ColorWidget,
         FactoredImage: FactoredImageWidget,

@@ -12,9 +12,9 @@ define([
 
     return VerticalWidget.extend({
 
-        el: ['<div class="widget layout-widget vertical-widget">',
+        el: ['<div class="widget text-input-widget">',
             '          <div class="widget-wrapper">',
-            '               <input class="value" />',
+            '               <input class="value text" />',
             '          </div>',
             '      </div>'
         ].join(''),

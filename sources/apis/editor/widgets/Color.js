@@ -46,6 +46,8 @@ define( [
             if ( typeof this.get() === 'undefined' )
                 this.set( '#000000' );
 
+            var firsttime = true;
+
             this.colorPicker = SvgColorPicker( {
 
                 slider: this.$( '.slider' )[ 0 ],
@@ -55,7 +57,10 @@ define( [
                 pickerCursor: this.$( '.picker > .cursor' )[ 0 ]
 
             }, function ( hsv, rgb , hex ) {
-
+                if(firsttime){
+                    firsttime = false;
+                    return;
+                }
                 this.change( hex );
 
             }.bind( this ) );
