@@ -18,6 +18,10 @@
 	src: url('sources/fonts/HoneyScript-Light.ttf')format('truetype');
 }
 
+.editor-panel, .editor-view {
+	padding-top: 0
+}
+
 .editor-view {
     display: flex;
 
