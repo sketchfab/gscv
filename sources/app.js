@@ -12,12 +12,14 @@ define( [
     var Card = Backbone.Model.extend( {
 
         defaults : {
-            radius   : 10,
-            name     : "Maël Nison",
-            job      : "FrontEnd Developer",
-            font     : "Courier New",
-            fontSize : 11,
-            fontColor : "rgb( 0, 0, 0)"
+            bckgColor : { "r" : 0, "g" : 0, "b" : 0 },
+            bckgImg   : undefined,
+            radius    : 10,
+            name      : "Maël Nison",
+            job       : "FrontEnd Developer",
+            font      : "Courier New",
+            fontSize  : 11,
+            fontColor : { "r" : 0, "g" : 0, "b" : 0 }
         }
 
     } );
@@ -25,23 +27,51 @@ define( [
     var View = Backbone.View.extend( {
 
         initialize : function ( ) {
+            this.model.on( 'change:bckgColor', this.onBckgColorChange, this );
+            this.model.on( 'change:bckgImg', this.onBckgImgChange, this );
+            this.model.on( 'change:radius', this.onRadiusChange, this );
+
             this.model.on( 'change:name', this.onNameChange, this );
             this.model.on( 'change:job', this.onJobChange, this );
             this.model.on( 'change:font', this.onFontChange, this );
             this.model.on( 'change:fontSize', this.onFontSizeChange, this );
-            this.model.on( 'change:fontColor', this.onFontColorChange, this );
-            this.model.on( 'change:radius', this.onRadiusChange, this );        
+            this.model.on( 'change:fontColor', this.onFontColorChange, this );        
         },
 
         render : function ( ) {
+            this.onBckgColorChange( );
+            this.onBckgImgChange( );
+            this.onRadiusChange( );
             this.onNameChange( );
             this.onJobChange( );
             this.onFontChange( );
             this.onFontSizeChange( );
             this.onFontColorChange( );
-            this.onRadiusChange( );  
+        },
+        
+        onBckgColorChange : function ( ) {
+            // Color.js is probably badly understood...
+            var r = Math.round ( this.model.get('bckgColor')["r"] * 255 );
+            var g = Math.round ( this.model.get('bckgColor')["g"] * 255 );
+            var b = Math.round ( this.model.get('bckgColor')["b"] * 255 );
+            var rgb = "rgb(" + r + "," + g + "," + b + ")";
+            this.$el.css( 'background-color', rgb );
         },
 
+        onBckgImgChange : function ( ) {
+            // Stuck, no input from the upload box ..?
+            console.log( this.model.get( 'bckgImg') );
+            if ( this.model.get( 'bckgImg' ) )
+            {
+                console.log( this.model.get( 'bckgImg') );
+                this.$el.css( 'background-image', "url" + "(" + this.model.get( 'bckgImg' ) + ")" );
+            }
+        },
+
+        onRadiusChange : function ( ) {
+            this.$el.css( 'border-radius', this.model.get( 'radius' ) );
+        },
+        
         onNameChange : function ( ) {
             this.$el.children( 'div.name' ).text( this.model.get( 'name' ) );
         },
@@ -66,11 +96,7 @@ define( [
             var rgb = "rgb(" + r + "," + g + "," + b + ")";
             this.$el.children( 'div.name' ).css( 'color', rgb );
             this.$el.children( 'div.job' ).css( 'color', rgb );
-        },
-
-        onRadiusChange : function ( ) {
-            this.$el.css( 'border-radius', this.model.get( 'radius' ) );
-        }
+        }  
 
     } );
 
@@ -81,10 +107,20 @@ define( [
 
     view.render( );
 
-    // --- --- --- --- --- --- --- --- ---
+    // --- --- --- --- CARD WIDGETS --- --- --- ---
 
     var appearance = editor.createWidget( 'Group', {
         label : 'Card Appearance'
+    } );
+
+    appearance.createWidget( 'Background Color', 'Color', {
+        model: card,
+        name: 'bckgColor'
+    } );
+
+    appearance.createWidget( 'Background Image', 'FilePicker', {
+        model: card,
+        name: 'bckgImg'
     } );
 
     appearance.createWidget( 'Border radius', 'NumberedSlider', {
@@ -92,7 +128,7 @@ define( [
         name  : 'radius'
     } );
 
-    // --- --- --- --- --- --- --- --- ---
+    // --- --- --- --- TEXT WIDGETS --- --- --- ---
 
     var textAppearance = editor.createWidget( 'Group', {
         label : 'Text Appearance'
