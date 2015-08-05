@@ -12,14 +12,19 @@ define( [
     var Card = Backbone.Model.extend( {
 
         defaults : {
-            bckgColor : { "r" : 0, "g" : 0, "b" : 0 },
+            //ecrased by the colorpicker...
+            bckgColor : { "r" : 1, "g" : 0, "b" : 0 },
             bckgImg   : undefined,
             radius    : 10,
             name      : "Maël Nison",
             job       : "FrontEnd Developer",
             font      : "Courier New",
-            fontSize  : 11,
-            fontColor : { "r" : 0, "g" : 0, "b" : 0 }
+            fontSize  : 21,
+            //ecrased by the colorpicker...
+            fontColor : { "r" : 0, "g" : 0, "b" : 0 },
+
+            logo      : true,
+            logoSize  : 100
         }
 
     } );
@@ -36,17 +41,24 @@ define( [
             this.model.on( 'change:font', this.onFontChange, this );
             this.model.on( 'change:fontSize', this.onFontSizeChange, this );
             this.model.on( 'change:fontColor', this.onFontColorChange, this );        
+            
+            this.model.on( 'change:logo', this.onLogoChange, this );        
+            this.model.on( 'change:logoSize', this.onLogoSizeChange, this );        
         },
 
         render : function ( ) {
             this.onBckgColorChange( );
-            this.onBckgImgChange( );
+            // this.onBckgImgChange( );
             this.onRadiusChange( );
+            
             this.onNameChange( );
             this.onJobChange( );
             this.onFontChange( );
             this.onFontSizeChange( );
             this.onFontColorChange( );
+
+            this.onLogoChange( );
+            this.onLogoSizeChange( );
         },
         
         onBckgColorChange : function ( ) {
@@ -58,15 +70,15 @@ define( [
             this.$el.css( 'background-color', rgb );
         },
 
-        onBckgImgChange : function ( ) {
-            // Stuck, no input from the upload box ..?
-            console.log( this.model.get( 'bckgImg') );
-            if ( this.model.get( 'bckgImg' ) )
-            {
-                console.log( this.model.get( 'bckgImg') );
-                this.$el.css( 'background-image', "url" + "(" + this.model.get( 'bckgImg' ) + ")" );
-            }
-        },
+        // onBckgImgChange : function ( ) {
+        //     // Stuck, no input from the upload box ..?
+        //     console.log( this.model.get( 'bckgImg') );
+        //     if ( this.model.get( 'bckgImg' ) )
+        //     {
+        //         console.log( this.model.get( 'bckgImg') );
+        //         this.$el.css( 'background-image', "url" + "(" + this.model.get( 'bckgImg' ) + ")" );
+        //     }
+        // },
 
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
@@ -96,7 +108,19 @@ define( [
             var rgb = "rgb(" + r + "," + g + "," + b + ")";
             this.$el.children( 'div.name' ).css( 'color', rgb );
             this.$el.children( 'div.job' ).css( 'color', rgb );
-        }  
+        },
+
+        onLogoChange : function ( ) {
+            if ( this.model.get('logo') )
+                this.$el.children( 'div.logo' ).show();
+            else
+                 this.$el.children( 'div.logo' ).hide();   
+        },
+
+        onLogoSizeChange : function ( ) {
+            this.$el.find( 'img' ).css( 'width', this.model.get('logoSize') * 2 );;
+            this.$el.find( 'img' ).css( 'height', this.model.get('logoSize') * 2 );;
+        } 
 
     } );
 
@@ -118,10 +142,10 @@ define( [
         name: 'bckgColor'
     } );
 
-    appearance.createWidget( 'Background Image', 'FilePicker', {
-        model: card,
-        name: 'bckgImg'
-    } );
+    // appearance.createWidget( 'Background Image', 'FilePicker', {
+    //     model: card,
+    //     name: 'bckgImg'
+    // } );
 
     appearance.createWidget( 'Border radius', 'NumberedSlider', {
         model : card,
@@ -160,5 +184,20 @@ define( [
         name  : 'fontColor'
     } );
     
+    // --- --- --- --- LOGO WIDGETS --- --- --- ---
+
+    var logoAppareance = editor.createWidget( 'Group', {
+        label : 'Logo Appearance'
+    } );
+
+    logoAppareance.createWidget( 'Logo', 'ToggleSwitch', {
+        model : card,
+        name  : 'logo'
+    } );
+
+    logoAppareance.createWidget( 'Logo Size', 'Slider', {
+        model : card,
+        name  : 'logoSize'
+    } );
 
 } );
