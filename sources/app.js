@@ -12,7 +12,9 @@ define( [
     var Card = Backbone.Model.extend( {
 
         defaults : {
-            radius : 10
+            radius : 10,
+            name   : "Maël Nison",
+            job    : "FrontEnd Developer"
         }
 
     } );
@@ -20,17 +22,23 @@ define( [
     var View = Backbone.View.extend( {
 
         initialize : function ( ) {
-            this.model.on( 'change:text-name', this.onNameChange, this );
+            this.model.on( 'change:name', this.onNameChange, this );
+            this.model.on( 'change:job', this.onJobChange, this );
             this.model.on( 'change:radius', this.onRadiusChange, this );        
         },
 
         render : function ( ) {
             this.onNameChange( );
+            this.onJobChange( );
             this.onRadiusChange( );  
         },
 
-         onNameChange : function ( ) {
-            this.$el.children( 'div.name' ).text( this.model.get( 'text-name' ) );
+        onNameChange : function ( ) {
+            this.$el.children( 'div.name' ).text( this.model.get( 'name' ) );
+        },
+
+        onJobChange : function ( ) {
+            this.$el.children( 'div.job' ).text( this.model.get( 'job' ) );
         },
 
         onRadiusChange : function ( ) {
@@ -54,7 +62,12 @@ define( [
 
     appearance.createWidget( 'Name', 'Text', {
         model : card,
-        name  : 'text-name'
+        name  : 'name'
+    } );
+
+    appearance.createWidget( 'Job', 'Text', {
+        model : card,
+        name  : 'job'
     } );
 
     appearance.createWidget( 'Border radius', 'NumberedSlider', {

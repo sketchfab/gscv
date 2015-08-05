@@ -147,33 +147,33 @@ define( [
 
             var value = $( e.currentTarget ).val();
 
-            // var valueUnit = value.match( /[^0-9.]*$/ )[ 0 ];
-            // var valueNumber = value.substr( 0, value.length - valueUnit.length );
+            var valueUnit = value.match( /[^0-9.]*$/ )[ 0 ];
+            var valueNumber = value.substr( 0, value.length - valueUnit.length );
 
-            // valueUnit = valueUnit.trim();
-            // valueNumber = valueNumber.trim();
+            valueUnit = valueUnit.trim();
+            valueNumber = valueNumber.trim();
 
-            // if ( valueUnit.length && valueUnit !== this.options.unit )
-            //     return; // bad unit
+            if ( valueUnit.length && valueUnit !== this.options.unit )
+                return; // bad unit
 
-            // value = Number( valueNumber );
+            value = Number( valueNumber );
 
             // override the inputValue to change the scale
             // typically it's for non linear scale
             // It's clearly not the good way to do it
             // we should refactor widget to handle custom
             // scale
-            // if ( this.options.inputValue ) {
-            //     value = this.options.inputValue( value );
-            // }
+            if ( this.options.inputValue ) {
+                value = this.options.inputValue( value );
+            }
 
-            // if ( value > this.options.maximum ) {
-            //     value = this.options.maximum;
-            // } else if ( value < this.options.minimum ) {
-            //     value = this.options.minimum;
-            // } else if ( isNaN( value ) ) {
-            //     return;
-            // }
+            if ( value > this.options.maximum ) {
+                value = this.options.maximum;
+            } else if ( value < this.options.minimum ) {
+                value = this.options.minimum;
+            } else if ( isNaN( value ) ) {
+                return;
+            }
 
             // This force the update
             this.set( !value );

@@ -35,8 +35,8 @@ define( [
 
             Widget.prototype.initialize.call( this, options );
 
-            if ( typeof this.get() === 'undefined' )
-                this.set( "Maël Nison" );
+            // if ( typeof this.get() === 'undefined' )
+            //     this.set( "Maël Nison" );
 
         },
 
