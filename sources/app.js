@@ -27,9 +27,7 @@ define( [
             bgSize : 100,
             switchPhoto : false,
             labelColor:'#fff',
-            jobColor:'#fff',
-            photoAxis:'x',
-            photoAxisVal:'5'
+            jobColor:'#fff'
         }
 
     } );
@@ -51,7 +49,6 @@ define( [
             this.model.on( 'change:bgSize', this.onSizeBgChange, this );
             this.model.on( 'change:labelColor', this.onLabelColorChange, this );
             this.model.on( 'change:jobColor', this.onJobColorChange, this );
-            this.model.on( 'change:photoAxisVal', this.onPhotoAxisChange, this );
         },
 
         render : function ( ) {
@@ -147,15 +144,6 @@ define( [
         onSizeBgChange : function ( ) {
              this.$el.css( 'background-size', this.model.get( 'bgSize' )+"% auto" );
         },
-        onPhotoAxisChange : function ( ) {
-            $( '.card' )
-            if(this.model.get( 'photoAxis' ) == 'x'){
-                this.$el.children(".photo").css( 'right', this.model.get( 'photoAxisVal' )+"%" );  
-            }else{
-                this.$el.children(".photo").css( 'top', this.model.get( 'photoAxisVal' )+"%" );
-            }
-            
-        },
         
         generateHex : function(rgb) {
             var rounded = {
@@ -237,11 +225,6 @@ define( [
     appearancePhoto.createWidget( 'Taille de la photo', 'NumberedSlider', {
         model : card,
         name  : 'photoSize'
-    } );
-    appearancePhoto.createWidget( 'Position', 'Axis', {  } );
-    appearancePhoto.createWidget( '', 'NumberedSlider', {
-        model : card,
-        name  : 'photoAxisVal'
     } );
     
     var appearanceBg = editor.createWidget( 'Group', {
