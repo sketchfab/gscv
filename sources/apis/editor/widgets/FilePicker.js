@@ -57,8 +57,12 @@ define( [
 
             if ( e.target.files[ 0 ] ) {
 
-                if ( this.options.selectEvent ) {
-                    this.options.model.trigger( this.options.selectEvent, e.target.files[ 0 ], this );
+                if ( this.options.action ) {
+                    this.options.model.trigger( "uploadSelectEventBg", e.target.files[ 0 ], this );
+                }else{
+                     if ( this.options.selectEvent ) {
+                         this.options.model.trigger( this.options.selectEvent, e.target.files[ 0 ], this );
+                     }
                 }
 
             } else {
