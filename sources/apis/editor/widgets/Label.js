@@ -13,11 +13,14 @@ define( [
     return Widget.extend( {
 
         el: [ '<div class="widget label-widget">',
-            '          <span class="text">',
-            '          </span class="text">',
+            '          <input type="text" name="value" class="text"/>',
             '      </div>'
         ].join( '' ),
-
+        
+        events: _.extend( {}, Widget.prototype.events, {
+            'keyup .text:input': 'changeEvent'
+        } ),
+        
         initialize: function ( options ) {
 
             options = _.defaults( options || {}, {
@@ -42,11 +45,17 @@ define( [
             }
 
         },
+        
+        changeEvent: function () {
+
+            this.set( this.$( '.text' ).val() );
+            
+        },
 
         render: function () {
 
-            this.$( '.text' )[ this.options.escape ? 'text' : 'html' ]( this.get() );
-
+            this.$( '.text' )[ this.options.escape ? 'val' : 'html' ]( this.get() );
+            
         }
 
     } );

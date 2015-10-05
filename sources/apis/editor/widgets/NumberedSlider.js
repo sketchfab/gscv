@@ -17,6 +17,10 @@ define( [
             '          </div>',
             '      </div>'
         ].join( '' ),
+        
+         events: _.extend( {}, HorizontalWidget.prototype.events, {
+            'change:data-value': 'changeDataValue'
+        } ),
 
         initialize: function ( options ) {
 
@@ -55,6 +59,12 @@ define( [
                 } );
             }
 
+        },
+        
+        changeDataValue: function ( e ) {
+            
+            console.log('toto');
+            
         }
 
     } );

@@ -59,9 +59,9 @@ define( [
                 pickerCursor: this.$( '.picker > .cursor' )[ 0 ]
 
             }, function ( hsv, rgb /*, hex*/ ) {
-
+                
                 this.change( rgb );
-
+                
             }.bind( this ) );
 
         },
@@ -75,7 +75,7 @@ define( [
         render: function () {
 
             var rgb = this.get();
-
+            
             this.colorPicker.set( rgb );
 
             var rounded = {
