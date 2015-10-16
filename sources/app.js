@@ -28,7 +28,7 @@ define( [
         render : function ( ) {
             this.onRadiusChange( );
             this.onBackColorChange( );
-            console.log(this.model.get('background'));
+            // console.log(this.model.get('background'));
         },
 
         onRadiusChange : function ( ) {
@@ -38,7 +38,7 @@ define( [
         onBackColorChange : function ( ) {
             var hexColor = this.rgb2hex(this.model.get( 'background' ));
             this.$el.css( 'background-color', hexColor );
-            console.log('background changed : ', hexColor );
+            // console.log('background changed : ', hexColor );
         },
 
         rgb2hex : function ( rgb ) {
@@ -76,5 +76,16 @@ define( [
         name : 'background'
     });
 
+    // appearance.createWidget( 'test', 'FilePicker', {
+    //         model : card,
+    //         selectEvent: 'uploadSelectEvent',
+    //         cancelEvent: 'uploadCancelEvent',
+    //         text: '',
+    //         action: null
+    //     });
+    
+    // Hack to initialize default color of color pickers
+    appearance.$el.find('.color-widget input').val(card.defaults.background);
+    appearance.$el.find('.color-widget input').trigger('change');
 
 } );

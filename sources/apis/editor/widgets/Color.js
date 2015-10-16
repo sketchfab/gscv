@@ -71,7 +71,7 @@ define( [
         },
 
         changeEvent: function () {
-            
+            console.log('color: ', this.$( '.value' ).val());
             this.colorPicker.set( this.$( '.value' ).val() );
             this.$('.valueColorBox').css('background-color', this.$( '.value' ).val());
         },

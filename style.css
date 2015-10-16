@@ -41,3 +41,7 @@
     width: 230px;
     float: left;
 }
+
+.editor-panel .color-widget > .widget-wrapper {
+     min-height: 0; 
+}
