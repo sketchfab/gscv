@@ -87,5 +87,7 @@ define( [
     // Hack to initialize default color of color pickers
     appearance.$el.find('.color-widget input').val(card.defaults.background);
     appearance.$el.find('.color-widget input').trigger('change');
+    //console.log(view.$el.find('.cardMovingElements'));
+    view.$el.find('.cardMovingElements').draggable({ containment: ".card", scroll: false });
 
 } );

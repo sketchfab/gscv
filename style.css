@@ -18,6 +18,17 @@
     color: #FFFFFF;
 }
 
+.cardMovingElements {
+    display: inline-block;
+    cursor: move;
+}
+
+.cardMovingElements:hover {
+    border-width: 1px;
+    border-style: solid;
+    opacity: 0.75;
+}
+
 .valueColorBox {
     width: 23px;
     height: 23px;
