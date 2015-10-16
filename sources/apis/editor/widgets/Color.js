@@ -14,7 +14,7 @@ define( [
 
         el: [ '<div class="widget color-widget">',
             '    <div class="widget-wrapper">',
-            '        <div class="box">',
+            '        <div class="box" style="display:none">',
             '            <div class="picker-wrapper">',
             '                <div class="picker-padder"></div>',
             '                <div class="picker"><div class="cursor"></div></div>',
@@ -23,13 +23,17 @@ define( [
             '                <div class="slider"><div class="cursor"></div></div>',
             '            </div>',
             '        </div>',
+            '        <div>',
             '        <input class="value" size="8" />',
+            '        <div class="valueColorBox"></div>',
+            '        </div>',
             '    </div>',
             '</div>'
         ].join( '' ),
 
         events: _.extend( {}, Widget.prototype.events, {
-            'change .value:input': 'changeEvent'
+            'change .value:input': 'changeEvent',
+            'click .valueColorBox': 'togglePicker'
         } ),
 
         initialize: function ( options ) {
@@ -61,15 +65,19 @@ define( [
             }, function ( hsv, rgb /*, hex*/ ) {
 
                 this.change( rgb );
+                this.$('.valueColorBox').css('background-color', this.$( '.value' ).val());
 
             }.bind( this ) );
-
         },
 
         changeEvent: function () {
-
+            
             this.colorPicker.set( this.$( '.value' ).val() );
+            this.$('.valueColorBox').css('background-color', this.$( '.value' ).val());
+        },
 
+        togglePicker : function(){
+            this.$('.widget-wrapper > .box').toggle();
         },
 
         render: function () {

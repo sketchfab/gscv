@@ -14,6 +14,30 @@
     padding: 20px;
 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
-    background: #2C2C2C;
+    /*background: #2C2C2C;*/
     color: #FFFFFF;
+}
+
+.valueColorBox {
+    width: 23px;
+    height: 23px;
+    /* display: inline; */
+    background-color: red;
+    float: left;
+    margin-top: 10px;
+    padding: 4px;
+    border: 0;
+    border-radius: 4px;
+    margin-left: 7px;
+    cursor: pointer;
+}
+
+.valueColorBox:hover {
+  /*box-shadow: inset 0 0 0 2px #1c1c1c;*/
+  opacity: 0.75;
+}
+
+.editor-panel .color-widget > .widget-wrapper .value {
+    width: 230px;
+    float: left;
 }
