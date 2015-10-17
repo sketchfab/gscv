@@ -29,6 +29,14 @@
     opacity: 0.75;
 }
 
+.card img {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    top:0;
+    right: 0;
+}
+
 .valueColorBox {
     width: 23px;
     height: 23px;
@@ -56,3 +64,11 @@
 .editor-panel .color-widget > .widget-wrapper {
      min-height: 0; 
 }
+
+/*.removeButton{
+    width : 24px;
+}
+
+.widget.button-widget.removeButton button{
+    width : 24px;
+}*/

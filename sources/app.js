@@ -13,7 +13,9 @@ define( [
 
         defaults : {
             radius : 10,
-            background: "#2C2C2C"
+            background: "#2C2C2C",
+            isBgImage: false
+
         }
 
     } );
@@ -23,6 +25,9 @@ define( [
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:background', this.onBackColorChange, this );
+            this.model.on( 'uploadBgImage', this.onUploadBgImage, this );
+            this.model.on( 'cancelBgImage', this.onCancelBgImage, this );
+            this.model.on( 'removeBgImage', this.onRemoveBgImage, this );
         },
 
         render : function ( ) {
@@ -39,6 +44,26 @@ define( [
             var hexColor = this.rgb2hex(this.model.get( 'background' ));
             this.$el.css( 'background-color', hexColor );
             // console.log('background changed : ', hexColor );
+        },
+
+        onUploadBgImage : function (photo) {
+            var self = this;
+            var fileReader = new FileReader();
+                fileReader.readAsDataURL(photo);
+                fileReader.onloadend = function(e){
+                    self.$el.css("background-image", "url("+e.target.result+")");
+                };
+            $('.removeButton button').prop('disabled', false);
+        },
+
+        onCancelBgImage : function(){
+            
+        },
+
+        onRemoveBgImage : function(){
+            this.$el.css("background-image", "");
+            $('.bgImagePicker input').val('');
+            $('.removeButton button').prop('disabled', true);
         },
 
         rgb2hex : function ( rgb ) {
@@ -76,18 +101,33 @@ define( [
         name : 'background'
     });
 
-    // appearance.createWidget( 'test', 'FilePicker', {
-    //         model : card,
-    //         selectEvent: 'uploadSelectEvent',
-    //         cancelEvent: 'uploadCancelEvent',
-    //         text: '',
-    //         action: null
-    //     });
+    var bgImgPicker = appearance.createWidget( 'Horizontal', {});
+
+    // appearance.createWidget( '', 'ToggleSwitch', {
+    //     model : card,
+    //     name : 'isBgImage',
+    //     label : 'Background Image'
+    // });
+    bgImgPicker.createWidget( '', 'FilePicker', {
+            model : card,
+            selectEvent: 'uploadBgImage',
+            cancelEvent: 'cancelBgImage',
+            text: 'Browse'
+            // action: null
+        }).$el.addClass('bgImagePicker');
+    bgImgPicker.createWidget( '', 'Button', {
+            model : card,
+            event: 'removeBgImage',
+            text: 'X'
+        }).$el.addClass('removeButton');
     
     // Hack to initialize default color of color pickers
     appearance.$el.find('.color-widget input').val(card.defaults.background);
     appearance.$el.find('.color-widget input').trigger('change');
     //console.log(view.$el.find('.cardMovingElements'));
+    $('.removeButton button').prop('disabled', true);
     view.$el.find('.cardMovingElements').draggable({ containment: ".card", scroll: false });
+
+
 
 } );
