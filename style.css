@@ -82,6 +82,19 @@
     padding: 4px;
 }
 
+.textarea-widget .value {
+    background-color: #777777;
+    color: white !important;
+    border-radius: 4px;
+    width: 100%;
+    border: 0;
+    padding: 4px;
+}
+
 .label-widget {
     padding-top: 2px;
+}
+
+.contactInfo {
+    white-space: pre-wrap;
 }

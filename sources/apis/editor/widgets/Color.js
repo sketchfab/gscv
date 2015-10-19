@@ -103,7 +103,6 @@ define( [
         render: function () {
 
             var rgb = this.get();
-            console.log("ahahaha",this.get());
             this.colorPicker.set( rgb );
 
             if (this.options.type === 'hex') {
