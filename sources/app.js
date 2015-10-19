@@ -23,9 +23,14 @@ define( [
             jobTextSize: 16,
             jobTextColor: "#FFFFFF",
             isContactText: false,
-            contactText: "Adress:\u000AEmail:\u000APhone:",
+            contactText: "Address:\u000AEmail:\u000APhone:",
             contactTextSize: 16,
-            contactTextColor: "#FFFFFF"
+            contactTextColor: "#FFFFFF",
+            isProfilePic: false,
+            profilePicRadius: 0,
+            profilePicSize: 150,
+            isCompanyPic: false,
+            companyPicWidth: 100
             
         }
 
@@ -51,7 +56,16 @@ define( [
             this.model.on( 'change:contactText', this.onContactTextChange, this );
             this.model.on( 'change:contactTextSize', this.onContactTextSizeChange, this );
             this.model.on( 'change:contactTextColor', this.onContactTextColorChange, this );
-
+            this.model.on( 'change:isProfilePic', this.onIsProfilePicChange, this );
+            this.model.on( 'uploadProfileImage', this.onUploadProfileImage, this );
+            this.model.on( 'cancelProfileImage', this.onCancelProfileImage, this );
+            this.model.on( 'change:profilePicRadius', this.onProfilePicRadiusChange, this );
+            this.model.on( 'change:profilePicSize', this.onProfilePicSizeChange, this );
+            this.model.on( 'change:isCompanyPic', this.onIsCompanyPicChange, this );
+            this.model.on( 'uploadCompanyImage', this.onUploadCompanyImage, this );
+            this.model.on( 'cancelCompanyImage', this.onCancelCompanyImage, this );
+            this.model.on( 'change:companyPicWidth', this.onCompanyPicWidthChange, this );
+            //this.model.on( 'exportCard', this.onExportCard, this );
         },
 
         render : function ( ) {
@@ -61,6 +75,9 @@ define( [
             this.onJobTextChange();
             this.onContactTextChange();
             this.onIsContactTextChange();
+            // this.onIsProfilePicChange();
+            // this.onIsCompanyPicChange();
+            //this.onProfilePicSizeChange();
             // console.log(this.model.get('background'));
         },
 
@@ -69,9 +86,7 @@ define( [
         },
 
         onBackColorChange : function ( ) {
-            //var hexColor = this.rgb2hex(this.model.get( 'background' ));
             this.$el.css( 'background-color', this.model.get( 'background' ) );
-            // console.log('background changed : ', hexColor );
         },
 
         onUploadBgImage : function (photo) {
@@ -81,7 +96,7 @@ define( [
                 fileReader.onloadend = function(e){
                     self.$el.css("background-image", "url("+e.target.result+")");
                 };
-            $('.removeButton button').prop('disabled', false);
+            $('.bgImagePicker .removeButton button').prop('disabled', false);
         },
 
         onCancelBgImage : function(){
@@ -91,7 +106,7 @@ define( [
         onRemoveBgImage : function(){
             this.$el.css("background-image", "");
             $('.bgImagePicker input').val('');
-            $('.removeButton button').prop('disabled', true);
+            $('.bgImagePicker .removeButton button').prop('disabled', true);
         },
 
         onNameTextChange : function(){
@@ -143,6 +158,52 @@ define( [
 
         onContactTextColorChange : function() {
             this.$el.find('.contactInfo').css( 'color', this.model.get( 'contactTextColor' ) );
+        },
+
+        onIsProfilePicChange : function() {
+            $('.pictureGroupProfile').toggle();
+            this.$el.find(".profilePic").toggle();
+        },
+
+        onUploadProfileImage : function (photo) {
+            var fileReader = new FileReader();
+                fileReader.readAsDataURL(photo);
+                fileReader.onloadend = function(e){
+                    $('.profilePic').css("background-image", "url("+e.target.result+")");
+                };
+        },
+
+        onCancelProfileImage : function(){
+            
+        },
+
+        onProfilePicRadiusChange : function ( ) {
+            $('.profilePic').css( 'border-radius', this.model.get( 'profilePicRadius' ) );
+        },
+
+        onProfilePicSizeChange : function ( ) {
+            $('.profilePic').css( 'width', this.model.get( 'profilePicSize' ) ).css( 'height', this.model.get( 'profilePicSize' ) );
+        },
+
+        onIsCompanyPicChange : function() {
+            $('.pictureGroupCompany').toggle();
+            this.$el.find(".companyPic").toggle();
+        },
+
+        onUploadCompanyImage : function (photo) {
+            var fileReader = new FileReader();
+                fileReader.readAsDataURL(photo);
+                fileReader.onloadend = function(e){
+                    $('.companyPic').attr("src", e.target.result);
+                };
+        },
+
+        onCancelCompanyImage : function(){
+            
+        },
+
+        onCompanyPicWidthChange : function ( ) {
+            $('.companyPic').css( 'width', this.model.get( 'companyPicWidth' ) );
         }
 
     } );
@@ -172,6 +233,7 @@ define( [
     });
 
     var bgImgPicker = appearance.createWidget( 'Horizontal', {});
+    bgImgPicker.$el.addClass('bgImagePicker');
 
     bgImgPicker.createWidget( '', 'FilePicker', {
             model : card,
@@ -179,18 +241,14 @@ define( [
             cancelEvent: 'cancelBgImage',
             text: 'Browse'
             // action: null
-        }).$el.addClass('bgImagePicker');
+        });
     bgImgPicker.createWidget( '', 'Button', {
             model : card,
             event: 'removeBgImage',
             text: 'X'
         }).$el.addClass('removeButton');
-    
-    // Hack to initialize default color of color pickers
-    // appearance.$el.find('.color-widget input').val(card.defaults.background);
-    // appearance.$el.find('.color-widget input').trigger('change');
-    //console.log(view.$el.find('.cardMovingElements'));
-    $('.removeButton button').prop('disabled', true);
+
+    $('.bgImagePicker .removeButton button').prop('disabled', true);
 
     var textGroup = editor.createWidget( 'Group', {
             label : 'Card Text'
@@ -203,17 +261,17 @@ define( [
 
     var textGroupName = textGroup.createWidget( 'Vertical', {
         });
-    textGroupName.$el.addClass('textGroupName');
+    textGroupName.$el.addClass('textGroupName verticalSection');
     textGroupName.createWidget('','Text', {
             model : card,
             name  : 'nameText'
         });
-    textGroupName.createWidget( '', 'Color', {
+    textGroupName.createWidget( 'Color', 'Color', {
         model : card,
         name : 'nameTextColor',
         type : 'hex'
     });
-    textGroupName.createWidget( '', 'NumberedSlider', {
+    textGroupName.createWidget( 'Size', 'NumberedSlider', {
         model : card,
         name  : 'nameTextSize',
         minimum: 1,
@@ -230,17 +288,17 @@ define( [
 
     var textGroupJob = textGroup.createWidget( 'Vertical', {
         });
-    textGroupJob.$el.addClass('textGroupJob');
+    textGroupJob.$el.addClass('textGroupJob verticalSection');
     textGroupJob.createWidget('','Text', {
             model : card,
             name  : 'jobText'
         });
-    textGroupJob.createWidget( '', 'Color', {
+    textGroupJob.createWidget( 'Color', 'Color', {
         model : card,
         name : 'jobTextColor',
         type : 'hex'
     });
-    textGroupJob.createWidget( '', 'NumberedSlider', {
+    textGroupJob.createWidget( 'Size', 'NumberedSlider', {
         model : card,
         name  : 'jobTextSize',
         minimum: 1,
@@ -257,17 +315,17 @@ define( [
 
     var textGroupContact = textGroup.createWidget( 'Vertical', {
         });
-    textGroupContact.$el.addClass('textGroupContact').hide();
+    textGroupContact.$el.addClass('textGroupContact verticalSection').hide();
     textGroupContact.createWidget('','TextArea', {
             model : card,
             name  : 'contactText'
         });
-    textGroupContact.createWidget( '', 'Color', {
+    textGroupContact.createWidget( 'Color', 'Color', {
         model : card,
         name : 'contactTextColor',
         type : 'hex'
     });
-    textGroupContact.createWidget( '', 'NumberedSlider', {
+    textGroupContact.createWidget( 'Size', 'NumberedSlider', {
         model : card,
         name  : 'contactTextSize',
         minimum: 1,
@@ -276,6 +334,62 @@ define( [
         unit: 'px'
     });
 
-    view.$el.find('.cardMovingElements').draggable({ containment: ".card", scroll: false });
+    var pictureGroup = editor.createWidget( 'Group', {
+        label : 'Card Picture'
+    });
+
+    pictureGroup.createWidget('','ToggleSwitch',{
+        model: card,
+        name: 'isProfilePic',
+        label: 'Profile'
+    });
+    var pictureGroupProfile = pictureGroup.createWidget( 'Vertical', {});
+    pictureGroupProfile.$el.addClass('pictureGroupProfile verticalSection').hide();
+
+    pictureGroupProfile.createWidget( '', 'FilePicker', {
+            model : card,
+            selectEvent: 'uploadProfileImage',
+            cancelEvent: 'cancelProfileImage',
+            text: 'Browse'
+            // action: null
+        });
+    pictureGroupProfile.createWidget( 'Border radius', 'NumberedSlider', {
+        model : card,
+        name  : 'profilePicRadius'
+    } );
+
+    pictureGroupProfile.createWidget( 'Size', 'NumberedSlider', {
+        model : card,
+        name  : 'profilePicSize',
+        minimum: 0,
+        maximum: 260,
+        unit: "px"
+    } );
+
+    pictureGroup.createWidget('','ToggleSwitch',{
+        model: card,
+        name: 'isCompanyPic',
+        label: 'Company'
+    });
+    var pictureGroupCompany = pictureGroup.createWidget( 'Vertical', {});
+    pictureGroupCompany.$el.addClass('pictureGroupCompany verticalSection').hide();
+
+    pictureGroupCompany.createWidget( '', 'FilePicker', {
+            model : card,
+            selectEvent: 'uploadCompanyImage',
+            cancelEvent: 'cancelCompanyImage',
+            text: 'Browse'
+            // action: null
+        });
+
+    pictureGroupCompany.createWidget( 'Size', 'NumberedSlider', {
+        model : card,
+        name  : 'companyPicWidth',
+        minimum: 0,
+        maximum: 500,
+        unit: "px"
+    } );
+
+    $('.cardMovingElements').draggable({ containment: ".card", scroll: false });
 
 } );

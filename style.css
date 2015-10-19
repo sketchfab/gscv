@@ -16,6 +16,7 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
     /*background: #2C2C2C;*/
     color: #FFFFFF;
+    overflow: hidden;
 }
 
 .cardMovingElements {
@@ -29,12 +30,25 @@
     opacity: 0.75;
 }
 
-.card img {
+.profilePic {
     width: 150px;
     height: 150px;
     position: relative;
     top:0;
     right: 0;
+    background-image: url("default-profile.png");
+    background-size: cover;
+    display: none;
+}
+
+.companyPic {
+    max-width: 510px;
+    max-height: 260px;
+    width: 100px;
+    position: relative;
+    /*background-image: url("http://38.media.tumblr.com/d86ab349a77b2eff8ae534d1b1d5fa0b/tumblr_inline_n084l6sF6L1rh8rjh.png");*/
+    display: none;
+    background-size: cover;
 }
 
 .valueColorBox {
@@ -57,7 +71,7 @@
 }
 
 .editor-panel .color-widget > .widget-wrapper .value {
-    width: 230px;
+    width: 87.9%;
     float: left;
 }
 
@@ -89,6 +103,7 @@
     width: 100%;
     border: 0;
     padding: 4px;
+    resize:vertical;
 }
 
 .label-widget {
@@ -97,4 +112,14 @@
 
 .contactInfo {
     white-space: pre-wrap;
+}
+
+.editor-panel {
+    overflow-y: scroll;
+}
+
+.verticalSection {
+    display: block;
+    padding: 6px;
+    background-color: #424242;
 }
