@@ -9,7 +9,8 @@ require.config( {
         'vendors/SvgColorPicker'    : { 'exports' : 'SvgColorPicker' },
         'vendors/jquery/UI'         : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
         'vendors/jquery/mousewheel' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
-        'vendors/jquery/toggleAttr' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] }
+        'vendors/jquery/toggleAttr' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
+        'vendors/html2canvas'       : { 'exports' : 'html2canvas',        'deps' : [ ] }
     }
 
 } );
@@ -20,10 +21,11 @@ require( [
     'vendors/jquery/UI',
     'vendors/jquery/mousewheel',
     'vendors/jquery/toggleAttr',
+    'vendors/html2canvas',
 
     'sources/apis/editor/API.js'
 
-], function ( $, UI, mousewheel, toggleAttr, WidgetApi ) {
+], function ( $, UI, mousewheel, toggleAttr, html2canvas, WidgetApi ) {
 
     $( function ( ) {
 

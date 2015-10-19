@@ -17,6 +17,7 @@
     /*background: #2C2C2C;*/
     color: #FFFFFF;
     overflow: hidden;
+    background-size: cover;
 }
 
 .cardMovingElements {

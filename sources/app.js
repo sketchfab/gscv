@@ -65,7 +65,7 @@ define( [
             this.model.on( 'uploadCompanyImage', this.onUploadCompanyImage, this );
             this.model.on( 'cancelCompanyImage', this.onCancelCompanyImage, this );
             this.model.on( 'change:companyPicWidth', this.onCompanyPicWidthChange, this );
-            //this.model.on( 'exportCard', this.onExportCard, this );
+            this.model.on( 'exportCard', this.onExportCard, this );
         },
 
         render : function ( ) {
@@ -204,6 +204,46 @@ define( [
 
         onCompanyPicWidthChange : function ( ) {
             $('.companyPic').css( 'width', this.model.get( 'companyPicWidth' ) );
+        },
+
+        onExportCard : function () {
+           //  var data = "data:image/svg+xml," +
+           // "<svg xmlns='http://www.w3.org/2000/svg' width='550' height='300'>" +
+           //   "<foreignObject width='100%' height='100%'>" +
+           //     $('.editor-view').html() +
+           //   "</foreignObject>" +
+           // "</svg>";
+           // var canvas = document.createElement("canvas");
+           //  var ctx = canvas.getContext("2d");
+
+           //  var img = new Image();
+           //  img.src = data;
+            
+           //  var a = document.createElement('a');
+           //  a.href = img.src;
+           //  a.download="card.svg";
+           //  img.onload = function() { 
+           //      ctx.drawImage(img, 0, 0); 
+           //  };
+           //  //ctx.drawImage(img, 0, 0);
+           //  console.log(a);
+           //  $(a).get(0).click();
+           //  
+           html2canvas($('.card'), {
+              onrendered: function(canvas) {
+                    //document.body.appendChild(canvas);
+                    var img = canvas.toDataURL('image/png');
+                    //window.open(img);
+                    var a = document.createElement('a');
+                    a.href = img;
+                    a.download="myCard.png";
+                    $(a).get(0).click();
+                },
+              allowTaint: true,
+              useCORS: true
+            });
+            
+            
         }
 
     } );
@@ -390,6 +430,14 @@ define( [
         unit: "px"
     } );
 
+    var exportGroup = editor.createWidget('Group',{
+        label: "Export (Beta)"
+    });
+    exportGroup.createWidget('','Button',{
+        model: card,
+        event: 'exportCard',
+        text: 'Download as png'
+    });
     $('.cardMovingElements').draggable({ containment: ".card", scroll: false });
 
 } );
