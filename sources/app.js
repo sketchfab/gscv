@@ -17,10 +17,10 @@ define( [
             isBgImage: false,
             nameText: "Cyril Sabbagh",
             nameTextSize: 16,
-            nameTextColor: "#ffffff",
+            nameTextColor: "#FFFFFF",
             jobText: "Frontend Developer",
             jobTextSize: 16,
-            jobTextColor: "#ffffff"
+            jobTextColor: "#FFFFFF"
             
         }
 
@@ -51,8 +51,8 @@ define( [
         },
 
         onBackColorChange : function ( ) {
-            var hexColor = this.rgb2hex(this.model.get( 'background' ));
-            this.$el.css( 'background-color', hexColor );
+            //var hexColor = this.rgb2hex(this.model.get( 'background' ));
+            this.$el.css( 'background-color', this.model.get( 'background' ) );
             // console.log('background changed : ', hexColor );
         },
 
@@ -85,19 +85,20 @@ define( [
         },
 
         onNameTextColorChange : function() {
-            var hexColor = this.rgb2hex(this.model.get( 'nameTextColor' ));
-            this.$el.find('.name').css( 'color', hexColor );
-        },
-
-        rgb2hex : function ( rgb ) {
-
-            var rounded = {
-                r: rgb.r * 255,
-                g: rgb.g * 255,
-                b: rgb.b * 255
-            };
-            return '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+            console.log(this.model.get( 'nameTextColor' ));
+            //var hexColor = this.rgb2hex(this.model.get( 'nameTextColor' ));
+            this.$el.find('.name').css( 'color', this.model.get( 'nameTextColor' ) );
         }
+
+        // rgb2hex : function ( rgb ) {
+
+        //     var rounded = {
+        //         r: rgb.r * 255,
+        //         g: rgb.g * 255,
+        //         b: rgb.b * 255
+        //     };
+        //     return '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+        // }
 
     } );
 
@@ -121,7 +122,8 @@ define( [
 
     appearance.createWidget( 'Background', 'Color', {
         model : card,
-        name : 'background'
+        name : 'background',
+        type : 'hex'
     });
 
     var bgImgPicker = appearance.createWidget( 'Horizontal', {});
@@ -140,8 +142,8 @@ define( [
         }).$el.addClass('removeButton');
     
     // Hack to initialize default color of color pickers
-    appearance.$el.find('.color-widget input').val(card.defaults.background);
-    appearance.$el.find('.color-widget input').trigger('change');
+    // appearance.$el.find('.color-widget input').val(card.defaults.background);
+    // appearance.$el.find('.color-widget input').trigger('change');
     //console.log(view.$el.find('.cardMovingElements'));
     $('.removeButton button').prop('disabled', true);
 
@@ -162,7 +164,8 @@ define( [
     });
     textGroup.createWidget( '', 'Color', {
         model : card,
-        name : 'nameTextColor'
+        name : 'nameTextColor',
+        type : 'hex'
     });
 
     view.$el.find('.cardMovingElements').draggable({ containment: ".card", scroll: false });

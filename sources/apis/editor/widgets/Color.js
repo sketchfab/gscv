@@ -41,7 +41,8 @@ define( [
             options = _.defaults( options || {}, {
 
                 model: new Backbone.Model(),
-                name: 'value'
+                name: 'value',
+                type: 'rgb' // can be 'rgb' or 'hex'
 
             } );
 
@@ -53,6 +54,9 @@ define( [
                     g: 1,
                     b: 1
                 } );
+            
+            // storing the initial value in the model
+            var intitialValue = this.get();
 
             this.colorPicker = SvgColorPicker( {
 
@@ -63,11 +67,17 @@ define( [
                 pickerCursor: this.$( '.picker > .cursor' )[ 0 ]
 
             }, function ( hsv, rgb /*, hex*/ ) {
-
-                this.change( rgb );
+                if (this.options.type === 'hex') {
+                    this.change( this.rgb2hex(rgb) );
+                } else{
+                    this.change( rgb );
+                }
                 this.$('.valueColorBox').css('background-color', this.$( '.value' ).val());
 
             }.bind( this ) );
+
+            // this hack will initialize the colorpicker to the right value
+            this.change(intitialValue);
         },
 
         changeEvent: function () {
@@ -80,20 +90,28 @@ define( [
             this.$('.widget-wrapper > .box').toggle();
         },
 
-        render: function () {
-
-            var rgb = this.get();
-
-            this.colorPicker.set( rgb );
+        rgb2hex : function ( rgb ) {
 
             var rounded = {
                 r: rgb.r * 255,
                 g: rgb.g * 255,
                 b: rgb.b * 255
             };
-            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+            return '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+        },
 
-            this.$( '.value' ).val( hex );
+        render: function () {
+
+            var rgb = this.get();
+            console.log("ahahaha",this.get());
+            this.colorPicker.set( rgb );
+
+            if (this.options.type === 'hex') {
+                this.$( '.value' ).val( rgb );
+            } else{
+                this.$( '.value' ).val( this.rgb2hex(rgb) );
+            }
+            
 
         }
 
