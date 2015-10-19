@@ -36,6 +36,7 @@ define( [
             this.model.on( 'removeBgImage', this.onRemoveBgImage, this );
             this.model.on( 'change:nameText', this.onNameTextChange, this );
             this.model.on( 'change:nameTextSize', this.onNameTextSizeChange, this );
+            this.model.on( 'change:nameTextColor', this.onNameTextColorChange, this );
 
         },
 
@@ -83,6 +84,11 @@ define( [
             this.$el.find(".name").css('font-size', this.model.get('nameTextSize'));
         },
 
+        onNameTextColorChange : function() {
+            var hexColor = this.rgb2hex(this.model.get( 'nameTextColor' ));
+            this.$el.find('.name').css( 'color', hexColor );
+        },
+
         rgb2hex : function ( rgb ) {
 
             var rounded = {
@@ -120,11 +126,6 @@ define( [
 
     var bgImgPicker = appearance.createWidget( 'Horizontal', {});
 
-    // appearance.createWidget( '', 'ToggleSwitch', {
-    //     model : card,
-    //     name : 'isBgImage',
-    //     label : 'Background Image'
-    // });
     bgImgPicker.createWidget( '', 'FilePicker', {
             model : card,
             selectEvent: 'uploadBgImage',
@@ -159,7 +160,10 @@ define( [
         step: 1,
         unit: 'px'
     });
-   
+    textGroup.createWidget( '', 'Color', {
+        model : card,
+        name : 'nameTextColor'
+    });
 
     view.$el.find('.cardMovingElements').draggable({ containment: ".card", scroll: false });
 

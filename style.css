@@ -81,3 +81,7 @@
     border: 0;
     padding: 4px;
 }
+
+.label-widget {
+    padding-top: 2px;
+}
