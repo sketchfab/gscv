@@ -72,3 +72,12 @@
 .widget.button-widget.removeButton button{
     width : 24px;
 }*/
+
+.text-widget .value {
+    background-color: #777777;
+    color: white !important;
+    border-radius: 4px;
+    width: 100%;
+    border: 0;
+    padding: 4px;
+}

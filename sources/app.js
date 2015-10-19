@@ -14,8 +14,14 @@ define( [
         defaults : {
             radius : 10,
             background: "#2C2C2C",
-            isBgImage: false
-
+            isBgImage: false,
+            nameText: "Cyril Sabbagh",
+            nameTextSize: 16,
+            nameTextColor: "#ffffff",
+            jobText: "Frontend Developer",
+            jobTextSize: 16,
+            jobTextColor: "#ffffff"
+            
         }
 
     } );
@@ -28,6 +34,9 @@ define( [
             this.model.on( 'uploadBgImage', this.onUploadBgImage, this );
             this.model.on( 'cancelBgImage', this.onCancelBgImage, this );
             this.model.on( 'removeBgImage', this.onRemoveBgImage, this );
+            this.model.on( 'change:nameText', this.onNameTextChange, this );
+            this.model.on( 'change:nameTextSize', this.onNameTextSizeChange, this );
+
         },
 
         render : function ( ) {
@@ -64,6 +73,14 @@ define( [
             this.$el.css("background-image", "");
             $('.bgImagePicker input').val('');
             $('.removeButton button').prop('disabled', true);
+        },
+
+        onNameTextChange : function(){
+            this.$el.find(".name").html(this.model.get('nameText'));
+        },
+
+        onNameTextSizeChange : function(){
+            this.$el.find(".name").css('font-size', this.model.get('nameTextSize'));
         },
 
         rgb2hex : function ( rgb ) {
@@ -126,8 +143,24 @@ define( [
     appearance.$el.find('.color-widget input').trigger('change');
     //console.log(view.$el.find('.cardMovingElements'));
     $('.removeButton button').prop('disabled', true);
+
+    var textGroup = editor.createWidget( 'Group', {
+            label : 'Card Text'
+        } );
+    textGroup.createWidget('','Text', {
+            model : card,
+            name  : 'nameText'
+        });
+    textGroup.createWidget( '', 'NumberedSlider', {
+        model : card,
+        name  : 'nameTextSize',
+        minimum: 1,
+        maximum: 100,
+        step: 1,
+        unit: 'px'
+    });
+   
+
     view.$el.find('.cardMovingElements').draggable({ containment: ".card", scroll: false });
-
-
 
 } );
