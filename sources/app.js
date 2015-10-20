@@ -23,7 +23,7 @@ define( [
             jobTextSize: 16,
             jobTextColor: "#FFFFFF",
             isContactText: false,
-            contactText: "Address:\u000AEmail:\u000APhone:",
+            contactText: "Email:\u000APhone:",
             contactTextSize: 16,
             contactTextColor: "#FFFFFF",
             isProfilePic: false,
@@ -75,10 +75,6 @@ define( [
             this.onJobTextChange();
             this.onContactTextChange();
             this.onIsContactTextChange();
-            // this.onIsProfilePicChange();
-            // this.onIsCompanyPicChange();
-            //this.onProfilePicSizeChange();
-            // console.log(this.model.get('background'));
         },
 
         onRadiusChange : function ( ) {
@@ -206,29 +202,7 @@ define( [
             $('.companyPic').css( 'width', this.model.get( 'companyPicWidth' ) );
         },
 
-        onExportCard : function () {
-           //  var data = "data:image/svg+xml," +
-           // "<svg xmlns='http://www.w3.org/2000/svg' width='550' height='300'>" +
-           //   "<foreignObject width='100%' height='100%'>" +
-           //     $('.editor-view').html() +
-           //   "</foreignObject>" +
-           // "</svg>";
-           // var canvas = document.createElement("canvas");
-           //  var ctx = canvas.getContext("2d");
-
-           //  var img = new Image();
-           //  img.src = data;
-            
-           //  var a = document.createElement('a');
-           //  a.href = img.src;
-           //  a.download="card.svg";
-           //  img.onload = function() { 
-           //      ctx.drawImage(img, 0, 0); 
-           //  };
-           //  //ctx.drawImage(img, 0, 0);
-           //  console.log(a);
-           //  $(a).get(0).click();
-           //  
+        onExportCard : function () { 
            html2canvas($('.card'), {
               onrendered: function(canvas) {
                     //document.body.appendChild(canvas);
