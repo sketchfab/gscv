@@ -51,7 +51,7 @@ define( [
             if ( this.options.unit ) {
                 // Unit is positionned on the right only.
                 this.createWidget( 'Label', {
-                    label: this.options.unit
+                    content: this.options.unit
                 } );
             }
 

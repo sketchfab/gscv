@@ -14,7 +14,7 @@ define( [
 
         el: [ '<div class="widget color-widget">',
             '    <div class="widget-wrapper">',
-            '        <div class="box">',
+            '        <div class="box" style="display:none">',
             '            <div class="picker-wrapper">',
             '                <div class="picker-padder"></div>',
             '                <div class="picker"><div class="cursor"></div></div>',
@@ -23,13 +23,17 @@ define( [
             '                <div class="slider"><div class="cursor"></div></div>',
             '            </div>',
             '        </div>',
+            '        <div>',
             '        <input class="value" size="8" />',
+            '        <div class="valueColorBox"></div>',
+            '        </div>',
             '    </div>',
             '</div>'
         ].join( '' ),
 
         events: _.extend( {}, Widget.prototype.events, {
-            'change .value:input': 'changeEvent'
+            'change .value:input': 'changeEvent',
+            'click .valueColorBox': 'togglePicker'
         } ),
 
         initialize: function ( options ) {
@@ -37,7 +41,8 @@ define( [
             options = _.defaults( options || {}, {
 
                 model: new Backbone.Model(),
-                name: 'value'
+                name: 'value',
+                type: 'rgb' // can be 'rgb' or 'hex'
 
             } );
 
@@ -49,6 +54,9 @@ define( [
                     g: 1,
                     b: 1
                 } );
+            
+            // storing the initial value in the model
+            var intitialValue = this.get();
 
             this.colorPicker = SvgColorPicker( {
 
@@ -59,33 +67,49 @@ define( [
                 pickerCursor: this.$( '.picker > .cursor' )[ 0 ]
 
             }, function ( hsv, rgb /*, hex*/ ) {
-
-                this.change( rgb );
+                if (this.options.type === 'hex') {
+                    this.change( this.rgb2hex(rgb) );
+                } else{
+                    this.change( rgb );
+                }
+                this.$('.valueColorBox').css('background-color', this.$( '.value' ).val());
 
             }.bind( this ) );
 
+            // this hack will initialize the colorpicker to the right value
+            this.change(intitialValue);
         },
 
         changeEvent: function () {
-
             this.colorPicker.set( this.$( '.value' ).val() );
-
+            this.$('.valueColorBox').css('background-color', this.$( '.value' ).val());
         },
 
-        render: function () {
+        togglePicker : function(){
+            this.$('.widget-wrapper > .box').toggle();
+        },
 
-            var rgb = this.get();
-
-            this.colorPicker.set( rgb );
+        rgb2hex : function ( rgb ) {
 
             var rounded = {
                 r: rgb.r * 255,
                 g: rgb.g * 255,
                 b: rgb.b * 255
             };
-            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+            return '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+        },
 
-            this.$( '.value' ).val( hex );
+        render: function () {
+
+            var rgb = this.get();
+            this.colorPicker.set( rgb );
+
+            if (this.options.type === 'hex') {
+                this.$( '.value' ).val( rgb );
+            } else{
+                this.$( '.value' ).val( this.rgb2hex(rgb) );
+            }
+            
 
         }
 
