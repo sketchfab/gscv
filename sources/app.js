@@ -6,12 +6,14 @@ define( [
     'vendors/JQuery',
 
     'editor'
-
-], function ( Backbone, $, editor ) {
+], function ( Backbone, $, editor) {
 
     var Card = Backbone.Model.extend( {
 
         defaults : {
+            name: 'John Doe',
+            title: 'Developer',
+            backgroundColor: '#2C2C2C',
             radius : 10
         }
 
@@ -21,14 +23,31 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
+            this.model.on( 'change:name', this.onNameChange, this );
+            this.model.on( 'change:title', this.onTitleChange, this );
+            this.model.on( 'change:backgroundColor', this.onBgColorChange, this );
         },
 
         render : function ( ) {
             this.onRadiusChange( );
+            this.onNameChange( );
+            this.onTitleChange( );
         },
 
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
+        },
+
+        onNameChange: function() {
+            this.$el.find('.name').text(this.model.get('name'));
+        },
+
+        onTitleChange: function() {
+            this.$el.find('.job').text(this.model.get('title'));
+        },
+
+        onBgColorChange: function() {
+            this.$el.css('background-color', this.model.get('backgroundColor'));
         }
 
     } );
@@ -50,5 +69,22 @@ define( [
         model : card,
         name  : 'radius'
     } );
+
+    appearance.createWidget('Name','EditableField', {
+        model: card,
+        name: 'name'
+    });
+
+    appearance.createWidget('Title','EditableField', {
+        model: card,
+        name: 'title'
+    });
+
+    appearance.createWidget('Background Color','Color', {
+        model: card,
+        name: 'backgroundColor',
+
+        returnHexadecimalValue: true
+    });
 
 } );

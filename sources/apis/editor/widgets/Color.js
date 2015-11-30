@@ -37,7 +37,9 @@ define( [
             options = _.defaults( options || {}, {
 
                 model: new Backbone.Model(),
-                name: 'value'
+                name: 'value',
+
+                returnHexadecimalValue: false
 
             } );
 
@@ -50,6 +52,10 @@ define( [
                     b: 1
                 } );
 
+            this.returnHexadecimalValue = options.returnHexadecimalValue;
+
+            var defaultColor = this.get();
+
             this.colorPicker = SvgColorPicker( {
 
                 slider: this.$( '.slider' )[ 0 ],
@@ -59,10 +65,15 @@ define( [
                 pickerCursor: this.$( '.picker > .cursor' )[ 0 ]
 
             }, function ( hsv, rgb /*, hex*/ ) {
-
-                this.change( rgb );
+                if(this.returnHexadecimalValue) {
+                    this.change(convertRGBToHexa(rgb));
+                } else {
+                    this.change(rgb);
+                }
 
             }.bind( this ) );
+
+            this.colorPicker.set(defaultColor);
 
         },
 
@@ -74,21 +85,25 @@ define( [
 
         render: function () {
 
-            var rgb = this.get();
+            var color = this.get();
+            if(!this.returnHexadecimalValue) {
+                color = convertRGBToHexa(color);
+            }
 
-            this.colorPicker.set( rgb );
+            this.colorPicker.set( color );
 
-            var rounded = {
-                r: rgb.r * 255,
-                g: rgb.g * 255,
-                b: rgb.b * 255
-            };
-            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
-
-            this.$( '.value' ).val( hex );
-
+            this.$( '.value' ).val( color );
         }
 
     } );
+
+    function convertRGBToHexa(rgb) {
+        var rounded = {
+            r: rgb.r * 255,
+            g: rgb.g * 255,
+            b: rgb.b * 255
+        };
+        return '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+    }
 
 } );
