@@ -54,6 +54,8 @@ define( [
 
             this.returnHexadecimalValue = options.returnHexadecimalValue;
 
+            var defaultColor = this.get();
+
             this.colorPicker = SvgColorPicker( {
 
                 slider: this.$( '.slider' )[ 0 ],
@@ -70,6 +72,8 @@ define( [
                 }
 
             }.bind( this ) );
+
+            this.colorPicker.set(defaultColor);
 
         },
 
