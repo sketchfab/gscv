@@ -13,6 +13,7 @@ define( [
         defaults : {
             name: 'John Doe',
             title: 'Developer',
+            backgroundColor: '#2C2C2C',
             radius : 10
         }
 
@@ -24,6 +25,7 @@ define( [
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:name', this.onNameChange, this );
             this.model.on( 'change:title', this.onTitleChange, this );
+            this.model.on( 'change:backgroundColor', this.onBgColorChange, this );
         },
 
         render : function ( ) {
@@ -42,6 +44,10 @@ define( [
 
         onTitleChange: function() {
             this.$el.find('.job').text(this.model.get('title'));
+        },
+
+        onBgColorChange: function() {
+            this.$el.css('background-color', this.model.get('backgroundColor'));
         }
 
     } );
@@ -72,6 +78,13 @@ define( [
     appearance.createWidget('Title','EditableField', {
         model: card,
         name: 'title'
+    });
+
+    appearance.createWidget('Background Color','Color', {
+        model: card,
+        name: 'backgroundColor',
+
+        returnHexadecimalValue: true
     });
 
 } );
