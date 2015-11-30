@@ -28,3 +28,35 @@
     background: #333333;
     color: white;
 }
+
+@media only screen and (max-width: 900px) {
+
+    body {
+        overflow: auto;
+    }
+
+    .editor {
+        display: flex;
+
+        flex-direction: column;
+    }
+
+    .editor-panel {
+        order: 2;
+        height: inherit;
+        width: 100%;
+        position: static;
+    }
+
+    .editor-view {
+        order: 1;
+        position: static;
+        width: auto;
+        height: auto;
+        padding:0;
+        display: block;
+        overflow: visible;
+        margin: 20px 0;
+    }
+
+}
