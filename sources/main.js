@@ -8,6 +8,7 @@ require.config( {
         'vendors/Backbone'          : { 'exports' : 'Backbone',      'deps' : [ 'vendors/JQuery', 'vendors/Underscore' ] },
         'vendors/SvgColorPicker'    : { 'exports' : 'SvgColorPicker' },
         'vendors/jquery/UI'         : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
+        'vendors/jquery/Draggable'  : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
         'vendors/jquery/mousewheel' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
         'vendors/jquery/toggleAttr' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] }
     }
@@ -18,12 +19,13 @@ require( [
 
     'vendors/JQuery',
     'vendors/jquery/UI',
+    'vendors/jquery/Draggable',
     'vendors/jquery/mousewheel',
     'vendors/jquery/toggleAttr',
 
     'sources/apis/editor/API.js'
 
-], function ( $, UI, mousewheel, toggleAttr, WidgetApi ) {
+], function ( $, UI, Draggable, mousewheel, toggleAttr, WidgetApi ) {
 
     $( function ( ) {
 

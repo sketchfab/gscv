@@ -1,0 +1,40 @@
+//Variables
+@c: card;
+@cardPadding: 20px;
+@cardWidth: 300px;
+@cardHeight: 150px;
+
+
+
+.@{c} {
+	padding: @cardPadding;
+	width: @cardWidth;
+	height: @cardHeight;
+	margin: auto;
+	flex: none;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+	& .content {
+		& .name {
+			display: inline-block;
+		}
+		
+		& .job {
+			display: inline-block;
+		}
+		& .information {
+			display: inline-block;
+			max-width: 200px;
+		}
+	}
+
+	& .logo {
+		& #output-logo{
+			max-width: 100px;
+		}
+		max-width: 100px;
+	}
+
+	.draggable {
+		cursor: move;
+	}
+}
