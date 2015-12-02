@@ -4850,7 +4850,8 @@ textarea.form-input, textarea.form-listbox, textarea.form-prefixed-input {
   /* line 775, ../../../static/sass/editor/_widgets.scss */
   .editor-panel .group-widget.opened > .widget-wrapper > .inner {
     overflow: visible;
-    max-height: 1000px; }
+    overflow: auto;
+    max-height: 500px; }
   /* line 786, ../../../static/sass/editor/_widgets.scss */
   .editor-panel .group-widget.active > .widget-wrapper > .header > .state:before {
     left: 0; }
