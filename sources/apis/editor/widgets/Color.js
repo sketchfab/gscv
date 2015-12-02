@@ -33,7 +33,6 @@ define( [
         } ),
 
         initialize: function ( options ) {
-
             options = _.defaults( options || {}, {
 
                 model: new Backbone.Model(),
@@ -44,11 +43,8 @@ define( [
             Widget.prototype.initialize.call( this, options );
 
             if ( typeof this.get() === 'undefined' )
-                this.set( {
-                    r: 1,
-                    g: 1,
-                    b: 1
-                } );
+                this.set("#ffffff");
+
 
             this.colorPicker = SvgColorPicker( {
 
@@ -58,12 +54,12 @@ define( [
                 sliderCursor: this.$( '.slider > .cursor' )[ 0 ],
                 pickerCursor: this.$( '.picker > .cursor' )[ 0 ]
 
-            }, function ( hsv, rgb /*, hex*/ ) {
-
-                this.change( rgb );
-
+            }, function ( hsv, rgb , hex ) {
+                this.change(hex);
             }.bind( this ) );
 
+            // init default color
+            this.change(this.options.color);
         },
 
         changeEvent: function () {
@@ -74,18 +70,8 @@ define( [
 
         render: function () {
 
-            var rgb = this.get();
-
-            this.colorPicker.set( rgb );
-
-            var rounded = {
-                r: rgb.r * 255,
-                g: rgb.g * 255,
-                b: rgb.b * 255
-            };
-            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
-
-            this.$( '.value' ).val( hex );
+            this.colorPicker.set( this.get() );
+            this.$( '.value' ).val( this.get() );
 
         }
 

@@ -43,7 +43,8 @@ define( [
                 name: this.options.name,
                 minimum: this.options.minimum,
                 maximum: this.options.maximum,
-                step: this.options.step
+                step: this.options.step,
+                unit: this.options.unit
             };
             this.slider = this.createWidget( 'Slider', _.extend( {}, common, this.options.sliderOptions ) );
             this.number = this.createWidget( 'Number', _.extend( {}, common, this.options.numberOptions ) );
