@@ -137,54 +137,109 @@ define( [
         minimum:200
     } );
 
-    var pictureSettings = editor.createWidget( 'Group', {
-        label : 'Picture settings'
+    cardAppearance.createWidget( 'Upload a background picture', 'FilePicker', {
+        model : card,
+        name  : 'pictureBackgroundUrl',
+        text: 'Choose picture'
     } );
 
-    pictureSettings.createWidget( 'Upload a picture', 'FilePicker', {
+    cardAppearance.createWidget( 'Or pick a background color', 'Color', {
+        model : card,
+        name  : 'backgroundColor'
+    } );
+
+    var pictureAppearance = editor.createWidget( 'Group', {
+        label : 'Profile Picture Appearance'
+    } );
+
+    pictureAppearance.createWidget( 'Upload a picture', 'FilePicker', {
         model : card,
         name  : 'pictureUrl',
-        text: 'Choose your picture'
+        text: 'Choose picture'
     } );
 
-    pictureSettings.createWidget( 'Picture size', 'NumberedSlider', {
+    pictureAppearance.createWidget( 'Picture size', 'NumberedSlider', {
         model : card,
         name  : 'pictureScale',
         maximum: 150
     } );
 
-    pictureSettings.createWidget( 'Picture border radius', 'NumberedSlider', {
+    pictureAppearance.createWidget( 'Picture border radius', 'NumberedSlider', {
         model : card,
         name  : 'pictureRadius',
         maximum: 150
     } );
 
-    var textSettings = editor.createWidget( 'Group', {
-        label : 'Informations settings'
+    var informationsAppearance = editor.createWidget( 'Group', {
+        label : 'Informations Block Appearance'
     } );
 
-    textSettings.createWidget( '', 'Input', {
+    informationsAppearance.createWidget( '', 'Input', {
         model : card,
         name  : 'name',
         placeholder : 'Full Name'
     } );
 
-    textSettings.createWidget( 'Font Size', 'NumberedSlider', {
+    informationsAppearance.createWidget( 'Font Size', 'NumberedSlider', {
         model : card,
         name  : 'nameFontSize',
         maximum: 30
     } );
 
-    textSettings.createWidget( '', 'Input', {
+    informationsAppearance.createWidget( '', 'Input', {
         model : card,
         name  : 'job',
         placeholder : 'Job'
     } );
 
-    textSettings.createWidget( 'Font Size', 'NumberedSlider', {
+    informationsAppearance.createWidget( 'Font Size', 'NumberedSlider', {
         model : card,
         name  : 'jobFontSize',
         maximum: 30
+    } );
+
+    var contactAppearance = editor.createWidget( 'Group', {
+        label : 'Contact Block Appearance'
+    } );
+
+    contactAppearance.createWidget( '', 'Input', {
+        model : card,
+        name  : 'email',
+        placeholder : 'Email'
+    } );
+
+    contactAppearance.createWidget( '', 'Input', {
+        model : card,
+        name  : 'website',
+        placeholder : 'Website'
+    } );
+
+    contactAppearance.createWidget( '', 'Input', {
+        model : card,
+        name  : 'phone',
+        placeholder : 'Phone'
+    } );
+
+    contactAppearance.createWidget( 'Font Size', 'NumberedSlider', {
+        model : card,
+        name  : 'contactFontSize',
+        maximum: 30
+    } );
+
+    var textAppearance = editor.createWidget( 'Group', {
+        label : 'Global Text Appearance'
+    } );
+
+    textAppearance.createWidget( 'Font Family', 'Select', {
+        model : card,
+        name  : 'jobFontSize',
+        placeholder : 'Font Family',
+        options : ['Lato', 'Montserrat', 'Raleway', 'Lora']
+    } );
+
+    textAppearance.createWidget( 'Text Color', 'Color', {
+        model : card,
+        name  : 'textColor'
     } );
 
 
