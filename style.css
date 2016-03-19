@@ -16,4 +16,39 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
     background: #2C2C2C;
     color: #FFFFFF;
+
+    background-position: center;
+    background-size: cover;
+}
+
+.card .informations{
+    width: auto;
+    max-width: 70%;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+}
+
+.card .picture{
+    background-position: center;
+    background-size: cover;
+
+    width: 100px;
+    height: 100px;
+
+    display: inline-block;
+    float: right;
+}
+
+.widget-wrapper input.text{
+    background-color: #777777;
+    color: white !important;
+    border-radius: 5px;
+    border: none;
+    width: auto;
+    padding: 10px;
+    font-weight: 700;
+    outline: none;
+    width: 100%;
+    font-size: 13px;
 }
