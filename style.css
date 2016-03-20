@@ -1,3 +1,8 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Lora);
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
 .editor-panel {   
     overflow: scroll;
 }
@@ -9,6 +14,7 @@
 }
 
 .card {
+    position: relative;
     margin: auto;
 
     flex: none;
@@ -23,6 +29,13 @@
 
     background-position: center;
     background-size: cover;
+
+    font-family: 'Lato';
+}
+
+.card .contact{
+    position: absolute;
+    bottom: 30px;
 }
 
 .card .informations{
