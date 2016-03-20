@@ -25,7 +25,7 @@ define( [
             name:'Clément Delaunay',
             job: 'Développeur Web',
             email : 'clem.delaunay@gmail.com',
-            website : 'clement.io',
+            website : 'http://clement.io',
             phone : '+336 87 25 09 44',
             nameFontSize:16,
             jobFontSize:16,
