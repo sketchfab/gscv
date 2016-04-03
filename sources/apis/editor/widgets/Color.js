@@ -43,12 +43,8 @@ define( [
 
             Widget.prototype.initialize.call( this, options );
 
-            if ( typeof this.get() === 'undefined' )
-                this.set( {
-                    r: 1,
-                    g: 1,
-                    b: 1
-                } );
+            // Get default color or create white color
+            var color = this.get() || { r: 1, g: 1, b: 1 };
 
             this.colorPicker = SvgColorPicker( {
 
@@ -64,6 +60,9 @@ define( [
 
             }.bind( this ) );
 
+            // Update the color of the colorPicker
+            // from the default color of the app
+            this.colorPicker.set(color);
         },
 
         changeEvent: function () {

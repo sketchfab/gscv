@@ -1,19 +1,98 @@
 .editor-view {
     display: flex;
-
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
+}
+
+.editor-panel {
+    overflow-y: auto;
 }
 
 .card {
     margin: auto;
-
     flex: none;
     width: 550px;
     height: 300px;
-
-    padding: 20px;
-
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
     background: #2C2C2C;
-    color: #FFFFFF;
+    background-position: center; 
+    background-size: cover;
+}
+
+.card .logo {
+    z-index: 0;
+    position: absolute;
+    opacity: 0.3;
+}
+
+.card .text {
+    flex: none;
+    z-index: 1;
+    min-width: 50%;
+    padding: 30px;
+}
+
+.text .name {
+    font-size: 170%;
+    line-height: 50%;
+}
+
+.text .job {
+    font-size: 120%;
+    line-height: 160%;
+    font-style: italic;
+}
+
+.text .phone {
+    font-size: 70%;
+    line-height: 120%;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.text .mail {
+    font-size: 70%;
+    line-height: 120%;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.text .website {
+    font-size: 70%;
+    line-height: 120%;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+
+/*      WIDGET CSS      */
+
+.widget-wrapper .widget-line {
+    text-align: center;
+}
+
+.widget-wrapper .widget-select-image {
+    background-clip: content-box;
+    height: 20px;
+}
+
+.editor-panel .slidered-image-widget > .widget-wrapper .text-widget {
+    line-height: 30px;
+} 
+
+.editor-panel .text-widget > .widget-wrapper .value {
+    border: 0;
+    border-radius: 4px;
+    width: 100%;
+    height: 22px;
+    padding: 4px 0 4px 8px;
+    text-align: left;
+    background: #333333;
+    color: white;
+}
+
+.editor-panel .color-widget > .widget-wrapper {
+    min-height: 0;
 }
