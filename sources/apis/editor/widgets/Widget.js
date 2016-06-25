@@ -289,7 +289,6 @@ define( [
     }, {
 
         reify: function () {
-
             var args = arguments;
             var constructor = this;
 
