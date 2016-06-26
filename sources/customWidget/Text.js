@@ -42,9 +42,7 @@ define( [
         },
 
         render: function renderText() {
-            console.log('renderText')
             this.$('input').val(this.get());
-
         },
 
         _readInputValue: function readInputValueOnBlur( e ) {
