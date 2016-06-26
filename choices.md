@@ -1,0 +1,3 @@
+- run `npm start` to launch the app
+- A Text component is usefull
+- I choos to always render and override the main view, it is easier to render it without asking any question.

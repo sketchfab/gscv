@@ -5,24 +5,43 @@ define( [
     'vendors/Backbone',
     'vendors/JQuery',
     'editor',
-    'customWidget/Text'
+    'customWidget/Text',
+    'customWidget/saveToLocal',
 
-], function ( Backbone, $, editor, TextWidget ) {
+], function ( Backbone, $, editor, TextWidget, SaveToLocalWidget ) {
+
+    // read and write to local storage
+    // This could be indexed db or a ws
+    function readCardDataFromLocalStorage(){
+      return JSON.parse(localStorage.getItem('sketch:settings'));
+    }
+    function saveCardDataToLocalStorage(jsonToSave){
+      jsonToSave.localSaved =  true;
+      localStorage.setItem('sketch:settings',JSON.stringify(jsonToSave));
+    }
 
     // Just to have non empty defaults
     var PIERRE_DEFAULTS = {
       radius: 7,
       name: 'Pierre Besson',
-      job: 'Bientôt chez sketchfab'
+      job: 'Bientôt chez sketchfab',
+      localSaved: true
     };
 
     var Card = Backbone.Model.extend( {
-
+        initialize(){
+          this.on('change', function onModelChange(model){
+            if(model.changedAttributes().hasOwnProperty('localSaved') === false && model.get('localSaved') === true){
+                model.set('localSaved', false);
+            }
+          })
+        },
         defaults : _.extend({
             radius : 10,
             // Identity defaults
             name: '',
-            job: ''
+            job: '',
+            localSaved: true
         }, PIERRE_DEFAULTS)
 
     } );
@@ -43,9 +62,9 @@ define( [
             // Even if this is maybe not the most optimal way.
             // I use ES2015 string interpolation to build the template, it could be a function.
             this.$el.html(`
-              <div class="name">${this.model.get('name')}</div>
-              <div class="job">${this.model.get('job')}</div>
-              `);
+              <div class='name'>${this.model.get('name')}</div>
+              <div class='job'>${this.model.get('job')}</div>
+            `);
 
             this.onRadiusChange( );
         },
@@ -57,12 +76,21 @@ define( [
 
     // --- --- --- --- --- --- --- --- ---
 
-    var card = new Card( );
+    var card = new Card( readCardDataFromLocalStorage() );
     var view = new View( { model : card, el : $( '.card' ) } );
 
     view.render( );
 
     // --- --- --- --- --- --- --- --- ---
+    // Settings
+
+    var settings = editor.createWidget('Group', {label: 'Settings'});
+    settings.createWidget('Save', SaveToLocalWidget, {
+      model: card,
+      name: 'localSaved',
+      saveToLocal: saveCardDataToLocalStorage,
+      getFromLocal: readCardDataFromLocalStorage
+    });
     // Appearance
     var appearance = editor.createWidget( 'Group', {
         label : 'Card Appearance'
@@ -84,5 +112,6 @@ define( [
         model : card,
         name  : 'job'
     } );
+
 
 } );
