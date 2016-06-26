@@ -17,3 +17,18 @@
     background: #2C2C2C;
     color: #FFFFFF;
 }
+
+.card.dark{
+  background: black;
+  color: white;
+}
+
+.card.light{
+  background: wheat;
+  color: black;
+}
+.card .github{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
