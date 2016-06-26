@@ -23,6 +23,7 @@ define( [
     // Just to have non empty defaults
     var PIERRE_DEFAULTS = {
       radius: 7,
+      orientation: 0,
       name: 'Pierre Besson',
       job: 'Bientôt chez sketchfab',
       localSaved: true
@@ -30,19 +31,22 @@ define( [
 
     var Card = Backbone.Model.extend( {
         initialize(){
-          this.on('change', function onModelChange(model){
-            if(model.changedAttributes().hasOwnProperty('localSaved') === false && model.get('localSaved') === true){
-                model.set('localSaved', false);
-            }
-          })
+          this.on('change', this._localSyncOnChange, this);
         },
         defaults : _.extend({
             radius : 10,
+            orientation: 0,
             // Identity defaults
             name: '',
             job: '',
             localSaved: true
-        }, PIERRE_DEFAULTS)
+        }, PIERRE_DEFAULTS),
+      
+        _localSyncOnChange: function onModelChange(model){
+          if(model.changedAttributes().hasOwnProperty('localSaved') === false && model.get('localSaved') === true){
+              model.set('localSaved', false);
+          }
+        }
 
     } );
 
@@ -50,11 +54,13 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
+            this.model.on( 'change:orientation', this.onOrientationChange, this );
+            this.model.on( 'change:theme', this.onThemeChange, this );
             this.model.on( 'change:name', this.render, this );
             this.model.on( 'change:job', this.render, this );
-
+          
         },
-
+        
         render : function ( ) {
             // I'd rather use templating on this view because it gets informations
             // from all the wiget
@@ -67,11 +73,19 @@ define( [
             `);
 
             this.onRadiusChange( );
+            this.onOrientationChange();
+            this.onThemeChange();
         },
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
+        },
+        onOrientationChange: function onOrientationChange(){
+          this.$el.css( 'transform', `rotate(${this.model.get( 'orientation' )}deg)`);
+        },
+        onThemeChange: function onThemeChange(){
+          console.log('theme', this.model.get('theme'))
+          this.$el.attr('class', `card ${this.model.get('theme')}`)
         }
-
     } );
 
     // --- --- --- --- --- --- --- --- ---
@@ -100,6 +114,18 @@ define( [
         model : card,
         name  : 'radius'
     } );
+    appearance.createWidget( 'Rotation', 'NumberedSlider', {
+        model : card,
+        name  : 'orientation',
+        maximum: 360
+    } );
+    appearance.createWidget( 'Theme', 'Select', {
+        model : card,
+        name  : 'theme',
+        options: ['dark', 'light', 'default']
+    } );
+
+
     // Identity
     var identity = editor.createWidget('Group', {
       label: 'Identity'
@@ -112,6 +138,6 @@ define( [
         model : card,
         name  : 'job'
     } );
-
+  
 
 } );
