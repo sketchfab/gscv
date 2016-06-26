@@ -67,7 +67,7 @@ define( [
             this.model.on( 'change:photo', this.render, this );
         },
         _renderGithub: function renderGithub(github){
-          return github ? `<div style='display:flex; justify-content:space-around; align-items:center'>
+          return github ? `<div class='github'>
               <i class='fa fa-github'></i>
               <p><a href='https://github.com/${github.name}'>@${github.name}</a></p>
               <p>${github.repo}</p>
@@ -76,11 +76,11 @@ define( [
         _renderPhoto: function renderPhoto(photoName){
           switch(photoName){
             case 'vader':
-              return "<img height='65%' style='display: flex;' src='https://media.giphy.com/media/wmJqYd1NA2CU8/giphy.gif' />";
+              return "<img height='65%' src='https://media.giphy.com/media/wmJqYd1NA2CU8/giphy.gif' />";
             case 'luke':
-              return "<img height='65%' style='display: flex;' src='https://media.giphy.com/media/6aR8pvL7Y7BLy/giphy.gif'/>"
+              return "<img height='65%' src='https://media.giphy.com/media/6aR8pvL7Y7BLy/giphy.gif'/>"
             default:
-              return "<img height='65%' style='display: flex;' src='https://media.giphy.com/media/mbUuykVh3yTRe/giphy.gif' />";
+              return "<img height='65%' src='https://media.giphy.com/media/mbUuykVh3yTRe/giphy.gif' />";
           }
 
         },
