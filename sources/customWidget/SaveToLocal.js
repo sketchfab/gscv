@@ -19,7 +19,8 @@ define( [
 
         events: _.extend( {}, Widget.prototype.events, {
             // It is more reactive to see live changes as the use types.
-            'click button': '_saveToLocal'
+            'click button.cancel': '_restoreFromLocal',
+            'click button.save': '_saveToLocal'
         } ),
 
         initialize: function ( options ) {
@@ -32,6 +33,9 @@ define( [
                 // Or use the Cache API
                 saveToLocal: function(jsonToSave){
                   throw new Error('SaveToLocalWidget: You need to provide a saveTo function.', jsonToSave)
+                },
+                getFromLocal: function(){
+                  throw new Error('SaveToLocalWidget: You need to provide a getFromLocal function');
                 }
             } );
 
@@ -39,12 +43,17 @@ define( [
         },
 
         render: function renderSaveToLocal() {
-          this.$el.html(this.get() ? 'saved': '<button>Save locally</button>');
+          this.$el.html(this.get() ?
+            'saved':
+            '<button class="cancel">Cancel</button><button class="save">Save locally</button>');
         },
         // Save to local as given in option and dispatch a change event
         _saveToLocal: function _saveToLocal( e ) {
             this.options.saveToLocal(this.options.model.toJSON());
             this.change(true);
+        },
+        _restoreFromLocal: function _restoreFromLocal(){
+          this.options.model.set(this.options.getFromLocal());
         }
 
     } );
