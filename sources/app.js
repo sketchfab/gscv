@@ -88,7 +88,8 @@ define( [
     settings.createWidget('Save', SaveToLocalWidget, {
       model: card,
       name: 'localSaved',
-      saveToLocal: saveCardDataToLocalStorage
+      saveToLocal: saveCardDataToLocalStorage,
+      getFromLocal: readCardDataFromLocalStorage
     });
     // Appearance
     var appearance = editor.createWidget( 'Group', {
