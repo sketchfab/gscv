@@ -27,3 +27,8 @@
   background: wheat;
   color: black;
 }
+.card .github{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}

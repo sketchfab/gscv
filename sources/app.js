@@ -64,13 +64,25 @@ define( [
             this.model.on( 'change:name', this.render, this );
             this.model.on( 'change:job', this.render, this );
             this.model.on( 'change:githubProfile', this.render, this );
+            this.model.on( 'change:photo', this.render, this );
         },
         _renderGithub: function renderGithub(github){
-          return github ? `<div style='display:flex; justify-content:space-around; align-items:center'>
+          return github ? `<div class='github'>
               <i class='fa fa-github'></i>
               <p><a href='https://github.com/${github.name}'>@${github.name}</a></p>
               <p>${github.repo}</p>
             </div>`: 'No github profile';
+        },
+        _renderPhoto: function renderPhoto(photoName){
+          switch(photoName){
+            case 'vader':
+              return "<img height='65%' src='https://media.giphy.com/media/wmJqYd1NA2CU8/giphy.gif' />";
+            case 'luke':
+              return "<img height='65%' src='https://media.giphy.com/media/6aR8pvL7Y7BLy/giphy.gif'/>"
+            default:
+              return "<img height='65%' src='https://media.giphy.com/media/mbUuykVh3yTRe/giphy.gif' />";
+          }
+
         },
         render : function ( ) {
             // I'd rather use templating on this view because it gets informations
@@ -82,6 +94,7 @@ define( [
               <div class='name'>${this.model.get('name')}</div>
               <div class='job'>${this.model.get('job')}</div>
               ${this._renderGithub(this.model.get('githubProfile'))}
+              ${this._renderPhoto(this.model.get('photo'))}
             `);
 
             this.onRadiusChange( );
@@ -160,5 +173,10 @@ define( [
         text: 'Load profile',
         event: 'load:github'
     } );
+    identity.createWidget('photo', 'Select', {
+      model: card,
+      name: 'photo',
+      options: ['vader', 'kylo ren', 'luke']
+    })
 
 } );
