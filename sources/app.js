@@ -6,7 +6,7 @@ define( [
     'vendors/JQuery',
     'editor',
     'customWidget/Text',
-    'customWidget/saveToLocal',
+    'customWidget/SaveToLocal',
 
 ], function ( Backbone, $, editor, TextWidget, SaveToLocalWidget ) {
 
@@ -45,7 +45,8 @@ define( [
         _onLoadGithub: function onLoadGithub(model){
           fetch(`/api/profile/${this.get('github')}`)
               .then(r => r.json())
-              .then(d => this.set('githubProfile', d));
+              .then(d => this.set('githubProfile', d))
+              .catch(err => console.error('Error'));
         },
         _localSyncOnChange: function onModelChange(model){
           if(model.changedAttributes().hasOwnProperty('localSaved') === false && model.get('localSaved') === true){
