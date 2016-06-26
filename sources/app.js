@@ -32,6 +32,7 @@ define( [
     var Card = Backbone.Model.extend( {
         initialize(){
           this.on('change', this._localSyncOnChange, this);
+          this.on('load:github', this._onLoadGithub, this);
         },
         defaults : _.extend({
             radius : 10,
@@ -41,7 +42,11 @@ define( [
             job: '',
             localSaved: true
         }, PIERRE_DEFAULTS),
-      
+        _onLoadGithub: function onLoadGithub(model){
+          fetch(`/api/profile/${this.get('github')}`)
+              .then(r => r.json())
+              .then(d => this.set('githubProfile', d));
+        },
         _localSyncOnChange: function onModelChange(model){
           if(model.changedAttributes().hasOwnProperty('localSaved') === false && model.get('localSaved') === true){
               model.set('localSaved', false);
@@ -58,9 +63,15 @@ define( [
             this.model.on( 'change:theme', this.onThemeChange, this );
             this.model.on( 'change:name', this.render, this );
             this.model.on( 'change:job', this.render, this );
-          
+            this.model.on( 'change:githubProfile', this.render, this );
         },
-        
+        _renderGithub: function renderGithub(github){
+          return github ? `<div style='display:flex; justify-content:space-around; align-items:center'>
+              <i class='fa fa-github'></i>
+              <p><a href='https://github.com/${github.name}'>@${github.name}</a></p>
+              <p>${github.repo}</p>
+            </div>`: 'No github profile';
+        },
         render : function ( ) {
             // I'd rather use templating on this view because it gets informations
             // from all the wiget
@@ -70,6 +81,7 @@ define( [
             this.$el.html(`
               <div class='name'>${this.model.get('name')}</div>
               <div class='job'>${this.model.get('job')}</div>
+              ${this._renderGithub(this.model.get('githubProfile'))}
             `);
 
             this.onRadiusChange( );
@@ -138,6 +150,15 @@ define( [
         model : card,
         name  : 'job'
     } );
-  
+    identity.createWidget( 'Github', TextWidget , {
+        model : card,
+        name  : 'github',
+        placeholder: 'fill your profile'
+    } );
+    identity.createWidget( '', 'Button' , {
+        model : card,
+        text: 'Load profile',
+        event: 'load:github'
+    } );
 
 } );
