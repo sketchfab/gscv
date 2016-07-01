@@ -28,7 +28,7 @@ define( [
 
                 model: new Backbone.Model(),
                 event: 'click',
-                text: ''
+                text: '', 
 
             }, options );
 
