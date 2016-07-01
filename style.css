@@ -17,3 +17,19 @@
     background: #2C2C2C;
     color: #FFFFFF;
 }
+
+.pic{
+    position: relative;
+    top: 5px;
+    left: 0;
+    width: 50px;
+    height: 75px;
+    box-sizing: border-box;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.firstName, .lastName, .job, .company{
+    position: relative;
+    /*font-family: "FontAwesome";*/
+}

@@ -2,10 +2,10 @@ define( [
 
     'vendors/Underscore',
 
-    'apis/editor/widgets/Vertical',
+    // 'apis/editor/widgets/Vertical',
     'apis/editor/defaultWidgets'
 
-], function ( _, VerticalWidget ) {
+], function ( _, defaultWidgets ) {
 
     'use strict';
 
@@ -13,7 +13,7 @@ define( [
 
         start: function ( environment, options ) {
 
-            var widget = VerticalWidget.reify( null, _.extend( {
+            var widget = defaultWidgets.Vertical.reify( null, _.extend( {
 
                 environment: _.extend( {}, environment, {
                     popupStack: []
