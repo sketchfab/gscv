@@ -1,0 +1,14 @@
+{
+  "name": "gscv",
+  "homepage": "https://github.com/sketchfab/gscv",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Tep Chann Nimmith TEK"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "font-awesome": "fontawesome#^4.6.3",
+    "bootstrap-sass": "^3.3.6"
+  }
+}

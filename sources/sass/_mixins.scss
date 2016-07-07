@@ -1,0 +1,7 @@
+@mixin transition-css($css) {
+  -webkit-transition: $css 0.3s ease 0s;
+  -moz-transition: $css 0.3s ease 0s;
+  -ms-transition: $css 0.3s ease 0s;
+  -o-transition: $css 0.3s ease 0s;
+  transition: $css 0.3s ease 0s;
+}
