@@ -1,0 +1,22 @@
+{
+  "name": "gscv",
+  "version": "1.0.0",
+  "description": "A Sketchfab, on aime bien venir voir les gens pour leur faire un petit coucou. Du coup, de temps à autres, on doit leur donner des cartes de visite. Pourtant, suite à un récent changement de logo, ces dernières vont devoir être refaites.",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp" : "./node_modules/.bin/gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sketchfab/gscv.git"
+  },
+  "author": "Tep Chann Nimmith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sketchfab/gscv/issues"
+  },
+  "homepage": "https://github.com/sketchfab/gscv#readme"
+}

@@ -1,27 +1,6 @@
-<!DOCTYPE HTML>
-<html class="ready">
-
-    <head>
-
-        <meta charset="UTF-8">
-        <title>Sketchfab Widgets</title>
-
-        <link rel="stylesheet" href="sources/vendors/Normalize.css" />
-        <link rel="stylesheet" href="sources/vendors/editor.css" />
-		<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,700' rel='stylesheet' type='text/css'>
-		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-        <style>.editor-panel, .editor-view { padding-top: 0 }</style>
-        <link rel="stylesheet" href="style.css" />
-
-        <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
-
-    </head>
-
-    <body>
-        <div class="editor">
-            <div class="editor-panel">
-                <div class="logo">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 729.779 235.76" enable-background="new 0 0 729.779 235.76" xml:space="preserve">
 <g id="Layer_1">
 	<rect id="Background" display="none" fill="#FFFFFF" width="729.779" height="235.76"/>
@@ -100,16 +79,3 @@
 <g id="Layer_2">
 </g>
 </svg>
-                </div>
-            </div>
-            <div class="editor-view">
-                <div class="card">
-                    <div class="name title">Tep Chann Nimmith TEK</div>
-                    <div class="job title">Designer</div>
-                </div>
-				<div class="bg"></div>
-            </div>
-        </div>
-    </body>
-
-</html>

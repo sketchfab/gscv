@@ -1,0 +1,34 @@
+.editor-view {
+  display: flex;
+  background-color: white;
+  .bg {
+    background-image: url("img/bg.svg");
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    opacity: 0.3;
+  }
+}
+
+.card {
+  margin: auto;
+
+  flex: none;
+  width: 400px;
+  height: 240px;
+
+  padding: 20px;
+
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
+  background: #2C2C2C;
+  color: #FFFFFF;
+  position: relative;
+  z-index: 1;
+  .job {
+    opacity: 0.5;
+  }
+}
