@@ -20,10 +20,17 @@
             <div class="editor-panel">
             </div>
             <div class="editor-view">
-                <div class="card">
-                    <div class="name">Maël Nison</div>
-                    <div class="job">Frontend Developer</div>
+                <div id="card" class="card">
+                    <script type="text/template" id="user_data">
+                    <img id="logo" src="" height="200" alt="Image preview...">
+                    <div id="user_text">
+                    <div id="name" class="name"><%= firstname %> <%= lastname %></div>
+                    <div id="title" class="job"><%= title %></div>
+                    </div>
+                    </script>
+                  
                 </div>
+                  
             </div>
         </div>
     </body>

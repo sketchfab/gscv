@@ -3,7 +3,11 @@
 
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
 }
-
+#logo{
+    float: right;
+    width: 100px;
+    height: 100px;
+}
 .card {
     margin: auto;
 
