@@ -15,7 +15,7 @@ define( [
             radius : 10,
             borderWith : 0,
             borderStyle : 'solid',
-            borderColor : '#000',
+            borderColor : '#000000'
         }
 
     } );
@@ -24,19 +24,22 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
-            this.model.on( 'change:borderWith', this.onWidthChange, this );
+            this.model.on( 'change:borderWith', this.onBorderChange, this );
+            this.model.on( 'change:borderStyle', this.onBorderChange, this );
+            this.model.on( 'change:borderColor', this.onBorderChange, this );
         },
 
         render : function ( ) {
             this.onRadiusChange( );
-            this.onWidthChange( );
+            this.onBorderChange( );
         },
 
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
         },
 
-        onWidthChange : function ( ) {
+        onBorderChange : function ( ) {
+
             this.$el.css({
               'border-width': this.model.get( 'borderWith' ),
               'border-style': this.model.get( 'borderStyle' ),
@@ -67,6 +70,11 @@ define( [
     appearance.createWidget( 'Border width', 'NumberedSlider', {
         model : card,
         name  : 'borderWith'
+    } );
+
+    appearance.createWidget( 'Border color', 'Color', {
+        model : card,
+        name  : 'borderColor'
     } );
 
 } );
