@@ -1,0 +1,23 @@
+{
+  "name": "gscv",
+  "version": "1.0.0",
+  "description": "A Sketchfab, on aime bien venir voir les gens pour leur faire un petit coucou. Du coup, de temps à autres, on doit leur donner des cartes de visite. Pourtant, suite à un récent changement de logo, ces dernières vont devoir être refaites.",
+  "main": "index.js",
+  "devDependencies": {
+    "http-server": "0.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node node_modules/http-server/bin/http-server -p 8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kud/gscv.git"
+  },
+  "author": "Erwann Mest <m@kud.io> (http://kud.io/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kud/gscv/issues"
+  },
+  "homepage": "https://github.com/kud/gscv#readme"
+}
