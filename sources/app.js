@@ -12,6 +12,8 @@ define( [
     var Card = Backbone.Model.extend( {
 
         defaults : {
+            firstName : 'John',
+            lastName : 'Doe',
             radius : 10,
             borderWith : 0,
             borderStyle : 'solid',
@@ -23,6 +25,8 @@ define( [
     var View = Backbone.View.extend( {
 
         initialize : function ( ) {
+            this.model.on( 'change:firstName', this.onFirstNameChange, this );
+            this.model.on( 'change:lastName', this.onLastNameChange, this );
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:borderWith', this.onBorderChange, this );
             this.model.on( 'change:borderStyle', this.onBorderChange, this );
@@ -30,8 +34,18 @@ define( [
         },
 
         render : function ( ) {
+            this.onFirstNameChange( );
+            this.onLastNameChange( );
             this.onRadiusChange( );
             this.onBorderChange( );
+        },
+
+        onFirstNameChange : function ( ) {
+            this.$el.find('.ska-js-Card-firstName').text( this.model.get( 'firstName' ) );
+        },
+
+        onLastNameChange : function ( ) {
+            this.$el.find('.ska-js-Card-lastName').text( this.model.get( 'lastName' ) );
         },
 
         onRadiusChange : function ( ) {
@@ -57,6 +71,20 @@ define( [
     view.render( );
 
     // --- --- --- --- --- --- --- --- ---
+
+    var appearance = editor.createWidget( 'Group', {
+        label : 'Card Content'
+    } );
+
+    appearance.createWidget( 'First name', 'Input', {
+        model : card,
+        name  : 'firstName'
+    } );
+
+    appearance.createWidget( 'Last name', 'Input', {
+        model : card,
+        name  : 'lastName'
+    } );
 
     var appearance = editor.createWidget( 'Group', {
         label : 'Card Appearance'
