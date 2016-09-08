@@ -11,6 +11,7 @@ define( [
     'apis/editor/widgets/Horizontal',
     'apis/editor/widgets/Hyde',
     'apis/editor/widgets/Image',
+    'apis/editor/widgets/Input',
     'apis/editor/widgets/Label',
     'apis/editor/widgets/NumberedSlider',
     'apis/editor/widgets/Number',
@@ -24,7 +25,7 @@ define( [
     'apis/editor/widgets/Vertical',
     'apis/editor/widgets/Widget'
 
-], function ( AngleWidget, AnnotationWidget, AxisWidget, ButtonWidget, ColorWidget, FactoredImageWidget, FilePickerWidget, GroupWidget, HorizontalWidget, Hyde, ImageWidget, LabelWidget, NumberedSliderWidget, NumberWidget, OrientationWidget, RepeatWidget, SelectWidget, SlideredImageWidget, SliderWidget, TabbedWidget, ToggleSwitchWidget, VerticalWidget ) {
+], function ( AngleWidget, AnnotationWidget, AxisWidget, ButtonWidget, ColorWidget, FactoredImageWidget, FilePickerWidget, GroupWidget, HorizontalWidget, Hyde, ImageWidget, InputWidget, LabelWidget, NumberedSliderWidget, NumberWidget, OrientationWidget, RepeatWidget, SelectWidget, SlideredImageWidget, SliderWidget, TabbedWidget, ToggleSwitchWidget, VerticalWidget ) {
 
     'use strict';
 
@@ -40,6 +41,7 @@ define( [
         Repeat: RepeatWidget,
 
         Image: ImageWidget,
+        Input: InputWidget,
         Color: ColorWidget,
         FactoredImage: FactoredImageWidget,
         SlideredImage: SlideredImageWidget,
