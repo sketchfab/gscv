@@ -14,6 +14,7 @@ define( [
         defaults : {
             firstName : 'John',
             lastName : 'Doe',
+            title : 'Frontend developer',
             radius : 10,
             borderWith : 0,
             borderStyle : 'solid',
@@ -27,6 +28,7 @@ define( [
         initialize : function ( ) {
             this.model.on( 'change:firstName', this.onFirstNameChange, this );
             this.model.on( 'change:lastName', this.onLastNameChange, this );
+            this.model.on( 'change:title', this.onTitleChange, this );
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:borderWith', this.onBorderChange, this );
             this.model.on( 'change:borderStyle', this.onBorderChange, this );
@@ -36,6 +38,7 @@ define( [
         render : function ( ) {
             this.onFirstNameChange( );
             this.onLastNameChange( );
+            this.onTitleChange( );
             this.onRadiusChange( );
             this.onBorderChange( );
         },
@@ -46,6 +49,10 @@ define( [
 
         onLastNameChange : function ( ) {
             this.$el.find('.ska-js-Card-lastName').text( this.model.get( 'lastName' ) );
+        },
+
+        onTitleChange : function ( ) {
+            this.$el.find('.ska-js-Card-title').text( this.model.get( 'title' ) );
         },
 
         onRadiusChange : function ( ) {
@@ -84,6 +91,11 @@ define( [
     appearance.createWidget( 'Last name', 'Input', {
         model : card,
         name  : 'lastName'
+    } );
+
+    appearance.createWidget( 'Title', 'Input', {
+        model : card,
+        name  : 'title'
     } );
 
     var appearance = editor.createWidget( 'Group', {
