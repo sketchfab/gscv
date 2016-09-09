@@ -4109,7 +4109,9 @@ textarea.form-input, textarea.form-listbox, textarea.form-prefixed-input {
   /* The +1 is because we have a right border */
   width: 291px;
   height: 100%;
-  padding-top: 55px; }
+  padding-top: 55px;
+  overflow: auto;
+}
 
 /* line 25, ../../../static/sass/editor/_layout.scss */
 .editor-view {
