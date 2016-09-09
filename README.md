@@ -24,10 +24,10 @@ Bref, votre mission consiste à achever le GSCV et rétablir la paix et l'harmon
 - Le squelette de l'application est déjà présent
 - Une bibliothèque de widgets vous est également fournie pour réaliser l'éditeur
 - A priori, seuls les fichiers `index.html`, `style.css` et `app.js` ont besoin d'être modifiés
-- Si vous trouvez et fixez un bug dans le dossier `apis`, c'est super-tip-top ☺
+- Si vous trouvez et fixez un bug dans le dossier `api`, c'est super-tip-top ☺
 - Vous êtes libres d'ajouter ce que vous souhaitez à l'application. Quelques examples :
     - Permettre de modifier le nom et la profession (conseillé ... ;)
-        - Vous aurez probablement besoin de créer un ou plusieurs nouveaux widgets pour l'éditeur. Prenez exemple sur le modèle de ceux déjà présents dans le dossier `apis`.
+        - Vous aurez probablement besoin de créer un ou plusieurs nouveaux widgets pour l'éditeur. Prenez exemple sur le modèle de ceux déjà présents dans le dossier `api`.
     - Changer la couleur des textes, du fond de la carte, les tailles des polices ...
     - Des images ! Choisir un arrière-plan parmis plusieurs, par exemple
     - ... Et à peu près tout ce que vous souhaitez d'autre.

@@ -21,7 +21,7 @@ require( [
     'vendors/jquery/mousewheel',
     'vendors/jquery/toggleAttr',
 
-    'sources/apis/editor/API.js'
+    'sources/api/editor/API.js'
 
 ], function ( $, UI, mousewheel, toggleAttr, WidgetApi ) {
 
