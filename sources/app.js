@@ -44,15 +44,15 @@ define( [
         },
 
         onFirstNameChange : function ( ) {
-            this.$el.find('.ska-js-Card-firstName').text( this.model.get( 'firstName' ) );
+            this.$el.find('.ske-js-Card-firstName').text( this.model.get( 'firstName' ) );
         },
 
         onLastNameChange : function ( ) {
-            this.$el.find('.ska-js-Card-lastName').text( this.model.get( 'lastName' ) );
+            this.$el.find('.ske-js-Card-lastName').text( this.model.get( 'lastName' ) );
         },
 
         onTitleChange : function ( ) {
-            this.$el.find('.ska-js-Card-title').text( this.model.get( 'title' ) );
+            this.$el.find('.ske-js-Card-title').text( this.model.get( 'title' ) );
         },
 
         onRadiusChange : function ( ) {
