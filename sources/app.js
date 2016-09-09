@@ -15,6 +15,7 @@ define( [
             firstName : 'John',
             lastName : 'Doe',
             title : 'Frontend developer',
+            backgroundColor : '#000000',
             radius : 10,
             borderWith : 0,
             borderStyle : 'solid',
@@ -29,6 +30,7 @@ define( [
             this.model.on( 'change:firstName', this.onFirstNameChange, this );
             this.model.on( 'change:lastName', this.onLastNameChange, this );
             this.model.on( 'change:title', this.onTitleChange, this );
+            this.model.on( 'change:backgroundColor', this.onBackgroundColorChange, this );
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:borderWith', this.onBorderChange, this );
             this.model.on( 'change:borderStyle', this.onBorderChange, this );
@@ -39,6 +41,7 @@ define( [
             this.onFirstNameChange( );
             this.onLastNameChange( );
             this.onTitleChange( );
+            this.onBackgroundColorChange( );
             this.onRadiusChange( );
             this.onBorderChange( );
         },
@@ -53,6 +56,10 @@ define( [
 
         onTitleChange : function ( ) {
             this.$el.find('.ske-js-Card-title').text( this.model.get( 'title' ) );
+        },
+
+        onBackgroundColorChange : function ( ) {
+            this.$el.css( 'background-color', this.model.get( 'backgroundColor' ) );
         },
 
         onRadiusChange : function ( ) {
@@ -100,6 +107,11 @@ define( [
 
     var appearance = editor.createWidget( 'Group', {
         label : 'Card Appearance'
+    } );
+
+    appearance.createWidget( 'Background color', 'Color', {
+        model : card,
+        name  : 'backgroundColor'
     } );
 
     appearance.createWidget( 'Border radius', 'NumberedSlider', {
