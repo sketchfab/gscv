@@ -16,6 +16,7 @@ define( [
             lastName : 'Doe',
             title : 'Frontend developer',
             description : '',
+            textColor : '#FFFFFF',
             textShadow : false,
 
             backgroundColor : '#000000',
@@ -34,6 +35,7 @@ define( [
             this.model.on( 'change:lastName', this.onLastNameChange, this );
             this.model.on( 'change:title', this.onTitleChange, this );
             this.model.on( 'change:description', this.onDescriptionChange, this );
+            this.model.on( 'change:textColor', this.onTextColorChange, this );
             this.model.on( 'change:textShadow', this.onTextShadowChange, this );
             this.model.on( 'change:backgroundColor', this.onBackgroundColorChange, this );
             this.model.on( 'change:radius', this.onRadiusChange, this );
@@ -47,6 +49,7 @@ define( [
             this.onLastNameChange( );
             this.onTitleChange( );
             this.onDescriptionChange( );
+            this.onTextColorChange( );
             this.onTextShadowChange( );
             this.onBackgroundColorChange( );
             this.onRadiusChange( );
@@ -67,6 +70,10 @@ define( [
 
         onDescriptionChange : function ( ) {
             this.$el.find('.ske-js-Card-description').text( this.model.get( 'description' ) );
+        },
+
+        onTextColorChange : function ( ) {
+          this.$el.css( 'color', this.model.get( 'textColor' ) );
         },
 
         onTextShadowChange : function ( ) {
@@ -125,6 +132,11 @@ define( [
     appearance.createWidget( 'Description', 'Textarea', {
         model : card,
         name  : 'description'
+    } );
+
+    appearance.createWidget( 'Text color', 'Color', {
+        model : card,
+        name  : 'textColor'
     } );
 
     appearance.createWidget( 'Text Shadow', 'ToggleSwitch', {
