@@ -23,8 +23,8 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
-            this.model.on( 'click', this.onNameUpdate, this );
-            this.model.on( 'click', this.onJobUpdate, this );
+            this.model.on( 'change:name', this.onNameUpdate, this );
+            this.model.on( 'change:job', this.onJobUpdate, this );
         },
 
         render : function ( ) {

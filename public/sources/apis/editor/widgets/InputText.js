@@ -19,7 +19,7 @@ define( [
         ].join( '' ),
 
         events: _.extend( {}, HorizontalWidget.prototype.events, {
-            'click .button': 'clickEvent'
+            'change .input:input': 'changeEvent'
         } ),
 
         initialize: function ( options ) {
@@ -28,7 +28,6 @@ define( [
 
                 model: new Backbone.Model(),
                 name: 'value',
-                text: 'Valider',
 
                 unit: null
 
@@ -77,9 +76,10 @@ define( [
 
         },
 
-        clickEvent: function () {
+        changeEvent: function () {
 
             console.log(this.model);
+            console.log(this.$( '.input' ).val());
 
             this.model.set( 'value', this.$( '.input' ).val() );
 
