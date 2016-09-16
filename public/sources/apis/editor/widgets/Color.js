@@ -29,7 +29,13 @@ define( [
         ].join( '' ),
 
         events: _.extend( {}, Widget.prototype.events, {
-            'change .value:input': 'changeEvent'
+            'change .value:input': 'changeEvent',
+            'mousedown .picker': 'changeEvent',
+            'mouseup .picker': 'changeEvent',
+            'blur .picker': 'changeEvent',
+            'mousedown rect': 'changeEvent',
+            'mouseup rect': 'changeEvent',
+            'blur rect': 'changeEvent'
         } ),
 
         initialize: function ( options ) {

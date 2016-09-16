@@ -19,7 +19,7 @@ define( [
         ].join( '' ),
 
         events: _.extend( {}, HorizontalWidget.prototype.events, {
-            'change .input:input': 'changeEvent'
+            'keyup .input:input': 'changeEvent'
         } ),
 
         initialize: function ( options ) {
@@ -43,13 +43,10 @@ define( [
             var common = {
                 model: this.model,
                 name: this.options.name,
-                text: this.options.text,
                 value: this.options.value,
                 renderValue: null,
                 inputValue: null
             };
-
-            this.button = this.createWidget( 'Button', _.extend( {}, common, this.options.buttonOptions ) );
 
             if ( this.options.unit ) {
                 // Unit is positionned on the right only.
@@ -78,10 +75,7 @@ define( [
 
         changeEvent: function () {
 
-            console.log(this.model);
-            console.log(this.$( '.input' ).val());
-
-            this.model.set( 'value', this.$( '.input' ).val() );
+            this.model.set( this.options.name, this.$( '.input' ).val() );
 
         }
 
