@@ -54,8 +54,9 @@ define( [
 
             Widget.prototype.initialize.call( this, options );
 
-            if ( typeof this.get() === 'undefined' )
+            if ( typeof this.get() === 'undefined' ) {
                 this.set( 0 );
+            }
 
             if ( this.options.decimals === null ) {
                 this.options.decimals = options.step.toString().replace( /^[0-9]*(?:\.([0-9]*))$/, '$1' ).length;

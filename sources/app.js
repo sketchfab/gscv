@@ -13,7 +13,9 @@ define( [
 
         defaults : {
             radius : 10,
-            fontsize : 24
+            fontsize : 24,
+            name : 'My Name',
+            job : 'My job',
         }
 
     } );
@@ -23,11 +25,15 @@ define( [
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:fontsize', this.onFontSizeChange, this );
+            this.model.on( 'change:name', this.onNameChange, this );
+            this.model.on( 'change:job', this.onJobChange, this );
         },
 
         render : function ( ) {
             this.onRadiusChange( );
             this.onFontSizeChange( );
+            this.onNameChange( );
+            this.onJobChange( );
         },
 
         onRadiusChange : function ( ) {
@@ -36,7 +42,15 @@ define( [
 
         onFontSizeChange : function ( ) {
             this.$el.css( 'font-size', this.model.get( 'fontsize' ) );
-        }
+        },
+
+        onNameChange : function ( ) {
+            this.$( '.name' ).text( this.model.get( 'name' ) );
+        },
+
+        onJobChange : function ( ) {
+            this.$( '.job' ).text( this.model.get( 'job' ) );
+        },
 
     } );
 
@@ -49,6 +63,7 @@ define( [
 
     // --- --- --- --- --- --- --- --- ---
 
+    // card appearance
     var appearance = editor.createWidget( 'Group', {
         label : 'Card Appearance'
     } );
@@ -58,9 +73,31 @@ define( [
         name  : 'radius'
     } );
 
-    appearance.createWidget( 'Font size', 'NumberedSlider', {
+
+    // font appearance
+    var fontAppearance = editor.createWidget( 'Group', {
+        label : 'Font appearance'
+    } );
+
+    fontAppearance.createWidget( 'Font size', 'NumberedSlider', {
         model : card,
         name  : 'fontsize'
     } );
+
+
+    // text appearance
+    var textContent = editor.createWidget( 'Group', {
+        label : 'Text content'
+    } );
+
+    textContent.createWidget( 'Name', 'Text', {
+        model : card,
+        name : 'name'
+    } );
+
+    textContent.createWidget( 'Job', 'Text', {
+        model : card,
+        name : 'job'
+    })
 
 } );
