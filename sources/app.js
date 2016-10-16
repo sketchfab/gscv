@@ -13,11 +13,13 @@ define( [
 
         defaults : {
             radius : 10,
-            //cardBackgroundColor : { r : 0.17255, g : 0.17255, b : 0.17255 },
-            image : { r : 0.17255, g : 0.17255, b : 0.17255 },
+            backgroundColor : { r : 0.17255, g : 0.17255, b : 0.17255 },
+            secondBackgroundColor : { r : 1, g : 1, b : 1 },
             borderWidth : 10,
             borderStyle : 'none',
             borderColor : { r : 0, g : 0, b : 0 },
+            isLinearGradientActive : false,
+            linearGradientOrientation : 45,
 
             nameFontSize : 24,
             jobFontSize : 18,
@@ -35,8 +37,10 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
-            //this.model.on( 'change:cardBackgroundColor', this.onCardBackgroundColorChange, this );
-            this.model.on( 'change:image', this.onImageChange, this );
+            this.model.on( 'change:backgroundColor', this.onBackgroundColorChange, this );
+            this.model.on( 'change:secondBackgroundColor', this.onSecondBackgroundColorChange, this );
+            this.model.on( 'change:isLinearGradientActive', this.onIsLinearGradientActiveChange, this );
+            this.model.on( 'change:linearGradientOrientation', this.onLinearGradientOrientationChange, this);
             this.model.on( 'change:borderWidth', this.onBorderWidthChange, this );
             this.model.on( 'change:borderStyle', this.onBorderStyleChange, this );
             this.model.on( 'change:borderColor', this.onBorderColorChange, this );
@@ -53,8 +57,7 @@ define( [
 
         render : function ( ) {
             this.onRadiusChange( );
-            //this.onCardBackgroundColorChange( );
-            this.onImageChange( );
+            this.onBackgroundColorChange( );
             this.onBorderWidthChange( );
             this.onBorderStyleChange( );
             this.onBorderColorChange( );
@@ -85,12 +88,35 @@ define( [
             this.$el.css( 'border-color', this.rgbToHex( this.model.get( 'borderColor' ) ) );
         },
 
-        /* onCardBackgroundColorChange : function ( ) {
-            this.$el.css( 'background-color', this.rgbToHex( this.model.get( 'cardBackgroundColor' ) ) );
-        },*/
+        onBackgroundColorChange : function ( ) {
+            if( this.model.get( 'isLinearGradientActive' ) ) {
+                this.$el.css( 'background-image', this.getLinearGradient( ) );
+            } else {
+                this.$el.css( 'background-color', this.rgbToHex( this.model.get( 'backgroundColor' ) ) );
+            }
+        },
 
-        onImageChange : function ( ) {
-            this.$el.css( 'background-color', this.rgbToHex( this.model.get( 'image' ) ) );
+        onSecondBackgroundColorChange : function ( ) {
+            this.$el.css( 'background-image', this.getLinearGradient( ) );
+        },
+
+        onIsLinearGradientActiveChange : function ( ) {
+            if( this.model.get( 'isLinearGradientActive' ) ) {
+                this.$el.css( 'background-image', this.getLinearGradient( ) );
+            } else {
+                this.$el.css( 'background-image', '' );
+                this.$el.css( 'background-color', this.rgbToHex( this.model.get( 'backgroundColor' ) ) );
+            }
+        },
+
+        onLinearGradientOrientationChange : function ( ) {
+            this.$el.css( 'background-image', this.getLinearGradient( ) );
+        },
+
+        getLinearGradient : function ( ) {
+            return 'linear-gradient( ' + this.model.get( 'linearGradientOrientation' ) + 'deg, ' +
+                    this.rgbToHex( this.model.get( 'backgroundColor' ) ) + ', ' + 
+                    this.rgbToHex( this.model.get( 'secondBackgroundColor' ) ) + ')';
         },
 
 
@@ -177,19 +203,38 @@ define( [
         }
     } );
 
-    appearance.createWidget( 'Border color', 'Color', {
+    appearance.createWidget( 'Border color', 'Image', {
         model : card,
-        name : 'borderColor'
+        name : 'borderColor',
+        allowTexture : false
     })
 
-    /*appearance.createWidget( 'Background color', 'Color', {
+    appearance.createWidget( 'Background color', 'Image', {
         model : card,
-        name : 'cardBackgroundColor'
-    } );*/
+        name : 'backgroundColor',
+        allowTexture : false
+    } );
 
-    appearance.createWidget( 'Background image', 'Image', {
+    appearance.createWidget( 'ToggleSwitch', {
         model : card,
-        name : 'image'
+        label : 'Linear gradient',
+        name : 'isLinearGradientActive'
+    } );
+
+    var hiddenLinearGradient = appearance.createWidget( 'Hyde', {
+        model : card,
+        name : 'isLinearGradientActive'
+    } );
+    
+    hiddenLinearGradient.createWidget( 'Second color', 'Image', {
+        model : card,
+        name : 'secondBackgroundColor',
+        allowTexture : false
+    } );
+
+    hiddenLinearGradient.createWidget( 'Linear gradient orientation', 'Angle', {
+        model : card,
+        name : 'linearGradientOrientation'
     } );
 
 
@@ -218,9 +263,10 @@ define( [
         name  : 'nameFontSize'
     } );
 
-    nameAppearance.createWidget( 'Name font color', 'Color', {
+    nameAppearance.createWidget( 'Name font color', 'Image', {
         model : card,
-        name : 'nameFontColor'
+        name : 'nameFontColor',
+        allowTexture : false
     } );
 
     // job
@@ -243,9 +289,10 @@ define( [
         name  : 'jobFontSize'
     } );
 
-    jobAppearance.createWidget( 'Job font color', 'Color', {
+    jobAppearance.createWidget( 'Job font color', 'Image', {
         model : card,
-        name : 'jobFontColor'
+        name : 'jobFontColor',
+        allowTexture : false
     } );
 
 } );
