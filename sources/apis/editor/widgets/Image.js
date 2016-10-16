@@ -53,13 +53,13 @@ define( [
             this.canvas = this.$( '.preview' )[ 0 ] || document.createElement( 'canvas' );
             this.context = this.canvas.getContext( '2d' );
 
-            if ( this.get() === undefined )
+            if ( this.get() === undefined ) {
                 this.set( {
                     r: 1,
                     g: 1,
                     b: 1
                 } );
-
+            }
 
             var colorPanel, texturePanel;
 

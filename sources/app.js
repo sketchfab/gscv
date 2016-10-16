@@ -13,7 +13,12 @@ define( [
 
         defaults : {
             radius : 10,
-            cardBackgroundColor : { r : 0.17255, g : 0.17255, b : 0.17255 },
+            //cardBackgroundColor : { r : 0.17255, g : 0.17255, b : 0.17255 },
+            image : { r : 0.17255, g : 0.17255, b : 0.17255 },
+            borderWidth : 10,
+            borderStyle : 'none',
+            borderColor : { r : 0, g : 0, b : 0 },
+
             nameFontSize : 24,
             jobFontSize : 18,
             nameFontColor : { r : 1, g : 1, b : 1 },
@@ -30,7 +35,12 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
-            this.model.on( 'change:cardBackgroundColor', this.onCardBackgroundColorChange, this );
+            //this.model.on( 'change:cardBackgroundColor', this.onCardBackgroundColorChange, this );
+            this.model.on( 'change:image', this.onImageChange, this );
+            this.model.on( 'change:borderWidth', this.onBorderWidthChange, this );
+            this.model.on( 'change:borderStyle', this.onBorderStyleChange, this );
+            this.model.on( 'change:borderColor', this.onBorderColorChange, this );
+
             this.model.on( 'change:nameFontSize', this.onNameFontSizeChange, this );
             this.model.on( 'change:jobFontSize', this.onJobFontSizeChange, this );
             this.model.on( 'change:nameFontColor', this.onNameFontColorChange, this );
@@ -43,7 +53,12 @@ define( [
 
         render : function ( ) {
             this.onRadiusChange( );
-            this.onCardBackgroundColorChange( );
+            //this.onCardBackgroundColorChange( );
+            this.onImageChange( );
+            this.onBorderWidthChange( );
+            this.onBorderStyleChange( );
+            this.onBorderColorChange( );
+
             this.onNameFontSizeChange( );
             this.onJobFontSizeChange( );
             this.onNameFontColorChange( );
@@ -58,9 +73,26 @@ define( [
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
         },
 
-        onCardBackgroundColorChange : function ( ) {
-            this.$el.css( 'background-color', this.rgbToHex( this.model.get( 'cardBackgroundColor' ) ) );
+        onBorderWidthChange : function ( ) {
+            this.$el.css( 'border-width', this.model.get( 'borderWidth' ) );
         },
+
+        onBorderStyleChange : function ( ) {
+            this.$el.css( 'border-style', this.model.get( 'borderStyle' ) );
+        },
+
+        onBorderColorChange : function ( ) {
+            this.$el.css( 'border-color', this.rgbToHex( this.model.get( 'borderColor' ) ) );
+        },
+
+        /* onCardBackgroundColorChange : function ( ) {
+            this.$el.css( 'background-color', this.rgbToHex( this.model.get( 'cardBackgroundColor' ) ) );
+        },*/
+
+        onImageChange : function ( ) {
+            this.$el.css( 'background-color', this.rgbToHex( this.model.get( 'image' ) ) );
+        },
+
 
         onNameFontSizeChange : function ( ) {
             this.$( '.name' ).css( 'font-size', this.model.get( 'nameFontSize' ) );
@@ -124,9 +156,40 @@ define( [
         name  : 'radius'
     } );
 
-    appearance.createWidget( 'Background color', 'Color', {
+    appearance.createWidget( 'Border width', 'NumberedSlider', {
+        model : card,
+        name : 'borderWidth'
+    } );
+
+    appearance.createWidget( 'Border style', 'Select', {
+        model : card,
+        name : 'borderStyle',
+        options : {
+            'none' : 'None',
+            'solid' : 'Solid',
+            'dotted' : 'Dotted',
+            'dashed' : 'Dashed',
+            'double' : 'Double',
+            'groove' : 'Groove',
+            'ridge' : 'Ridge',
+            'inset' : 'Inset',
+            'outset' : 'Outset'
+        }
+    } );
+
+    appearance.createWidget( 'Border color', 'Color', {
+        model : card,
+        name : 'borderColor'
+    })
+
+    /*appearance.createWidget( 'Background color', 'Color', {
         model : card,
         name : 'cardBackgroundColor'
+    } );*/
+
+    appearance.createWidget( 'Background image', 'Image', {
+        model : card,
+        name : 'image'
     } );
 
 
