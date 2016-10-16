@@ -14,8 +14,12 @@ define( [
         defaults : {
             radius : 10,
             cardBackgroundColor : { r : 0.17255, g : 0.17255, b : 0.17255 },
-            fontsize : 24,
-            fontColor : { r : 1, g : 1, b : 1 },
+            nameFontSize : 24,
+            jobFontSize : 18,
+            nameFontColor : { r : 1, g : 1, b : 1 },
+            jobFontColor : { r : 1, g : 1, b : 1 },
+            nameFontFamily : 'Helvetica',
+            jobFontFamily : 'Arial',
             name : 'My Name',
             job : 'My job',
         }
@@ -27,8 +31,12 @@ define( [
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
             this.model.on( 'change:cardBackgroundColor', this.onCardBackgroundColorChange, this );
-            this.model.on( 'change:fontsize', this.onFontSizeChange, this );
-            this.model.on( 'change:fontColor', this.onFontColorChange, this );
+            this.model.on( 'change:nameFontSize', this.onNameFontSizeChange, this );
+            this.model.on( 'change:jobFontSize', this.onJobFontSizeChange, this );
+            this.model.on( 'change:nameFontColor', this.onNameFontColorChange, this );
+            this.model.on( 'change:jobFontColor', this.onJobFontColorChange, this );
+            this.model.on( 'change:nameFontFamily', this.onNameFontFamilyChange, this );
+            this.model.on( 'change:jobFontFamily', this.onJobFontFamilyChange, this );
             this.model.on( 'change:name', this.onNameChange, this );
             this.model.on( 'change:job', this.onJobChange, this );
         },
@@ -36,8 +44,12 @@ define( [
         render : function ( ) {
             this.onRadiusChange( );
             this.onCardBackgroundColorChange( );
-            this.onFontSizeChange( );
-            this.onFontColorChange();
+            this.onNameFontSizeChange( );
+            this.onJobFontSizeChange( );
+            this.onNameFontColorChange( );
+            this.onJobFontColorChange( );
+            this.onNameFontFamilyChange( );
+            this.onJobFontFamilyChange( );
             this.onNameChange( );
             this.onJobChange( );
         },
@@ -50,12 +62,28 @@ define( [
             this.$el.css( 'background-color', this.rgbToHex( this.model.get( 'cardBackgroundColor' ) ) );
         },
 
-        onFontSizeChange : function ( ) {
-            this.$el.css( 'font-size', this.model.get( 'fontsize' ) );
+        onNameFontSizeChange : function ( ) {
+            this.$( '.name' ).css( 'font-size', this.model.get( 'nameFontSize' ) );
         },
 
-        onFontColorChange : function ( ) {
-            this.$el.css( 'color', this.rgbToHex( this.model.get( 'fontColor' ) ) );
+        onJobFontSizeChange : function ( ) {
+            this.$( '.job' ).css( 'font-size', this.model.get( 'jobFontSize' ) );
+        },
+
+        onNameFontColorChange : function ( ) {
+            this.$( '.name' ).css( 'color', this.rgbToHex( this.model.get( 'nameFontColor' ) ) );
+        },
+
+        onJobFontColorChange : function ( ) {
+            this.$( '.job' ).css( 'color', this.rgbToHex( this.model.get( 'jobFontColor' ) ) );
+        },
+
+        onNameFontFamilyChange : function ( ) {
+            this.$( '.name' ).css( 'font-family', this.model.get( 'nameFontFamily' ) );
+        },
+
+        onJobFontFamilyChange : function ( ) {
+            this.$( '.job' ).css( 'font-family', this.model.get( 'jobFontFamily' ) );
         },
 
         onNameChange : function ( ) {
@@ -102,35 +130,59 @@ define( [
     } );
 
 
-    // font appearance
-    var fontAppearance = editor.createWidget( 'Group', {
-        label : 'Font appearance'
-    } );
-
-    fontAppearance.createWidget( 'Font size', 'NumberedSlider', {
-        model : card,
-        name  : 'fontsize'
-    } );
-
-    fontAppearance.createWidget( 'Font color', 'Color', {
-        model : card,
-        name : 'fontColor'
-    })
-
-
     // text appearance
-    var textContent = editor.createWidget( 'Group', {
-        label : 'Text content'
+    var textAppearance = editor.createWidget( 'Group', {
+        label : 'Text appearance'
     } );
 
-    textContent.createWidget( 'Name', 'Text', {
+    // name
+    var nameAppearance = textAppearance.createWidget( 'Group', {
+        label : 'Name appearance'
+    } );
+
+    nameAppearance.createWidget( 'Name', 'Text', {
         model : card,
         name : 'name'
     } );
 
-    textContent.createWidget( 'Job', 'Text', {
+    nameAppearance.createWidget( 'Name font family', 'Text',  {
+        model : card,
+        name : 'nameFontFamily'
+    } );
+
+    nameAppearance.createWidget( 'Name font size', 'NumberedSlider', {
+        model : card,
+        name  : 'nameFontSize'
+    } );
+
+    nameAppearance.createWidget( 'Name font color', 'Color', {
+        model : card,
+        name : 'nameFontColor'
+    } );
+
+    // job
+    var jobAppearance = textAppearance.createWidget( 'Group', {
+        label : 'Job appearance'
+    } );
+
+    jobAppearance.createWidget( 'Job', 'Text', {
         model : card,
         name : 'job'
-    })
+    } );
+
+    jobAppearance.createWidget( 'Job font family', 'Text',  {
+        model : card,
+        name : 'jobFontFamily'
+    } );
+
+    jobAppearance.createWidget( 'Job font size', 'NumberedSlider', {
+        model : card,
+        name  : 'jobFontSize'
+    } );
+
+    jobAppearance.createWidget( 'Job font color', 'Color', {
+        model : card,
+        name : 'jobFontColor'
+    } );
 
 } );

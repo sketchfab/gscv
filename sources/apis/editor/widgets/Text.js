@@ -14,9 +14,7 @@ define( [
 
         el: [ '<div class="widget text-widget">',
             '          <div class="widget-wrapper">',
-            '              <div class="decrease"><a></a></div>',
             '              <input class="value" />',
-            '              <div class="increase"><a></a></div>',
             '          </div>',
             '      </div>'
         ].join( '' ),
