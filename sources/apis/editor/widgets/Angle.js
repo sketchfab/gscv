@@ -25,7 +25,7 @@ define( [
 
                 minimum: 0,
                 maximum: 360,
-                step: 90,
+                step: 45,
 
                 cycle: true
 
