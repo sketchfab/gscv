@@ -58,9 +58,9 @@ define( [
                 sliderCursor: this.$( '.slider > .cursor' )[ 0 ],
                 pickerCursor: this.$( '.picker > .cursor' )[ 0 ]
 
-            }, function ( hsv, rgb /*, hex*/ ) {
+            }, function ( hsv, rgb , hex ) {
 
-                this.change( rgb );
+                this.change( hex );
 
             }.bind( this ) );
 
@@ -69,22 +69,14 @@ define( [
         changeEvent: function () {
 
             this.colorPicker.set( this.$( '.value' ).val() );
+            
 
         },
 
         render: function () {
 
-            var rgb = this.get();
-
-            this.colorPicker.set( rgb );
-
-            var rounded = {
-                r: rgb.r * 255,
-                g: rgb.g * 255,
-                b: rgb.b * 255
-            };
-            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
-
+            this.$( '.widget-wrapper' ).addClass(this.options.class);
+            var hex = this.get();
             this.$( '.value' ).val( hex );
 
         }
