@@ -17,7 +17,7 @@ define( [
             '      </div>'
         ].join( '' ),
 
-         events: _.extend( {}, Widget.prototype.events, {
+        events: _.extend( {}, Widget.prototype.events, {
             'keyup .text:input': 'keyUpEvent',
         }),
 
@@ -41,7 +41,7 @@ define( [
         },
 
         render: function () {
-            //
+
         }
 
     } );

@@ -2,6 +2,11 @@
     display: flex;
 
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
+    
+}
+
+.editor-panel {
+    overflow: auto;
 }
 
 .card {
@@ -16,4 +21,37 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
     background: #2C2C2C;
     color: #FFFFFF;
+}
+
+
+.card .profile-picture {
+    display: block;
+    float: right;
+
+    width: 100px;
+    height: 100px;
+
+    background-position: center;
+    background-size: cover;
+}
+
+.card .details {
+    max-width: 300px;
+}
+
+.card .details .name {
+    font-size: 30px;
+
+    padding: 0 0 5px 0;
+}
+
+.card .details .job {
+    font-size: 20px;
+    
+    padding: 0 0 5px 0;
+}
+
+.card .details .phone,
+.card .details .email {
+    font-size: 15px;
 }
