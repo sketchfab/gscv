@@ -42,9 +42,8 @@ define([
             });
 
             Widget.prototype.initialize.call(this, options);
-            if (typeof this.get() === 'undefined'){
+            if (typeof this.get() === 'undefined') {
                 this.set(options.color);
-                //console.info('lol',this.get());
             }
 
             this.colorPicker = SvgColorPicker({
@@ -56,21 +55,17 @@ define([
                 pickerCursor: this.$('.picker > .cursor')[0]
 
             }, function (hsv, rgb /*, hex*/) {
-
                 this.change(rgb);
-
             }.bind(this));
 
         },
 
+        //todo never triggered
         changeEvent: function () {
-
             this.colorPicker.set(this.$('.value').val());
-
         },
 
         render: function () {
-
             var rgb = this.get();
 
             this.colorPicker.set(rgb);
