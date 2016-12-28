@@ -17,3 +17,7 @@
     background: #2C2C2C;
     color: #FFFFFF;
 }
+
+.widget > .widget:not(.active) {
+    display: none;
+}

@@ -1,4 +1,4 @@
-define( [
+define([
 
     'vendors/Backbone',
     'vendors/JQuery',
@@ -6,66 +6,73 @@ define( [
 
     'apis/editor/widgets/Widget'
 
-], function ( Backbone, $, _, Widget ) {
+], function (Backbone, $, _, Widget) {
 
     'use strict';
 
-    return Widget.extend( {
+    return Widget.extend({
 
-        initialize: function ( options ) {
+        initialize: function (options) {
 
-            options = _.defaults( options || {}, {
+            options = _.defaults(options || {}, {
 
                 withMargins: true,
                 withPadding: false
 
-            }, options );
+            }, options);
 
-            Widget.prototype.initialize.call( this, options );
+            Widget.prototype.initialize.call(this, options);
 
-            if ( this.options.withMargins ) {
-                this.$el.addClass( 'with-margins' );
+            if (this.options.withMargins) {
+                this.$el.addClass('with-margins');
             }
 
-            if ( this.options.withPadding ) {
-                this.$el.addClass( 'with-padding' );
+            if (this.options.withPadding) {
+                this.$el.addClass('with-padding');
             }
 
         },
 
-        addWidget: function ( label, widget ) {
+        addWidget: function (label, widget) {
 
-            if ( arguments.length <= 1 ) {
+            if (arguments.length <= 1) {
                 widget = label;
                 label = undefined;
             }
-
-            if ( label ) {
-                $( '<div/>' )
-                    .attr( 'class', 'widget widget-label' )
-                    .append( $( '<label/>' )
-                        .attr( 'class', 'label' )
-                        .text( label ) )
-                    .append( widget.$el )
-                    .appendTo( this.$( '.children' ) );
+            if (label) {
+                var sanitizeLabel = label.replace(/ /g, '');
+                $('<div/>')
+                    .attr('class', 'widget widget-label')
+                    .append($('<label/>')
+                        .attr({
+                            'class': 'label js-toggler',
+                            'data-toggler-id': sanitizeLabel,
+                            'data-toggler-group': sanitizeLabel
+                        })
+                        .text(label))
+                    .append(widget.$el.attr({
+                        'data-toggler-itemid': sanitizeLabel,
+                        'data-toggler-group': sanitizeLabel
+                    }).addClass('js-item-toggler'))
+                    .appendTo(this.$('.children'));
             } else {
                 widget.$el
-                    .appendTo( this.$( '.children' ) );
+                    .appendTo(this.$('.children'));
             }
 
             return widget;
 
         },
 
-        removeWidget: function ( widget ) {
+        removeWidget: function (widget) {
 
-            if ( this.$( widget.el ).length < 1 )
+            if (this.$(widget.el).length < 1)
                 return; // The layout does not contain this widget
 
-            if ( widget.$el.parent().is( this.$( '.children' ) ) )
+            if (widget.$el.parent().is(this.$('.children')))
                 widget.$el.remove();
 
-            widget.$el.parentsUntil( this.$( '.children' ) ).remove();
+            widget.$el.parentsUntil(this.$('.children')).remove();
 
         },
 
@@ -82,9 +89,9 @@ define( [
         //     /*...*/.createWidget( Select );
         // } );
 
-        createWidget: function ( label, type, options ) {
+        createWidget: function (label, type, options) {
 
-            if ( arguments.length === 1 || ( arguments.length === 2 && typeof type === 'object' ) ) {
+            if (arguments.length === 1 || ( arguments.length === 2 && typeof type === 'object' )) {
                 options = type;
                 type = label;
                 label = undefined;
@@ -92,18 +99,18 @@ define( [
 
             // If not-a-function, we get the standard widget from its name
             var WidgetType = typeof type !== 'function' ?
-                require( 'apis/editor/defaultWidgets' )[ type ] :
+                require('apis/editor/defaultWidgets')[type] :
                 type;
 
-            if ( !WidgetType )
-                throw new Error( type + ': Invalid widget type' );
+            if (!WidgetType)
+                throw new Error(type + ': Invalid widget type');
 
-            var widget = WidgetType.reify( this, options );
+            var widget = WidgetType.reify(this, options);
 
-            return this.addWidget( label, widget );
+            return this.addWidget(label, widget);
 
         }
 
-    } );
+    });
 
-} );
+});
