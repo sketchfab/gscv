@@ -43,33 +43,36 @@ define([
     var View = Backbone.View.extend({
 
         initialize: function () {
-            this.model.on('change:radius', this.onRadiusChange, this);
-            this.model.on('change:bg-color', this.onImageChange, this);
-            this.model.on('change:color', this.onColorChange, this);
+            this.model.on('change:bg-color', this.onBgColorChange, this);
+            this.model.on('change:text-color', this.onTextColorChange, this);
+            this.model.on('change:back-img', this.onBackImageChange, this);
             this.$el.find('.js-text-edit').on('input', this.onTextChange).each(setDefaultText);
         },
 
         render: function () {
-            this.onRadiusChange();
+            this.onBackImageChange();
         },
 
         onTextChange: function () {
             localStorage.setStorage(this.getAttribute('data-name'), this.innerHTML);
         },
 
-        onRadiusChange: function () {
-            this.$el.css('border-radius', this.model.get('radius'));
-        },
-
-        onImageChange: function () {
+        onBgColorChange: function () {
             var rgbColors = getRGBColor(this.model.get('bg-color'));
-            this.$el.css('background-color', rgbColors);
+            localStorage.setStorage('bg-color', this.model.get('bg-color'));
+            this.$el.find('.front').css('background-color', rgbColors);
         },
 
-        onColorChange: function () {
-            var rgbColors = getRGBColor(this.model.get('color'));
-            //console.info(rgbColors);
-            this.$el.css('color', rgbColors);
+        onTextColorChange: function () {
+            var rgbColors = getRGBColor(this.model.get('text-color'));
+            localStorage.setStorage('text-color', this.model.get('text-color'));
+            this.$el.find('.front').css('color', rgbColors);
+        },
+
+        onBackImageChange: function () {
+            var image = this.model.get('back-img') || localStorage.getStorage('back-img');
+            localStorage.setStorage('back-img', image);
+            this.$el.find('.card-model.back').css('background-image', 'url(' + image + ')');
         }
 
     });
@@ -87,19 +90,31 @@ define([
         label: 'Card Appearance'
     });
 
-    appearance.createWidget('Border radius', 'NumberedSlider', {
-        model: card,
-        name: 'radius'
-    });
     appearance.createWidget('Background', 'Color', {
         model: card,
         name: 'bg-color',
-        color: {r:.2, g: 1, b: 1}
+        color: localStorage.getStorage('bg-color') || {
+            r: 0.1435441674361342,
+            g: 0.3991228070175439,
+            b: 0.3991228070175439
+        }
     });
     appearance.createWidget('Color', 'Color', {
         model: card,
-        name: 'color',
-        color: {r:.2, g: 1, b: 0}
+        name: 'text-color',
+        color: localStorage.getStorage('text-color') || {
+            r: 0.5152354570637121,
+            g: 0.7894736842105263,
+            b: 0.4466759002770083
+        }
+    });
+    appearance.createWidget('Back Image', 'Select', {
+        model: card,
+        name: 'back-img',
+        options: {
+            'http://stockcg.com/wp-content/uploads/2014/05/05743512-photo-sketchfab-logo.jpg': 'sketchfabulous',
+            'https://secure.static.tumblr.com/dda01c20ab0c80c39f70b0602eabf8c4/umfpebc/Qbhns3khm/tumblr_static_tumblr_static_d0214hjyh6o04o0cgco8g8cw4_640.jpg': 'toni'
+        }
     });
 
 });

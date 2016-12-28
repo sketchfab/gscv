@@ -23,7 +23,7 @@ require( [
     'vendors/jquery/toggleAttr',
     'vendors/jquery/togglerSa',
 
-    'apis/editor/API.js'
+    'sources/apis/editor/API.js'
 
 ], function ( $, UI, mousewheel, toggleAttr, togglerSa, WidgetApi) {
 
@@ -38,7 +38,7 @@ require( [
         } );
 
         require( [ 'app' ] );
-
+        $('html').addClass('ready')
     } );
 
 } );

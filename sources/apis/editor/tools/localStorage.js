@@ -8,7 +8,7 @@ define([], function () {
      * @param content {String}
      */
     var setStorage = function (elemId, content) {
-        localStorage.setItem(elemId, content);
+        localStorage.setItem(elemId, JSON.stringify(content));
     };
 
     /**
@@ -16,7 +16,12 @@ define([], function () {
      * @param elemId {String}
      */
     var getStorage = function (elemId) {
-        return localStorage.getItem(elemId);
+        try {
+            return JSON.parse(localStorage.getItem(elemId))
+        }
+        catch (e) {
+            return localStorage.getItem(elemId)
+        }
     };
 
     return {

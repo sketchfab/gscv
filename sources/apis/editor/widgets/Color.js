@@ -32,7 +32,6 @@ define([
         }),
 
         initialize: function (options) {
-            //console.info(options);
             options = _.defaults(options || {}, {
 
                 model: new Backbone.Model(),
