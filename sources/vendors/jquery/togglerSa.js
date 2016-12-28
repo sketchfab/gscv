@@ -91,7 +91,6 @@ var jsToggler = (function () {
         events = events || '';
         currentTriggerClass = currentTriggerClass || 'current-trigger';
 
-        console.info('mdrlol');
         events = events ? ' ' + events : '';
         _cssSelector = cssSelector;
         _cssSelectorContent = cssSelectorContent;
