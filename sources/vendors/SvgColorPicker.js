@@ -390,8 +390,6 @@ var SvgColorPicker = ( function ( ) {
         options.slider.appendChild( slider );
         options.picker.appendChild( picker );
 
-        updateColor( );
-
         return {
 
             set : function ( value ) {

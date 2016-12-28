@@ -86,17 +86,19 @@
  */
 /* FONT PATH
  * -------------------------- */
+/*
 @font-face {
   font-family: 'FontAwesome';
   src: url("../vendors/font-awesome/fonts//fontawesome-webfont.eot?v=4.0.3");
   src: url("../vendors/font-awesome/fonts//fontawesome-webfont.eot?#iefix&v=4.0.3") format("embedded-opentype"), url("../vendors/font-awesome/fonts//fontawesome-webfont.woff?v=4.0.3") format("woff"), url("../vendors/font-awesome/fonts//fontawesome-webfont.ttf?v=4.0.3") format("truetype"), url("../vendors/font-awesome/fonts//fontawesome-webfont.svg?v=4.0.3#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
+*/
 
 /* line 4, ../../../static/vendors/font-awesome/scss/_core.scss */
 .fa, .popup-signup-finalize .icon-twitter, .popup-signup-finalize .icon-google, .popup-signup-finalize .icon-facebook, .editor .popup-wrapper .popup .popup-header .popup-actions .popup-action-close, .viewer .infos .bt-prev, .viewer .infos .bt-next {
   display: inline-block;
-  font-family: FontAwesome;
+  /*font-family: FontAwesome;*/
   font-style: normal;
   font-weight: normal;
   line-height: 1;

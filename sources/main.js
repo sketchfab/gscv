@@ -9,7 +9,9 @@ require.config( {
         'vendors/SvgColorPicker'    : { 'exports' : 'SvgColorPicker' },
         'vendors/jquery/UI'         : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
         'vendors/jquery/mousewheel' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
-        'vendors/jquery/toggleAttr' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] }
+        'vendors/jquery/toggleAttr' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
+        'vendors/jquery/togglerSa'  : { 'exports' : 'jsToggler',     'deps' : [ 'vendors/JQuery' ] },
+        'vendors/dom-to-image.min'  : { 'exports' : 'domtoimage',    'deps' : [ 'vendors/JQuery' ] }
     }
 
 } );
@@ -20,13 +22,14 @@ require( [
     'vendors/jquery/UI',
     'vendors/jquery/mousewheel',
     'vendors/jquery/toggleAttr',
+    'vendors/jquery/togglerSa',
 
     'sources/apis/editor/API.js'
 
-], function ( $, UI, mousewheel, toggleAttr, WidgetApi ) {
+], function ( $, UI, mousewheel, toggleAttr, togglerSa, WidgetApi) {
 
     $( function ( ) {
-
+        togglerSa();
         define( 'editor', function ( ) {
 
             return WidgetApi.start( {
@@ -36,7 +39,7 @@ require( [
         } );
 
         require( [ 'app' ] );
-
+        $('html').addClass('ready')
     } );
 
 } );

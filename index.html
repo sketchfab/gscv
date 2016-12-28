@@ -1,31 +1,54 @@
 <!DOCTYPE HTML>
 <html>
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <title>Sketchfab Widgets</title>
+    <meta charset="UTF-8">
+    <title>Sketchfab Widgets</title>
 
-        <link rel="stylesheet" href="sources/vendors/Normalize.css" />
-        <link rel="stylesheet" href="sources/vendors/editor.css" />
-        <style>.editor-panel, .editor-view { padding-top: 0 }</style>
-        <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="sources/vendors/Normalize.css"/>
+    <link rel="stylesheet" href="sources/vendors/editor.css"/>
+    <style>.editor-panel, .editor-view {
+        padding-top: 0
+    }</style>
+    <link rel="stylesheet" href="style.css"/>
 
-        <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
+    <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
 
-    </head>
+</head>
 
-    <body>
-        <div class="editor">
-            <div class="editor-panel">
-            </div>
-            <div class="editor-view">
-                <div class="card">
-                    <div class="name">Maël Nison</div>
-                    <div class="job">Frontend Developer</div>
+<body>
+<div class="editor">
+    <div class="editor-panel">
+    </div>
+    <div class="editor-view">
+        <div class="card-wrap">
+            <label for="back">back</label>
+            <input type="checkbox" id="back">
+            <div class="card">
+                <div class="card-model front">
+                    <div>
+                        <div class="title">Sketchfab</div>
+                    </div>
+                    <div>
+                        <div class="name js-text-edit" data-name="name" contenteditable="true">Maël Nison</div>
+                        <div class="job js-text-edit" data-name="job" contenteditable="true">Frontend Developer</div>
+                    </div>
+                    <div>
+                        <div class="address js-text-edit" data-name="address" contenteditable="true">99 Rue de la
+                            Verrerie, 75004 Paris
+                        </div>
+                        <div class="website js-text-edit" data-name="website" contenteditable="true">
+                            http://cv.asanchez.fr/
+                        </div>
+                    </div>
                 </div>
+                <div class="card-model back"></div>
             </div>
+            <p class="js-save-as">Save as image</p>
         </div>
-    </body>
+    </div>
+</div>
+</body>
 
 </html>

@@ -4,16 +4,67 @@
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
 }
 
-.card {
-    margin: auto;
-
+.card-wrap {
     flex: none;
-    width: 550px;
     height: 300px;
+    margin: auto;
+    perspective: 1500px;
+    width: 550px;
+}
 
-    padding: 20px;
+[type="checkbox"] {
+    vertical-align: middle;
+}
 
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+.card {
     background: #2C2C2C;
     color: #FFFFFF;
+    height: 100%;
+    width: 100%;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 620ms cubic-bezier(0.81, 0.28, 0, 0.99);
+}
+
+.card-model {
+    backface-visibility: hidden;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+    height: 100%;
+    padding: 20px;
+    position: absolute;
+    width: 100%;
+}
+
+.card-model.front {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    transition: all 125ms;
+}
+
+.card-model.front > * {
+    flex: 1 1 auto;
+}
+
+.card-model.front > *:last-child {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+}
+
+.card-model.back {
+    background-size: cover;
+    transform: rotateY(180deg) scaleX(-1);
+}
+
+.card-model .title {
+    font-size: 30px;
+}
+
+#back:checked + .card {
+    transform: rotateY(180deg);
+}
+
+.widget > .widget:not(.active) {
+    display: none;
 }
