@@ -6,9 +6,10 @@ define([
     'vendors/JQuery',
 
     'editor',
-    'apis/editor/tools/localStorage'
+    'apis/editor/tools/localStorage',
+    'vendors/dom-to-image.min'
 
-], function (Backbone, $, editor, localStorage) {
+], function (Backbone, $, editor, localStorage, domtoimg) {
 
     var Card = Backbone.Model.extend({
 
@@ -26,6 +27,10 @@ define([
         if (text) {
             this.innerHTML = text;
         }
+    };
+
+    var createSaveLink = function (name, dataImg) {
+        return $('<a>').attr({download: name, href: dataImg}).html('<img width="60" src="'+dataImg+'">').addClass('js-saved-img');
     };
 
     /**
@@ -47,10 +52,24 @@ define([
             this.model.on('change:text-color', this.onTextColorChange, this);
             this.model.on('change:back-img', this.onBackImageChange, this);
             this.$el.find('.js-text-edit').on('input', this.onTextChange).each(setDefaultText);
+            this.$el.find('.js-save-as').on('click', this.onSave.bind(this));
         },
 
         render: function () {
             this.onBackImageChange();
+        },
+
+        onSave: function (e) {
+            this.$el.find('.js-saved-img').remove();
+            domtoimg.toPng(document.querySelector('.front')).then(function (dataImg) {
+                var $link = createSaveLink('front.png', dataImg);
+                $(e.target).after($link);
+            });
+            //todo know issue, image from back is reversed
+            domtoimg.toPng(document.querySelector('.back')).then(function (dataImg) {
+                var $link = createSaveLink('back.png', dataImg);
+                $(e.target).after($link);
+            });
         },
 
         onTextChange: function () {
@@ -80,7 +99,7 @@ define([
     // --- --- --- --- --- --- --- --- ---
 
     var card = new Card();
-    var view = new View({model: card, el: $('.card')});
+    var view = new View({model: card, el: $('.card-wrap')});
 
     view.render();
 
@@ -112,8 +131,8 @@ define([
         model: card,
         name: 'back-img',
         options: {
-            'http://stockcg.com/wp-content/uploads/2014/05/05743512-photo-sketchfab-logo.jpg': 'sketchfabulous',
-            'https://secure.static.tumblr.com/dda01c20ab0c80c39f70b0602eabf8c4/umfpebc/Qbhns3khm/tumblr_static_tumblr_static_d0214hjyh6o04o0cgco8g8cw4_640.jpg': 'toni'
+            'imgs/sketchfab.jpg': 'sketchfabulous',
+            'imgs/toni.jpg': 'toni'
         }
     });
 

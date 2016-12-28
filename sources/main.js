@@ -10,7 +10,8 @@ require.config( {
         'vendors/jquery/UI'         : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
         'vendors/jquery/mousewheel' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
         'vendors/jquery/toggleAttr' : { 'exports' : 'jQuery',        'deps' : [ 'vendors/JQuery' ] },
-        'vendors/jquery/togglerSa'  : { 'exports' : 'jsToggler',     'deps' : [ 'vendors/JQuery' ] }
+        'vendors/jquery/togglerSa'  : { 'exports' : 'jsToggler',     'deps' : [ 'vendors/JQuery' ] },
+        'vendors/dom-to-image.min'  : { 'exports' : 'domtoimage',    'deps' : [ 'vendors/JQuery' ] }
     }
 
 } );

@@ -4,7 +4,7 @@
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
 }
 
-.wrap {
+.card-wrap {
     flex: none;
     height: 300px;
     margin: auto;
@@ -54,7 +54,7 @@
 
 .card-model.back {
     background-size: cover;
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) scaleX(-1);
 }
 
 .card-model .title {
