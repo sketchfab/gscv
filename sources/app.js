@@ -23,6 +23,8 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
+            this.model.on( 'change:name', this.onNameChange, this );
+            this.model.on( 'change:job', this.onJobChange, this );
         },
 
         render : function ( ) {
@@ -36,11 +38,11 @@ define( [
         },
 
         onNameChange : function ( ) {
-            this.$el.find( '.name' ).html(this.model.get( 'name' ))
+          this.$el.find( '.name' ).html(this.model.get( 'name' ));
         },
 
         onJobChange : function ( ) {
-            this.$el.find( '.job' ).html(this.model.get( 'job' ))
+          this.$el.find( '.job' ).html(this.model.get( 'job' ));
         },
 
     } );
@@ -61,6 +63,16 @@ define( [
     appearance.createWidget( 'Border radius', 'NumberedSlider', {
         model : card,
         name  : 'radius'
+    } );
+
+    appearance.createWidget( 'Name', 'TextInput', {
+        model : card,
+        name  : 'name'
+    } );
+
+    appearance.createWidget( 'Job', 'TextInput', {
+        model : card,
+        name  : 'job'
     } );
 
 } );
