@@ -15,6 +15,11 @@ define( [
             radius : 10,
             name: 'Tiago Ferreira',
             job: 'Pokemon Trainer',
+            backgroundColor: {
+              r: 0.17,
+              g: 0.17,
+              b: 0.17,
+            },
         }
 
     } );
@@ -23,6 +28,7 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
+            this.model.on( 'change:backgroundColor', this.onBackgroundColorChange, this );
             this.model.on( 'change:name', this.onNameChange, this );
             this.model.on( 'change:job', this.onJobChange, this );
         },
@@ -31,10 +37,22 @@ define( [
             this.onRadiusChange( );
             this.onNameChange( );
             this.onJobChange( );
+            this.onBackgroundColorChange( );
         },
 
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
+        },
+
+        onBackgroundColorChange : function ( ) {
+            var rgb = this.model.get( 'backgroundColor' );
+            var rounded = {
+                r: rgb.r * 255,
+                g: rgb.g * 255,
+                b: rgb.b * 255
+            };
+            var hex = '#' + ( 16777216 | rounded.b | ( rounded.g << 8 ) | ( rounded.r << 16 ) ).toString( 16 ).substr( 1 );
+            this.$el.css( 'background-color', hex );
         },
 
         onNameChange : function ( ) {
@@ -63,6 +81,11 @@ define( [
     appearance.createWidget( 'Border radius', 'NumberedSlider', {
         model : card,
         name  : 'radius'
+    } );
+
+    appearance.createWidget( 'Background color', 'Color', {
+        model : card,
+        name  : 'backgroundColor'
     } );
 
     appearance.createWidget( 'Name', 'TextInput', {

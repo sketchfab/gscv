@@ -52,6 +52,8 @@ define( [
 
             this.colorPicker = SvgColorPicker( {
 
+                color: this.get(),
+
                 slider: this.$( '.slider' )[ 0 ],
                 picker: this.$( '.picker' )[ 0 ],
 

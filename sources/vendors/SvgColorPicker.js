@@ -340,7 +340,7 @@ var SvgColorPicker = ( function ( ) {
 
         var index = count ++;
 
-        var color = { h : 1, s : 1, v : 1 };
+        var color = rgb2hsv( options.color ) || { h : 1, s : 1, v : 1 };
 
         // Hue selector
         var slider = _slider( index );
