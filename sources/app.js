@@ -12,7 +12,9 @@ define( [
     var Card = Backbone.Model.extend( {
 
         defaults : {
-            radius : 10
+            radius : 10,
+            name: 'Tiago Ferreira',
+            job: 'Pokemon Trainer',
         }
 
     } );
@@ -25,11 +27,21 @@ define( [
 
         render : function ( ) {
             this.onRadiusChange( );
+            this.onNameChange( );
+            this.onJobChange( );
         },
 
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
-        }
+        },
+
+        onNameChange : function ( ) {
+            this.$el.find( '.name' ).html(this.model.get( 'name' ))
+        },
+
+        onJobChange : function ( ) {
+            this.$el.find( '.job' ).html(this.model.get( 'job' ))
+        },
 
     } );
 
