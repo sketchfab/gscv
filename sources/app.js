@@ -20,6 +20,9 @@ define( [
               g: 0.17,
               b: 0.17,
             },
+            rotateY: 15,
+            rotateX: 35,
+            rotateZ: 10,
         }
 
     } );
@@ -31,6 +34,9 @@ define( [
             this.model.on( 'change:backgroundColor', this.onBackgroundColorChange, this );
             this.model.on( 'change:name', this.onNameChange, this );
             this.model.on( 'change:job', this.onJobChange, this );
+            this.model.on( 'change:rotateY', this.onRotationChange, this );
+            this.model.on( 'change:rotateX', this.onRotationChange, this );
+            this.model.on( 'change:rotateZ', this.onRotationChange, this );
         },
 
         render : function ( ) {
@@ -38,10 +44,16 @@ define( [
             this.onNameChange( );
             this.onJobChange( );
             this.onBackgroundColorChange( );
+
+            this.onRotationChange();
         },
 
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
+        },
+
+        onRotationChange : function ( ) {
+              this.$el.css( 'transform', 'rotateY( '+this.model.get( 'rotateY' )+'deg ) rotateX( '+this.model.get( 'rotateX' )+'deg ) rotateZ( '+this.model.get( 'rotateZ' )+'deg )' );
         },
 
         onBackgroundColorChange : function ( ) {
@@ -98,4 +110,28 @@ define( [
         name  : 'job'
     } );
 
+    var position = editor.createWidget( 'Group', {
+        label : 'Card Position'
+    } );
+
+    position.createWidget('Rotate Y', 'NumberedSlider', {
+        model : card,
+        name  : 'rotateY',
+        minimum: -180,
+        maximum: 180,
+    });
+
+    position.createWidget('Rotate X', 'NumberedSlider', {
+        model : card,
+        name  : 'rotateX',
+        minimum: -180,
+        maximum: 180,
+    });
+
+    position.createWidget('Rotate Z', 'NumberedSlider', {
+        model : card,
+        name  : 'rotateZ',
+        minimum: -180,
+        maximum: 180,
+    });
 } );
