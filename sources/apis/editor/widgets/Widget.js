@@ -244,7 +244,7 @@ define( [
 
         defaultAction: function ( which, value ) {
 
-            this.set( value );
+            this.set( which, value );
 
         },
 
