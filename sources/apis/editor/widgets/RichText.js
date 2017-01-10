@@ -4,15 +4,15 @@ define( [
     'vendors/JQuery',
     'vendors/Underscore',
 
-    'apis/editor/widgets/Horizontal',
+    'apis/editor/widgets/Vertical',
 
-], function ( Backbone, $, _, HorizontalWidget ) {
+], function ( Backbone, $, _, VerticalWidget ) {
 
     'use strict';
 
-    return HorizontalWidget.extend( {
+    return VerticalWidget.extend( {
 
-        el: [ ' <div class="widget layout-widget horizontal-widget rich-text-widget">',
+        el: [ ' <div class="widget layout-widget vertical-widget rich-text-widget">',
             '       <div class="widget-wrapper">',
             '           <div class="children"></div>',
             '       </div>',
@@ -28,7 +28,7 @@ define( [
 
             }, options );
 
-            HorizontalWidget.prototype.initialize.call( this, options );
+            VerticalWidget.prototype.initialize.call( this, options );
 
             var common = {
                 model: this.model,
