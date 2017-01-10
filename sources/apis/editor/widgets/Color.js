@@ -49,6 +49,7 @@ define( [
                 g: 1,
                 b: 1
             };
+            var rgb = this.convertColor( color, { to: 'rgb' } );
 
             this.colorPicker = SvgColorPicker( {
 
@@ -66,6 +67,7 @@ define( [
             }.bind( this ) );
 
             this.set( color );
+            this.colorPicker.set( rgb );
 
         },
 
