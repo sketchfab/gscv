@@ -76,27 +76,31 @@ define( [
 
     // --- --- --- --- --- --- --- --- ---
 
-    var appearance = editor.createWidget( 'Group', {
+    var appearanceGroup = editor.createWidget( 'Group', {
         label : 'Card Appearance'
     } );
 
-    appearance.createWidget( 'Border radius', 'NumberedSlider', {
+    appearanceGroup.createWidget( 'Border radius', 'NumberedSlider', {
         model : card,
         name  : 'radius'
     } );
 
-    appearance.createWidget( 'Paddings', 'NumberedSlider', {
+    appearanceGroup.createWidget( 'Paddings', 'NumberedSlider', {
         model : card,
         name  : 'padding'
     } );
 
-    appearance.createWidget( 'Background Color', 'Color', {
+    appearanceGroup.createWidget( 'Background Color', 'Color', {
         model : card,
         name  : 'background',
         format: 'hex'
     } );
 
-    appearance.createWidget( 'Title', 'RichText', {
+    var contentGroup = editor.createWidget( 'Group', {
+        label : 'Content'
+    } );
+
+    contentGroup.createWidget( 'Title', 'RichText', {
         model : card,
         name  : 'title',
         colorOptions : {
@@ -104,7 +108,7 @@ define( [
         },
     } );
 
-    appearance.createWidget( 'Subtitle', 'RichText', {
+    contentGroup.createWidget( 'Subtitle', 'RichText', {
         model : card,
         name  : 'subtitle',
         colorOptions : {
