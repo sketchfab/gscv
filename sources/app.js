@@ -12,7 +12,8 @@ define( [
     var Card = Backbone.Model.extend( {
 
         defaults : {
-            radius : 10
+            radius : 10,
+            padding: 50,
         }
 
     } );
@@ -21,14 +22,20 @@ define( [
 
         initialize : function ( ) {
             this.model.on( 'change:radius', this.onRadiusChange, this );
+            this.model.on( 'change:padding', this.onPaddingChange, this );
         },
 
         render : function ( ) {
             this.onRadiusChange( );
+            this.onPaddingChange( );
         },
 
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
+        onPaddingChange : function ( ) {
+            this.$el.css( 'padding', this.model.get( 'padding' ) );
+        },
+
         }
 
     } );
@@ -49,6 +56,11 @@ define( [
     appearance.createWidget( 'Border radius', 'NumberedSlider', {
         model : card,
         name  : 'radius'
+    } );
+
+    appearance.createWidget( 'Paddings', 'NumberedSlider', {
+        model : card,
+        name  : 'padding'
     } );
 
 } );
