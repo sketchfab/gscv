@@ -13,6 +13,7 @@ define( [
 
         defaults : {
             radius : 10,
+            background: '#222222',
             padding: 50,
             title: {
                 text: 'Name',
@@ -33,6 +34,7 @@ define( [
         initialize : function ( ) {
             this.model.on( 'change:radius',     this.bindPropertyChange( 'radius', 'border-radius' ), this );
             this.model.on( 'change:padding',    this.bindPropertyChange( 'padding', 'padding' ), this );
+            this.model.on( 'change:background', this.bindPropertyChange( 'background', 'background-color' ), this );
             this.model.on( 'change:title',      this.bindRichTextChange( 'title', '.name' ), this );
             this.model.on( 'change:subtitle',   this.bindRichTextChange( 'subtitle', '.job' ), this );
             this.model.on( 'all',               this.debugChange, this );
@@ -41,6 +43,7 @@ define( [
         render : function ( ) {
             this.bindPropertyChange( 'radius', 'border-radius' )();
             this.bindPropertyChange( 'padding', 'padding' )();
+            this.bindPropertyChange( 'background', 'background-color' )();
             this.bindRichTextChange( 'title', '.name' )();
             this.bindRichTextChange( 'subtitle', '.job' )();
         },
@@ -85,6 +88,12 @@ define( [
     appearance.createWidget( 'Paddings', 'NumberedSlider', {
         model : card,
         name  : 'padding'
+    } );
+
+    appearance.createWidget( 'Background Color', 'Color', {
+        model : card,
+        name  : 'background',
+        format: 'hex'
     } );
 
     appearance.createWidget( 'Title', 'RichText', {
