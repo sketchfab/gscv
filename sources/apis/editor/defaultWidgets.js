@@ -16,6 +16,7 @@ define( [
     'apis/editor/widgets/Number',
     'apis/editor/widgets/Orientation',
     'apis/editor/widgets/Repeat',
+    'apis/editor/widgets/RichText',
     'apis/editor/widgets/Select',
     'apis/editor/widgets/SlideredImage',
     'apis/editor/widgets/Slider',
@@ -43,6 +44,7 @@ define( [
     NumberWidget,
     OrientationWidget,
     RepeatWidget,
+    RichTextWidget,
     SelectWidget,
     SlideredImageWidget,
     SliderWidget,
@@ -67,6 +69,7 @@ define( [
         Repeat: RepeatWidget,
 
         Text: TextWidget,
+        RichText: RichTextWidget,
         Image: ImageWidget,
         Color: ColorWidget,
         FactoredImage: FactoredImageWidget,
