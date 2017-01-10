@@ -32,10 +32,10 @@ define( [
 
         onRadiusChange : function ( ) {
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
-        onPaddingChange : function ( ) {
-            this.$el.css( 'padding', this.model.get( 'padding' ) );
         },
 
+        onPaddingChange : function ( ) {
+            this.$el.css( 'padding', this.model.get( 'padding' ) );
         }
 
     } );
