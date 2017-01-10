@@ -31,21 +31,27 @@ define( [
     var View = Backbone.View.extend( {
 
         initialize : function ( ) {
-            this.model.on( 'change:radius', this.onRadiusChange, this );
-            this.model.on( 'change:padding', this.onPaddingChange, this );
-            this.model.on( 'change:title', this.bindRichTextChange( '.name', 'title' ), this );
-            this.model.on( 'change:subtitle', this.bindRichTextChange( '.job', 'subtitle' ), this );
-            this.model.on( 'all', this.debugChange, this );
+            this.model.on( 'change:radius',     this.bindPropertyChange( 'radius', 'border-radius' ), this );
+            this.model.on( 'change:padding',    this.bindPropertyChange( 'padding', 'padding' ), this );
+            this.model.on( 'change:title',      this.bindRichTextChange( 'title', '.name' ), this );
+            this.model.on( 'change:subtitle',   this.bindRichTextChange( 'subtitle', '.job' ), this );
+            this.model.on( 'all',               this.debugChange, this );
         },
 
         render : function ( ) {
-            this.onRadiusChange( );
-            this.onPaddingChange( );
-            this.bindRichTextChange( '.name', 'title' )();
-            this.bindRichTextChange( '.job', 'subtitle' )();
+            this.bindPropertyChange( 'radius', 'border-radius' )();
+            this.bindPropertyChange( 'padding', 'padding' )();
+            this.bindRichTextChange( 'title', '.name' )();
+            this.bindRichTextChange( 'subtitle', '.job' )();
         },
 
-        bindRichTextChange: function ( selector, key ) {
+        bindPropertyChange : function ( key, property ) {
+            return function ( ) {
+                this.$el.css( property, this.model.get( key ) );
+            }.bind( this );
+        },
+
+        bindRichTextChange: function ( key, selector ) {
             var $richText = this.$el.find( selector );
 
             return function ( ) {
@@ -54,14 +60,6 @@ define( [
                 $richText.css( 'font-size', datas.size );
                 $richText.css( 'color', datas.color );
             }.bind( this );
-        },
-
-        onRadiusChange : function ( ) {
-            this.$el.css( 'border-radius', this.model.get( 'radius' ) );
-        },
-
-        onPaddingChange : function ( ) {
-            this.$el.css( 'padding', this.model.get( 'padding' ) );
         }
 
     } );
