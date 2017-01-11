@@ -2,9 +2,11 @@ define( [
 
     'vendors/Backbone',
     'vendors/JQuery',
-    'vendors/Underscore'
+    'vendors/Underscore',
 
-], function ( Backbone, $, _ ) {
+    'utils/DeepObject'
+
+], function ( Backbone, $, _, DeepObject ) {
 
     'use strict';
 
@@ -175,16 +177,15 @@ define( [
         modelChangeEvent: function () {
 
             var name = this.options.name;
+            var keys = name.split( '.' );
             var namespace = name + '.';
 
             // If there is no name, then we catch every event
             var thereIsNoName = ! name;
 
-            // Is there some attribute that match the widget name ? (ie. a widget named "foo" will catch changes on properties "foo" and "foo.bar")
-            var changedAttributes = Object.keys( this.model.changedAttributes() || {} );
-            var hasInterestingChanges = changedAttributes.some( function ( attribute ) {
-                return attribute === name || attribute.indexOf( namespace ) === 0;
-            } );
+            // Check if the widget's object is in the changed attributes
+            var changedAttributes = this.model.changedAttributes() || {};
+            var hasInterestingChanges = DeepObject.has( changedAttributes, keys );
 
             if ( thereIsNoName || hasInterestingChanges ) {
                 this.render();
@@ -243,7 +244,7 @@ define( [
 
         defaultAction: function ( which, value ) {
 
-            this.set( value );
+            this.set( which, value );
 
         },
 
@@ -260,19 +261,22 @@ define( [
         /**
          * This function returns the value of a widget field from the model.
          *
-         * If specified, `which` is the name of the specific field requested. Only useful for some specific widgets.
+         * If specified, `which` is the name of the specific field or sub-field affected. Sub-field are separated by a dot ('.').
          */
 
         get: function ( which ) {
 
-            return this.model.get( this.field( which ) );
+            var keys = this.field( which ).split( '.' );
+            var value = DeepObject.get( this.model.attributes, keys );
+
+            return value;
 
         },
 
         /**
          * This function sets the value of a widget field from the model.
          *
-         * If specified, `which` is the name of the specific field affected. Only useful for some specific widgets.
+         * If specified, `which` is the name of the specific field or sub-field affected. Sub-field are separated by a dot ('.').
          */
 
         set: function ( which, value ) {
@@ -282,7 +286,27 @@ define( [
                 which = undefined;
             }
 
-            return this.model.set( this.field( which ), value );
+            var keys = this.field( which ).split( '.' );
+
+            // Because change events are manually triggered to handle deep change,
+            // we must verify there is actually a change.
+            if (DeepObject.get( this.model.attributes, keys ) !== value ) {
+
+                // To allow deep changes to be triggered before top changes, `model.set()` cannot be called.
+                // `model.changed` and `model.attributes` must be updated manually.
+                this.model.attributes = DeepObject.set( this.model.attributes, keys, value );
+                this.model.changed = DeepObject.set( { }, keys, value );
+
+                // Trigger changes
+                while ( keys.length > 0 ) {
+                    this.model.trigger( 'change:' + keys.join( '.' ) );
+                    keys.pop( );
+                }
+                this.model.trigger( 'change' );
+
+            }
+
+            return this.model;
 
         }
 
