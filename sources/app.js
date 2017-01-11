@@ -32,20 +32,22 @@ define( [
     var View = Backbone.View.extend( {
 
         initialize : function ( ) {
-            this.model.on( 'change:radius',     this.bindPropertyChange( 'radius', 'border-radius' ), this );
-            this.model.on( 'change:padding',    this.bindPropertyChange( 'padding', 'padding' ), this );
-            this.model.on( 'change:background', this.bindPropertyChange( 'background', 'background-color' ), this );
-            this.model.on( 'change:title',      this.bindRichTextChange( 'title', '.name' ), this );
-            this.model.on( 'change:subtitle',   this.bindRichTextChange( 'subtitle', '.job' ), this );
-            this.model.on( 'all',               this.debugChange, this );
+            this.handlers = [ ];
+
+            this.addHandler( 'change:radius',     this.bindPropertyChange( 'radius', 'border-radius' ) );
+            this.addHandler( 'change:padding',    this.bindPropertyChange( 'padding', 'padding' ) );
+            this.addHandler( 'change:background', this.bindPropertyChange( 'background', 'background-color' ) );
+            this.addHandler( 'change:title',      this.bindRichTextChange( 'title', '.name' ) );
+            this.addHandler( 'change:subtitle',   this.bindRichTextChange( 'subtitle', '.job' ) );
         },
 
         render : function ( ) {
-            this.bindPropertyChange( 'radius', 'border-radius' )();
-            this.bindPropertyChange( 'padding', 'padding' )();
-            this.bindPropertyChange( 'background', 'background-color' )();
-            this.bindRichTextChange( 'title', '.name' )();
-            this.bindRichTextChange( 'subtitle', '.job' )();
+            this.handlers.forEach( handler => handler.call( this ) );
+        },
+
+        addHandler: function ( event, handler ) {
+            this.model.on( event, handler, this );
+            this.handlers.push( handler );
         },
 
         bindPropertyChange : function ( key, property ) {
