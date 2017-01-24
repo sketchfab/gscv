@@ -11,12 +11,23 @@
 
 /* CARD  */
 .card {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 45px;
     margin: auto;
-    flex: none;
+    display: flex;
     width: 550px;
     height: 300px;
     padding: 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
     background: #2C2C2C;
     color: #FFFFFF;
+}
+
+.name {
+
+}
+.job {
+    font-size: 30px;
 }
