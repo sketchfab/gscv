@@ -1,31 +1,39 @@
 <!DOCTYPE HTML>
 <html>
+<head>
+    <meta charset="UTF-8">
 
-    <head>
+    <!-- TITLE -->
+    <title>
+        Florian Boudot | Générateur Sketchfab de Cartes de Visites
+    </title>
 
-        <meta charset="UTF-8">
-        <title>Sketchfab Widgets</title>
+    <!-- STYLES -->
+    <link rel="stylesheet" href="sources/vendors/Normalize.css"/>
+    <link rel="stylesheet" href="sources/vendors/editor.css"/>
+    <link rel="stylesheet" href="style.css"/>
+</head>
 
-        <link rel="stylesheet" href="sources/vendors/Normalize.css" />
-        <link rel="stylesheet" href="sources/vendors/editor.css" />
-        <style>.editor-panel, .editor-view { padding-top: 0 }</style>
-        <link rel="stylesheet" href="style.css" />
 
-        <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
+<body>
 
-    </head>
+    <!-- EDITOR -->
+    <div class="editor">
 
-    <body>
-        <div class="editor">
-            <div class="editor-panel">
-            </div>
-            <div class="editor-view">
-                <div class="card">
-                    <div class="name">Maël Nison</div>
-                    <div class="job">Frontend Developer</div>
-                </div>
+        <!-- PANEL -->
+        <div class="editor-panel"></div>
+
+        <!-- VIEW -->
+        <div class="editor-view">
+            <div class="card">
+                <div class="name">Maël Nison</div>
+                <div class="job">Frontend Developer</div>
             </div>
         </div>
-    </body>
+    </div>
 
+    <!-- SCRIPTS -->
+    <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
+
+</body>
 </html>
