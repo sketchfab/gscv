@@ -1,31 +1,58 @@
 <!DOCTYPE HTML>
 <html>
+<head>
+    <meta charset="UTF-8">
 
-    <head>
+    <!-- TITLE -->
+    <title>
+        Florian Boudot | Générateur Sketchfab de Cartes de Visites
+    </title>
 
-        <meta charset="UTF-8">
-        <title>Sketchfab Widgets</title>
+    <!-- STYLES -->
+    <link rel="stylesheet" href="sources/vendors/Normalize.css"/>
+    <link rel="stylesheet" href="sources/vendors/editor.css"/>
+    <link rel="stylesheet" href="style.css"/>
 
-        <link rel="stylesheet" href="sources/vendors/Normalize.css" />
-        <link rel="stylesheet" href="sources/vendors/editor.css" />
-        <style>.editor-panel, .editor-view { padding-top: 0 }</style>
-        <link rel="stylesheet" href="style.css" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var htmlTag = document.getElementsByTagName('html')[0];
+            htmlTag.className = (htmlTag.className + ' ' || '') + 'ready';
+        });
+    </script>
+</head>
 
-        <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
 
-    </head>
+<body>
 
-    <body>
-        <div class="editor">
-            <div class="editor-panel">
-            </div>
-            <div class="editor-view">
-                <div class="card">
-                    <div class="name">Maël Nison</div>
-                    <div class="job">Frontend Developer</div>
+<!-- EDITOR -->
+<div class="editor">
+
+    <!-- PANEL -->
+    <div class="editor-panel"></div>
+
+    <!-- VIEW -->
+    <div class="editor-view">
+        <div class="flip-container">
+            <div class="flipper card">
+                <div class="front">
+                    <div class="name" contenteditable="true">
+                        Florian Boudot
+                    </div>
+                    <div class="job" contenteditable="true">
+                        Front-end Developer
+                    </div>
+                </div>
+                <div class="back">
+                    back
                 </div>
             </div>
         </div>
-    </body>
 
+    </div>
+</div>
+
+<!-- SCRIPTS -->
+<script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
+
+</body>
 </html>
