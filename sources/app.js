@@ -12,7 +12,8 @@ define([
     var Card = Backbone.Model.extend({
         defaults: {
             radius: localStorage.getItem('radius') * 1 || 10,
-            color: JSON.parse(localStorage.getItem('color')) // sorry, default color is not working :(
+            bgcolor: JSON.parse(localStorage.getItem('background-color')) || {r: 0, g: 0, b: 1}, // default color not working yet !
+            textcolor: JSON.parse(localStorage.getItem('text-color')) || {r: 0, g: 1, b: 1}
         }
     });
 
@@ -26,32 +27,49 @@ define([
                     this.innerHTML = def_text;
                 }
             });
+
             this.model.on('change:radius', this.onRadiusChange, this);
-            this.model.on('change:color', this.onColorChange, this);
+            this.model.on('change:textcolor', this.onTextColorChange, this);
+            this.model.on('change:toggleback', this.onToggleBack, this);
+            this.model.on('change:bgcolor', this.onBgColorChange, this);
         },
 
         render: function () {
             this.onRadiusChange();
-            this.onColorChange();
+            //this.onTextColorChange();
+            //this.onBgColorChange();
         },
 
         onRadiusChange: function () {
             var radius = this.model.get('radius');
-            this.$el.css('border-radius', radius);
+            this.$el.find('.front, .back').css('border-radius', radius);
             localStorage.setItem('radius', radius)
+        },
+
+        onToggleBack: function () {
+            this.$el.toggleClass('hover');
         },
 
         onTextChange: function () {
             localStorage.setItem(this.getAttribute('class'), this.innerHTML);
         },
 
-        onColorChange: function () {
-            var color = this.model.get('color');
-            localStorage.setItem('color', JSON.stringify(color));
+        onTextColorChange: function () {
+            var color = this.model.get('textcolor');
+            localStorage.setItem('text-color', JSON.stringify(color));
             var rgb = Object.values(color).map(function (color) {
                 return Math.floor(color * 255);
             }).join(',');
-            this.$el.css('color', 'rgb(' + rgb + ')');
+            this.$el.find('.front').css('color', 'rgb(' + rgb + ')');
+        },
+
+        onBgColorChange: function () {
+            var color = this.model.get('bgcolor');
+            localStorage.setItem('background-color', JSON.stringify(color));
+            var rgb = Object.values(color).map(function (color) {
+                return Math.floor(color * 255);
+            }).join(',');
+            this.$el.find('.front').css('background-color', 'rgb(' + rgb + ')');
         }
 
     });
@@ -65,18 +83,37 @@ define([
 
     // --- --- --- --- --- --- --- --- ---
 
-    var appearance = editor.createWidget('Group', {
-        label: 'Card Appearance'
-    });
 
-    appearance.createWidget('Border radius', 'NumberedSlider', {
+    editor.createWidget('Group', {
+        label: 'Corners'
+    }).createWidget('', 'NumberedSlider', {
         model: card,
         name: 'radius'
     });
 
-    appearance.createWidget('Text color', 'Color', {
+    editor.createWidget('Group', {
+        label: 'Front Text Color',
+        opened : false
+    }).createWidget('', 'Color', {
         model: card,
-        name: 'color'
+        name: 'textcolor'
+    });
+
+    editor.createWidget('Group', {
+        label: 'Front Background Color',
+        opened : false
+    }).createWidget('', 'Color', {
+        model: card,
+        name: 'bgcolor'
+    });
+
+    editor.createWidget('Group', {
+        label: 'back',
+        opened : false
+    }).createWidget('', 'ToggleSwitch', {
+        model: card,
+        label:'flip card',
+        name: 'toggleback'
     });
 
 });

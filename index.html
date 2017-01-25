@@ -12,32 +12,47 @@
     <link rel="stylesheet" href="sources/vendors/Normalize.css"/>
     <link rel="stylesheet" href="sources/vendors/editor.css"/>
     <link rel="stylesheet" href="style.css"/>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var htmlTag = document.getElementsByTagName('html')[0];
+            htmlTag.className = (htmlTag.className + ' ' || '') + 'ready';
+        });
+    </script>
 </head>
 
 
 <body>
 
-    <!-- EDITOR -->
-    <div class="editor">
+<!-- EDITOR -->
+<div class="editor">
 
-        <!-- PANEL -->
-        <div class="editor-panel"></div>
+    <!-- PANEL -->
+    <div class="editor-panel"></div>
 
-        <!-- VIEW -->
-        <div class="editor-view">
-            <div class="card">
-                <div class="name" contenteditable="true">
-                    Florian Boudot
+    <!-- VIEW -->
+    <div class="editor-view">
+        <div class="flip-container">
+            <div class="flipper card">
+                <div class="front">
+                    <div class="name" contenteditable="true">
+                        Florian Boudot
+                    </div>
+                    <div class="job" contenteditable="true">
+                        Front-end Developer
+                    </div>
                 </div>
-                <div class="job" contenteditable="true">
-                    Front-end Developer
+                <div class="back">
+                    back
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- SCRIPTS -->
-    <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
+    </div>
+</div>
+
+<!-- SCRIPTS -->
+<script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
 
 </body>
 </html>

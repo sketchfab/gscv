@@ -1,6 +1,10 @@
 /* EDITOR VIEW */
 .editor-view {
     display: flex;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
 }
 
@@ -11,23 +15,66 @@
 
 /* CARD  */
 .card {
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
     font-size: 45px;
     margin: auto;
-    display: flex;
     width: 550px;
     height: 300px;
-    padding: 20px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
-    background: #2C2C2C;
+    /*background: #2C2C2C;*/
     color: #FFFFFF;
 }
 
-.name {
-
-}
 .job {
     font-size: 30px;
+}
+
+/* entire container, keeps perspective */
+.flip-container {
+    perspective: 1000px;
+}
+
+/* flip the pane when hovered */
+.flip-container .flipper.hover {
+    transform: rotateY(180deg);
+}
+
+.flip-container, .front, .back {
+
+    width: 550px;
+    height: 300px;
+}
+
+/* flip speed goes here */
+.flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+    position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+    backface-visibility: hidden;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+    z-index: 2;
+    background: red;
+    /* for firefox 31 */
+    transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+    background: green;
+    transform: rotateY(180deg);
 }
