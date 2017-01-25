@@ -40,6 +40,13 @@ define([
             //this.onBgColorChange();
         },
 
+
+        toRgb:function (obj_color) {
+            return Object.values(obj_color).map(function (color) {
+                return Math.floor(color * 255);
+            }).join(',')
+        },
+
         onRadiusChange: function () {
             var radius = this.model.get('radius');
             this.$el.find('.front, .back').css('border-radius', radius);
@@ -57,18 +64,14 @@ define([
         onTextColorChange: function () {
             var color = this.model.get('textcolor');
             localStorage.setItem('text-color', JSON.stringify(color));
-            var rgb = Object.values(color).map(function (color) {
-                return Math.floor(color * 255);
-            }).join(',');
+            var rgb = this.toRgb(color);
             this.$el.find('.front').css('color', 'rgb(' + rgb + ')');
         },
 
         onBgColorChange: function () {
             var color = this.model.get('bgcolor');
             localStorage.setItem('background-color', JSON.stringify(color));
-            var rgb = Object.values(color).map(function (color) {
-                return Math.floor(color * 255);
-            }).join(',');
+            var rgb = this.toRgb(color);
             this.$el.find('.front').css('background-color', 'rgb(' + rgb + ')');
         }
 
