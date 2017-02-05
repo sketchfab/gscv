@@ -17,3 +17,14 @@
     background: #2C2C2C;
     color: #FFFFFF;
 }
+
+.input-widget > .value {
+    width: 100%;
+
+    padding: 4px;
+    border: 0;
+    border-radius: 4px;
+
+    background: #1a1a1a;
+    color: white;
+}

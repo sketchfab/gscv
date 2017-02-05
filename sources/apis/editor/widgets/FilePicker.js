@@ -54,10 +54,10 @@ define( [
         },
 
         changeEvent: function ( e ) {
-
             if ( e.target.files[ 0 ] ) {
-
                 if ( this.options.selectEvent ) {
+                    this.set(e.target.files[ 0 ]);
+                    this.$el.find( '.button' ).html(e.target.files[ 0 ].name.split(".")[0]);
                     this.options.model.trigger( this.options.selectEvent, e.target.files[ 0 ], this );
                 }
 
@@ -70,7 +70,7 @@ define( [
 
             }
 
-        }
+        },
 
     } );
 
