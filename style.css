@@ -1,6 +1,6 @@
 .editor-view {
     display: flex;
-
+    font-family: "Roboto";
     background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
 }
 
