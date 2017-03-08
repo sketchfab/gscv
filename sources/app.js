@@ -24,6 +24,9 @@ define( [
             this.model.on( 'change:background-opacity', this.onBackgroundColorChange, this) ;
             this.model.on( 'change:font-family', this.onFontFamilyChange, this );
             this.model.on( 'change:font-color', this.onFontColorChange, this );
+            this.model.on( 'change:font-size', this.onFontSizeChange, this );
+            this.model.on( 'change:job', this.onJobChange, this );
+            this.model.on( 'change:name', this.onNameChange, this );
         },
 
         rgbToCss: function ( rgbObject ) {
@@ -50,8 +53,16 @@ define( [
             this.$el.css( 'border-radius', this.model.get( 'radius' ) );
         },
 
-        onProfileInfosChange : function ( ) {
-          console.log(this.model.get('profile-infos'))
+        onJobChange : function ( ) {
+            this.$el.find('.job').text(this.model.get( 'job' ))
+        },
+
+        onNameChange : function ( ) {
+            this.$el.find('.name').text(this.model.get( 'name' ))
+        },
+
+        onFontSizeChange : function ( ) {
+            this.$el.css( 'font-size', this.model.get( 'font-size' ) );
         },
 
         onBackgroundColorChange : function ( ) {
@@ -86,6 +97,21 @@ define( [
 
     // --- --- --- --- --- --- --- --- ---
 
+    var content = editor.createWidget('Group', {label: 'Content'});
+
+    content.createWidget('Your name', 'Text', {
+        model: card,
+        placeholder: 'Jeff',
+        name: 'name',
+      });
+
+    content.createWidget('Your job description', 'Text', {
+        model: card,
+        placeholder: 'CEO',
+        name: 'job',
+      });
+
+
     var cardAppearance = editor.createWidget('Group', {label: 'Card Appearance'});
 
     cardAppearance.createWidget('Border radius', 'NumberedSlider', {
@@ -118,5 +144,13 @@ define( [
           model: card,
           name: 'font-color'
       }).set('#ffffff');
+
+
+      cardAppearance.createWidget('Font size', 'NumberedSlider', {
+          model: card,
+          name: 'font-size',
+          maximum: 24,
+          minim: 9
+      }).set(14);
 
 });
