@@ -86,6 +86,12 @@ define( [
             $selectionElement.text( label || this.options.placeholder );
             $selectionElement.attr( 'title', label || this.options.placeholder );
 
+          var optionsHTML = this.options.collection.map( function(option) {
+              return '<option data-value="'+ option +'">' + option +'</option>';
+          }).join('') ;
+
+          this.$el.find('.options').html(optionsHTML);
+
         },
 
         isOpened: function () {
