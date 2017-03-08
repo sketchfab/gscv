@@ -60,7 +60,7 @@ define( [
         },
 
         onFontFamilyChange : function ( ) {
-          this.$el.parent().css('font-family', his.model.get('font-family'));
+          this.$el.parent().css('font-family', this.model.get('font-family'));
         }
     });
 
