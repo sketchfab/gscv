@@ -83,7 +83,7 @@ define( [
 
             var $selectionElement = this.$( '.selection' );
             $selectionElement.removeClass( 'placeholder', value );
-            $selectionElement.text( label || this.options.placeholder );
+            $selectionElement.text( value || label || this.options.placeholder );
             $selectionElement.attr( 'title', label || this.options.placeholder );
 
           var optionsHTML = this.options.collection.map( function(option) {
