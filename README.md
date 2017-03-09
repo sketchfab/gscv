@@ -1,3 +1,15 @@
+# Features
+- Modifier le nom
+- Modifier le job
+- Modifier la `font-family`
+- Modifier la `font-size`
+- Modifier la `color`
+- Modifier le `background`
+- Modifier le `border-radius`
+- upload d'image
+- affichage des réseaux sociaux
+
+
 # Générateur Sketchfab de Cartes de Visite
 
 A Sketchfab, on aime bien venir voir les gens pour leur faire un petit coucou. Du coup, de temps à autres, on doit leur donner des cartes de visite. Pourtant, suite à un récent changement de logo, ces dernières vont devoir être refaites.
