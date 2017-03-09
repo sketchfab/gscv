@@ -27,6 +27,11 @@ define( [
             this.model.on( 'change:font-size', this.onFontSizeChange, this );
             this.model.on( 'change:job', this.onJobChange, this );
             this.model.on( 'change:name', this.onNameChange, this );
+            this.model.on( 'change:picture', this.onPictureChange, this );
+            this.model.on( 'change:networks-facebook', this.onNetworksFacebookChange, this );
+            this.model.on( 'change:networks-twitter', this.onNetworksTwitterChange, this );
+            this.model.on( 'change:networks-github', this.onNetworksGithubChange, this );
+            this.model.on( 'change:networks-linkedin', this.onNetworksLinkedinChange, this );
         },
 
         rgbToCss: function ( rgbObject ) {
@@ -45,6 +50,10 @@ define( [
           return color;
         },
 
+        notEmptyString(str){
+          return str.length > 0 ? true : false;
+        },
+
         render : function ( ) {
             this.onRadiusChange( );
         },
@@ -57,12 +66,63 @@ define( [
             this.$el.find('.job').text(this.model.get( 'job' ))
         },
 
+        onNetworksFacebookChange : function ( ) {
+            var username = this.model.get( 'networks-facebook');
+            var parent = this.$el.find('.fa-facebook-square').parent();
+
+            if(this.notEmptyString(username))
+                parent.css({ 'display' : 'flex'});
+            else
+                parent.css({ 'display' : 'none'});
+
+            this.$el.find('.fa-facebook-square + p').text( username );
+        },
+
+        onNetworksTwitterChange : function ( ) {
+          var username = this.model.get( 'networks-twitter');
+          var parent = this.$el.find('.fa-twitter-square').parent();
+
+          if(this.notEmptyString(username))
+              parent.css({ 'display' : 'flex'});
+          else
+              parent.css({ 'display' : 'none'});
+
+          this.$el.find('.fa-twitter-square + p').text( username );
+        },
+
+        onNetworksGithubChange : function ( ) {
+          var username = this.model.get( 'networks-github');
+          var parent = this.$el.find('.fa-github').parent();
+
+          if(this.notEmptyString(username))
+              parent.css({ 'display' : 'flex'});
+          else
+              parent.css({ 'display' : 'none'});
+
+          this.$el.find('.fa-github + p').text( username );
+        },
+
+        onNetworksLinkedinChange : function ( ) {
+          var username = this.model.get( 'networks-linkedin');
+          var parent = this.$el.find('.fa-linkedin-square').parent();
+
+          if(this.notEmptyString(username))
+              parent.css({ 'display' : 'flex'});
+          else
+              parent.css({ 'display' : 'none'});
+
+          this.$el.find('.fa-linkedin-square + p').text( username );
+        },
+
         onNameChange : function ( ) {
             this.$el.find('.name').text(this.model.get( 'name' ))
         },
 
         onFontSizeChange : function ( ) {
             this.$el.css( 'font-size', this.model.get( 'font-size' ) );
+        },
+        onPictureChange : function ( ) {
+          this.$el.find('.picture').css('background-image', 'url('+ this.model.get( 'picture' )+')')
         },
 
         onBackgroundColorChange : function ( ) {
@@ -97,28 +157,68 @@ define( [
 
     // --- --- --- --- --- --- --- --- ---
 
-    var content = editor.createWidget('Group', {label: 'Content'});
+    var content = editor.createWidget('Group',
+    {
+      label: 'Content',
+      opened: false
+    });
 
     content.createWidget('Your name', 'Text', {
         model: card,
         placeholder: 'Jeff',
         name: 'name',
-      });
+      }).set('Your name');
 
     content.createWidget('Your job description', 'Text', {
         model: card,
         placeholder: 'CEO',
         name: 'job',
+      }).set('Intern at Sketchfab');
+
+    content.createWidget('Your picture', 'FilePicker', {
+        model: card,
+        name: 'picture',
+      });
+
+    var networks = content.createWidget('', 'Group', {
+        model: card,
+        name: 'networks',
+        label: 'Your networks',
+
+      });
+    networks.createWidget('Twitter username', 'Text', {
+        model: card,
+        name: 'networks-twitter',
+      });
+
+    networks.createWidget('Facebook username', 'Text', {
+        model: card,
+        name: 'networks-facebook',
+      });
+
+    networks.createWidget('Github username', 'Text', {
+        model: card,
+        name: 'networks-github',
+      });
+
+    networks.createWidget('Linkedin username', 'Text', {
+        model: card,
+        name: 'networks-linkedin',
       });
 
 
-    var cardAppearance = editor.createWidget('Group', {label: 'Card Appearance'});
+
+    var cardAppearance = editor.createWidget('Group',
+    {
+      label: 'Card Appearance',
+      opened: false
+    });
 
     cardAppearance.createWidget('Border radius', 'NumberedSlider', {
         model: card,
         name: 'radius',
         maximum: 60
-    });
+    }).set(3);
 
     cardAppearance.createWidget('Background color', 'Color', {
         model: card,
@@ -131,13 +231,17 @@ define( [
     }).set(100);
 
 
-    var fontAppearance = editor.createWidget('Group', {label: 'Font Appearance'});
+    var fontAppearance = editor.createWidget('Group',
+    {
+      label: 'Font Appearance',
+      opened: false
+    });
 
     fontAppearance.createWidget('Font family', 'Select', {
         model: card,
         name: 'font-family',
         placeholder: 'Select your font',
-        collection: window.fonts
+        list: window.fonts
       });
 
       fontAppearance.createWidget('Font color', 'Color', {
@@ -146,11 +250,30 @@ define( [
       }).set('#ffffff');
 
 
-      cardAppearance.createWidget('Font size', 'NumberedSlider', {
+      fontAppearance.createWidget('Font size', 'NumberedSlider', {
           model: card,
           name: 'font-size',
           maximum: 24,
           minim: 9
       }).set(14);
 
+      var exportBtn = editor.createWidget('Button',
+      {
+        label: 'Content',
+        text: 'Export card',
+      });
+
+      exportBtn.exportCard = function() {
+        var html2obj = html2canvas($('.card'));
+
+        var queue  = html2obj.parse();
+        var canvas = html2obj.render(queue);
+        var img = canvas.toDataURL();
+
+        var link = document.createElement("a");
+        link.download = 'Your gscv';
+        link.href = img;
+        link.click();
+      };
+      exportBtn.$el.click(exportBtn.exportCard)
 });

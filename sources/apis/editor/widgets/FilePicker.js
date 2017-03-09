@@ -54,10 +54,18 @@ define( [
         },
 
         changeEvent: function ( e ) {
-
             if ( e.target.files[ 0 ] ) {
-
                 if ( this.options.selectEvent ) {
+                    var reader = new FileReader();
+                    var self = this;
+                    var base64;
+                    reader.onloadend = function(e){
+                        base64 = e.target.result;
+                        self.set(base64);
+                    }
+
+                    reader.readAsDataURL(e.target.files[ 0 ]);
+                    this.$el.find( '.button' ).html(e.target.files[ 0 ].name.split(".")[0]);
                     this.options.model.trigger( this.options.selectEvent, e.target.files[ 0 ], this );
                 }
 
