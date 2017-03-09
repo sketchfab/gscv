@@ -83,8 +83,17 @@ define( [
 
             var $selectionElement = this.$( '.selection' );
             $selectionElement.removeClass( 'placeholder', value );
-            $selectionElement.text( label || this.options.placeholder );
+            $selectionElement.text( value || label || this.options.placeholder );
             $selectionElement.attr( 'title', label || this.options.placeholder );
+
+            // prevent some widget of throwing errors
+            if(!this.options.list) return
+
+            var optionsHTML = this.options.list.map( function(option) {
+                return '<option data-value="'+ option +'">' + option +'</option>';
+            }).join('') ;
+
+            this.$el.find('.options').html(optionsHTML);
 
         },
 

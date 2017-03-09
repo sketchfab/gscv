@@ -1,7 +1,11 @@
 .editor-view {
     display: flex;
+    font-family: "Roboto";
+    background: url(https://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
+}
 
-    background: url(http://upload.wikimedia.org/wikipedia/commons/2/24/Transparent_Square_Tiles_Texture.png);
+.editor-panel {
+  overflow: auto;
 }
 
 .card {
@@ -12,8 +16,54 @@
     height: 300px;
 
     padding: 20px;
-
+    position: relative;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
     background: #2C2C2C;
     color: #FFFFFF;
+}
+
+.card .picture {
+  width: 60px;
+  height: 60px;
+  border: 3px solid white;
+  background-color: white;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+
+.card .logo {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.networks {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  font-size: 9px;
+  padding: 0 20px;
+  right: 0;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.networks li{
+  align-items: flex-end;
+  display: none;
+}
+
+.networks i {
+  padding: 0px 4px;
+  font-size: 14px
 }

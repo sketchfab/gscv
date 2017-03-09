@@ -1,31 +1,69 @@
 <!DOCTYPE HTML>
 <html>
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <title>Sketchfab Widgets</title>
+  <meta charset="UTF-8">
+  <title>Sketchfab Widgets</title>
 
-        <link rel="stylesheet" href="sources/vendors/Normalize.css" />
-        <link rel="stylesheet" href="sources/vendors/editor.css" />
-        <style>.editor-panel, .editor-view { padding-top: 0 }</style>
-        <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="sources/vendors/Normalize.css" />
+  <link rel="stylesheet" href="sources/vendors/editor.css" />
+  <style>.editor-panel, .editor-view { padding-top: 0 }</style>
+  <link rel="stylesheet" href="style.css" />
 
-        <script data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
 
-    </head>
+</head>
 
-    <body>
-        <div class="editor">
-            <div class="editor-panel">
-            </div>
-            <div class="editor-view">
-                <div class="card">
-                    <div class="name">Maël Nison</div>
-                    <div class="job">Frontend Developer</div>
-                </div>
-            </div>
-        </div>
-    </body>
+<body>
+  <div class="editor">
+    <div class="editor-panel">
+    </div>
+    <div class="editor-view">
+      <div class="card">
+        <div class="name"></div>
+        <div class="job"></div>
+        <div class="picture"></div>
+
+        <img src="sources/img/logo.png" alt="sketchfab logo" class="logo">
+
+        <ul class="networks">
+          <li>
+            <i class="fa fa-twitter-square" aria-hidden="true"></i>
+            <p></p>
+          </li>
+          <li>
+            <i class="fa fa-facebook-square" aria-hidden="true"></i>
+            <p></p>
+          </li>
+          <li>
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <p></p>
+          </li>
+          <li>
+            <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+            <p></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+  google.load('webfont','1');
+  google.setOnLoadCallback(function() {
+    window.fonts = [ "Roboto" ,"Diplomata SC" ,"Baloo Bhaina" ,"Open Sans" ,"Lato" ,"Slabo" ,"Ranga","Oswald"];
+    WebFont.load({
+      google: {
+        families: window.fonts
+      }
+    });
+  });
+  </script>
+  <script src="sources/vendors/html2canvas.js"></script>
+  <script defer data-main="sources/main" src="sources/vendors/require.2.1.13.js"></script>
+
+</body>
 
 </html>
